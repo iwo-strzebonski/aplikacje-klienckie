@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        td {
+            text-align: center;
+            border: 0.1px solid white;
+        }
+    </style>
 </head>
 
 <body style='font-family: "Courier New"'>
@@ -81,7 +88,7 @@
         temp = n < 2 ? false : true
         for (i = 2; i <= Math.round(n / 2); i++) {
             if (n % i == 0) {
-                temp = False
+                temp = false
                 break
             }
         }
@@ -95,10 +102,29 @@
 
         document.write('i)<br />')
         document.write('<table style="text-align:center">')
-        for (i = 1; i <= n; i++) {
-            document.write('<tr>' + '<td>'.repeat(n) + 'y' + '</td>'.repeat(n))
+        for (i = 0; i <= n; i++) {
+            document.write('<tr>')
+            for (j = 0; j <= n; j++) {
+                if (i == j && i == 0) {
+                    temp = ''
+                    document.write('<td style="background-color:DeepSkyBlue">' + temp + '</td>')
+                } else if (i == 0) {
+                    temp = j
+                    document.write('<td style="background-color:DeepSkyBlue;font-color:white">' + temp + '</td>')
+                } else if (j == 0) {
+                    temp = i
+                    document.write('<td style="background-color:DeepSkyBlue;font-color:white">' + temp + '</td>')
+                } else if (i == j) {
+                    temp = i * j
+                    document.write('<td>' + temp + '</td>')
+                } else {
+                    temp = i * j
+                    document.write('<td style="background-color:Orange">' + temp + '</td>')
+                }
+            }
+            document.write('</tr>')
         }
-        document.write('</table>')
+        document.write('</table><br />')
     </script>
 </body>
 
