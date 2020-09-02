@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="font-family: 'Courier New'">
+    <script>
+        // 02871401458
+        var n = prompt('Podaj PESEL:', 0).toString()
+        var temp1 = n.substr(0, 6)
+        var temp2 = temp1.substr(0, 2) + '.'
+
+        switch (temp1[2]) {
+            case '8':
+                temp2 += (parseInt(temp1.substr(2, 2) - 80) + '.18' + temp1.substr(4, 2))
+                break;
+
+            default:
+                break;
+        }
+
+        document.write(temp2)
+    </script>
+</body>
+
+</html>
