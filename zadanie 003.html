@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var n = prompt('Podaj liczbe:', 0)
+        var temp = ''
+        var list = []
+
+        document.write('a)<br />')
+        temp = 'X'.repeat(n)
+        document.write(temp + '<br /><br />')
+
+        document.write('b)<br />')
+        for (i = 0; i < n; i++) {
+            if ((i == 0) || (i == n - 1)) {
+                temp = 'X '.repeat(n)
+                temp += '<br />'
+                document.write(temp)
+            } else if (n > 2) {
+                temp = 'X'
+                temp += '&nbsp;'.repeat(2 * n - 3)
+                temp += 'X<br />'
+                document.write(temp)
+            }
+        }
+
+        document.write('c)<br />')
+        for (i = 0; i < n; i++) {
+            temp = '&nbsp;'.repeat(n - 1) + 'X'
+        }
+        // 2n - 1
+    </script>
+</body>
+
+</html>
