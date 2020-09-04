@@ -15,11 +15,20 @@
         var temp2 = temp1.substr(0, 2) + '.'
 
         switch (temp1[2]) {
-            case '8':
-                temp2 += (parseInt(temp1.substr(2, 2) - 80) + '.18' + temp1.substr(4, 2))
+            case '8' or '9':
+                temp2 += (parseInt(temp1.substr(2, 1) - 8) + temp1.substr(3, 1) + '.18' + temp1.substr(4, 2))
                 break;
-
+			case '2':
+                temp2 += (parseInt(temp1.substr(2, 1) - 2) + temp1.substr(3, 1) + '.18' + temp1.substr(4, 2))
+                break;
+			case '4':
+                temp2 += (parseInt(temp1.substr(2, 1) - 4) + temp1.substr(3, 1) + '.18' + temp1.substr(4, 2))
+                break;
+			case '6':
+                temp2 += (parseInt(temp1.substr(2, 1) - 6) + temp1.substr(3, 1) + '.18' + temp1.substr(4, 2))
+                break;
             default:
+                temp2 += (parseInt(temp1.substr(2, 1) - 8) + temp1.substr(3, 1) + '.18' + temp1.substr(4, 2))
                 break;
         }
 
