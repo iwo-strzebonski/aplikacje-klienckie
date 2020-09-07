@@ -47,6 +47,23 @@
                     .html("<b>TEST</b>")
             })
 
+            $("#bt5").on("click", function() {
+                $("#bt4").off("click")
+            })
+
+            $("#bt6").on("click", function() {
+                $("#div2").on("mouseout", function() {
+                    $("#div2")
+                        .css("background-color", "gray")
+                        .html("<b>boldem</b>")
+                        .html("<i>italic</i>")
+                })
+
+                $("#div2").on("mouseover", function() {
+                    $("#div2").css("background-color", "dark-gray")
+                })
+            })
+
         })
     </script>
 
@@ -55,6 +72,12 @@
             width: 100px;
             height: 100px;
             background-color: blue;
+        }
+        
+        #div2 {
+            width: 200px;
+            height: 200px;
+            background-color: lightgray;
         }
     </style>
 </head>
@@ -68,6 +91,11 @@
     <button id="bt5">Anuluj działanie przycisku</button>
 
     <div id="div1"></div>
+
+    <br />
+    <h1>T: JQuery - Zdarzenia</h1>
+    <button id="bt6">DODAJ/USUŃ LISTENERY</button>
+    <div id="div2"></div>
 
 </body>
 
