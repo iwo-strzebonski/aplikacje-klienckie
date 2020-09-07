@@ -51,17 +51,31 @@
                 $("#bt4").off("click")
             })
 
+            var bool = 1
+
             $("#bt6").on("click", function() {
-                $("#div2").on("mouseout", function() {
-                    $("#div2")
-                        .css("background-color", "gray")
-                        .html("<b>boldem</b>")
-                        .html("<i>italic</i>")
+
+                $("h1").html("Listenery dodane")
+
+                $("#bt6").on("click", function() {
+                    bool = 0
                 })
 
-                $("#div2").on("mouseover", function() {
-                    $("#div2").css("background-color", "dark-gray")
-                })
+                if (bool) {
+                    $("#div2").on("mouseover", function() {
+                        $("#div2")
+                            .css("background-color", "darkgray")
+                            .html("<b>boldem</b><br /><i>italic</i>")
+                    })
+
+                    $("#div2").on("mouseout", function() {
+                        $("#div2")
+                            .css("background-color", "gray")
+                            .empty()
+                    })
+                } else {
+                    $("h1").html("Listenery usunięte")
+                }
             })
 
         })
@@ -78,6 +92,10 @@
             width: 200px;
             height: 200px;
             background-color: lightgray;
+        }
+        
+        h1 {
+            color: blue;
         }
     </style>
 </head>
