@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="libs/jq.js"></script>
+
+    <script>
+        var x
+        var y
+
+        var perc
+
+        $(document).ready(function() {
+            $(window).on("mousedown", function(e) {
+                x = e.clientX
+
+                offX = e.clientX - $("#slider").offset().left
+
+                $(window).on("mousemove", function(e) {
+                    $("#slider").css("left", e.clientX)
+
+                    perc = ($(window).width() - e.clientX) / $(window).width()
+
+                    console.log(perc)
+
+                    //$("#a").width(0.5 * $(window).width() + e.clientX).css("left", 0)
+                    $("#b").width(0.5 * $(window).width() - e.clientX).css("left", perc + "%")
+
+                    console.log($("#b").width())
+                })
+            })
+
+            $(window).on("mouseup", function(e) {
+                x = e.clientX
+                $("#slider").css("left", x)
+                $(window).off("mousemove")
+            })
+        })
+    </script>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            position: absolute;
+            height: 100%;
+        }
+        
+        #a,
+        #b {
+            width: 50%;
+        }
+        
+        #a {
+            background-color: gray;
+        }
+        
+        #b {
+            left: 50%;
+            background-color: yellow;
+        }
+        
+        #slider {
+            width: 16px;
+            left: 50%;
+            background-color: blue;
+            cursor: col-resize;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="a"></div>
+
+    <div id="b"></div>
+    <div id="slider"></div>
+</body>
+
+</html>
