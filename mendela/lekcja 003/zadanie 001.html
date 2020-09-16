@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="font-family: 'Courier New'">
+    <img src="./total-annihilation-logo.png" id="img" />
+
+    <script>
+        img = document.getElementById("img")
+        img.style.width = "700px"
+        img.style.height = "220px"
+        w = img.width
+        h = img.height
+
+        i = 1
+        resize = false
+
+        function scaling() {
+            if (floor(i) == 0.1) {
+                resize = true
+            }
+            if (floor(i) == 1) {
+                resize = false
+            }
+            if (i > 0.1) {
+                i -= 0.1
+                img.style.width = w * i + "px"
+                img.style.height = h * i + "px"
+            }
+            if (resize) {
+                i += 0.1
+                img.style.width = w * i + "px"
+                img.style.height = h * i + "px"
+            }
+            console.log(resize, i)
+        }
+
+        window.setInterval(scaling, 100)
+        console.log(img, img.style.width)
+    </script>
+
+
+</body>
+
+</html>
