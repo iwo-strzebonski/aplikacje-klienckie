@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="font-family: 'Courier New'">
+    <script>
+        //TODO: Naprawić to badziewie
+
+
+        var list = prompt('Wklej zdanie',
+            'ten testowy tekst te słowa testowe testuje: te, ten, Bartek, potencjał, plater. Te.').split(' ')
+        var str = prompt('Szukane słowo', 'te')
+        var out = []
+        var n = 0
+        const punct_marks = ['.', ',', ';', '?', '!', ':']
+
+        for (i = 0; i < list.length; i++) {
+            n = 0
+
+            if (punct_marks.includes(list[i][list[i].length - 1])) {
+                list[i] = list[i].substr(0, list[i].length - 1)
+            }
+
+            list[i] = list[i].toLowerCase()
+
+            console.log(list)
+
+            list.filter(wordCheck)
+
+            console.log(list)
+                // out.push(n + " " + list[i])
+                //console.log(list)
+        }
+
+        // console.log(out)
+    </script>
+</body>
+
+</html>

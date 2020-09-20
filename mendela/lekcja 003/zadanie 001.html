@@ -11,37 +11,34 @@
     <img src="./total-annihilation-logo.png" id="img" />
 
     <script>
-        img = document.getElementById("img")
+        var img = document.images[0]
         img.style.width = "700px"
         img.style.height = "220px"
-        w = img.width
-        h = img.height
+        var w = img.width
+        var h = img.height
 
-        i = 1
-        resize = false
+        var i = 1
+        var resize
 
         function scaling() {
-            if (floor(i) == 0.1) {
-                resize = true
-            }
-            if (floor(i) == 1) {
+            if (i == 1) {
                 resize = false
             }
-            if (i > 0.1) {
-                i -= 0.1
+            if (i < 0.01) {
+                resize = true
+            }
+            if (!resize) {
+                i -= 0.01
                 img.style.width = w * i + "px"
                 img.style.height = h * i + "px"
             }
             if (resize) {
-                i += 0.1
+                i += 0.01
                 img.style.width = w * i + "px"
                 img.style.height = h * i + "px"
             }
-            console.log(resize, i)
         }
-
-        window.setInterval(scaling, 100)
-        console.log(img, img.style.width)
+        window.setInterval(scaling, 10)
     </script>
 
 
