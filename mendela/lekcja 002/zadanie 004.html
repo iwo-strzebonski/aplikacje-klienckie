@@ -38,6 +38,23 @@
         }
 
         // console.log(out)
+
+    /*I. Łączenie dwóch list w jedną:*/
+    var points = ["40", "100", "1", "5", "25", "10"];
+    var words = ['q', 'w', 'e', 'r', 't', 'y']
+    var out = []
+
+    for (i = 0; i < points.length; i++) {
+        out[i] = points[i] + ' ' + words[i]
+    }
+
+    /*II. Autorski system sortowania*/
+    function customSort(a, b) {
+        return a.substring(0, a.indexOf(' ')) - b.substring(0, b.indexOf(' '))
+    }
+
+    out.sort(customSort);
+
     </script>
 </body>
 
