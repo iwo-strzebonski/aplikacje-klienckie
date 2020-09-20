@@ -9,36 +9,26 @@
     <script src="libs/jq.js"></script>
 
     <script>
-        var x
-        var y
-
-        var perc
-
         $(document).ready(function() {
-            $(window).on("mousedown", function(e) {
-                x = e.clientX
+            /*Początek skryptu*/
 
-                offX = e.clientX - $("#slider").offset().left
-
+            $("#slider").on("mousedown", function(e) {
                 $(window).on("mousemove", function(e) {
                     $("#slider").css("left", e.clientX)
 
-                    perc = ($(window).width() - e.clientX) / $(window).width()
+                    perc1 = e.clientX / $(window).width() * 100
+                    perc2 = 100 - e.clientX / $(window).width() * 100
 
-                    console.log(perc)
-
-                    //$("#a").width(0.5 * $(window).width() + e.clientX).css("left", 0)
-                    $("#b").width(0.5 * $(window).width() - e.clientX).css("left", perc + "%")
-
-                    console.log($("#b").width())
+                    $("#a").css("width", perc1 + "%")
+                    $("#b").css("width", perc2 + "%").css("left", perc1 + "%")
                 })
             })
 
-            $(window).on("mouseup", function(e) {
-                x = e.clientX
-                $("#slider").css("left", x)
-                $(window).off("mousemove")
-            })
+            $("#slider").on("mouseup", function(e) {
+                    $("#slider").css("left", $("#slider").offset().left / $(window).width() * 100 + "%")
+                    $(window).off("mousemove")
+                })
+                /*Koniec skryptu*/
         })
     </script>
 
@@ -49,16 +39,22 @@
             width: 100%;
             margin: 0;
             padding: 0;
+            font-family: 'Courier New';
+            user-select: none;
+            overflow: hidden;
         }
         
         div {
             position: absolute;
             height: 100%;
+            text-align: center;
         }
         
         #a,
         #b {
             width: 50%;
+            font-weight: bold;
+            font-size: 512px;
         }
         
         #a {
@@ -80,10 +76,8 @@
 </head>
 
 <body>
-
-    <div id="a"></div>
-
-    <div id="b"></div>
+    <div id="a">A</div>
+    <div id="b">B</div>
     <div id="slider"></div>
 </body>
 
