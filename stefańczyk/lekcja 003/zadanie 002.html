@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="libs/jq.js"></script>
+
+    <script>
+        var n = 0
+        var div
+
+        var el = {}
+        var list = []
+
+        $(document).ready(function() {
+            /*Początek skryptu*/
+
+            for (i = 0; i < 5; i++) {
+                for (j = 0; j < 5; j++) {
+                    div = $("<div>")
+                    div.addClass("pole")
+                    div.css("left", i * 32 + "px").css("top", j * 32 + "px")
+                    $("#main").append(div)
+                }
+            }
+
+            $(".pole").on("click", function() {
+                $(this).css("background-color", "yellow")
+
+                el = {
+                    x: $(this).offset().left,
+                    y: $(this).offset().top
+                }
+
+
+                //TODO: repair it
+                if (!list.some(list => list.x === el.x) ||
+                    !list.some(list => list.y === el.y)) {
+                    list.push(el)
+                    console.log(list)
+                }
+            })
+
+            // $("#bt1").on("click", function() {
+
+            // })
+
+            /*Koniec skryptu*/
+        })
+    </script>
+
+    <style>
+        #bt1,
+        #bt2,
+        #bt3 {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: blue;
+        }
+        
+        .pole {
+            width: 28px;
+            height: 28px;
+            border: black 1px solid;
+        }
+        
+        div {
+            position: absolute;
+        }
+        
+        #main {
+            top: 128px;
+            left: 64px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>T: Labirynt - tablice obiektów</h1>
+
+    <button id="bt1">Start game</button>
+    <button id="bt2">Next move</button>
+    <button id="bt3">Reset game</button>
+
+    <br />
+
+    <div id="main">
+    </div>
+
+</body>
+
+</html>
