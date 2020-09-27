@@ -9,23 +9,24 @@
 
 <body style="font-family: 'Courier New'">
     <form>
-        <textarea readonly style="resize: none;"></textarea>
+        <textarea readonly style="resize: none; overflow: hidden; padding-left: 5em;"></textarea>
     </form>
 
     <script>
         var textarea = document.forms[0][0]
-        textarea.style.height = "1em"
-        textarea.style.width = "22.2em"
+        textarea.style.height = "16em"
+        textarea.style.width = "16em"
 
-        list = "  Ciekawe czy uda Ci się to zrobić  ".split('')
+        list = "\n,\n,\n,\n,\n,\n,\n,\n,\n,\n,\n,\n,\n,\n,1p. Siódmy punkt\n,1p. Szósty punkt\n,1p. Piąty punkt\n,1p. Czwarty punkt\n,1p. Trzeci punkt\n,1p. Drugi punkt\n,1p. Pierwszy punkt".split(',')
         textarea.innerHTML = list.join('')
 
         function leftflow() {
-            list.push(list.shift())
+            list.unshift(list.pop())
             textarea.innerHTML = list.join('')
         }
 
         window.setInterval(leftflow, 50)
+        console.log(list)
     </script>
 </body>
 

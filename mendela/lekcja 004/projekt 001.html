@@ -1,0 +1,227 @@
+<!--
+    Battleship game
+    Bot's ships generator
+    © Copyright 2020 Iwo Strzeboński
+    Published under WTFPLv2
+    Languages: HTML5, CSS3, JavaScript (ES 2020)
+-->
+
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        html,
+        body {
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        .monitor {
+            background-color: rgb(56, 56, 56);
+            border-radius: 2rem;
+            position: absolute;
+            width: 418px;
+            height: 418px;
+        }
+        .cell {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border: 1px rgba(0, 255, 65, 0.5) solid;
+            
+        }
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 70%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 0.3rem;
+        }
+        .frame {
+            background-color: transparent;
+            border: 16px solid;
+            border-bottom-color: #121212;
+            border-left-color: #080808;
+            border-right-color: #080808;
+            border-top-color: #020202;
+            box-shadow:
+                inset 0 0 9rem black,
+                inset 0 0 1rem black,
+                0 0 2rem black;
+            position: absolute;
+            left: 32px;
+            top: 32px;
+            height: 320px;
+            width: 320px;
+            pointer-events: none;
+        }
+        .noisy {
+            position: absolute;
+            height: 322px;
+            width: 322px;
+        }
+    </style>
+</head>
+
+<body style="font-family: 'Courier New'">
+    <div class="monitor" id="monitorbot">
+        <div class="noisy frame scanlines" id="bot"></div>
+    </div>
+
+    <div class="monitor" id="monitorplayer">
+        <div class="noisy frame scanlines" id="player"></div>
+    </div>
+    
+    <script>
+
+        /*
+        Generator's directions:
+        0: up
+        1: right
+
+        Cell state:
+        0: empty
+        1: ship
+        2: protected
+
+        #031E11 - background
+        #14FDCE - console
+         */
+         
+        const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
+        const ship_list = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+
+        var cell_list = []
+
+        var result, state, cell, direction, row, div
+        var frame = document.getElementById('bot')
+
+        function check_for_ship(d, s) {
+            if (d === 0) {
+                for (i = -1; i <= 1; i++) {
+                    for (j = -1; j <= s; j++) {
+                        if (cell_list[row + j][cell + i] === 0) {
+                            state += 1
+                        } else if (cell_list[row + j][cell + i] === 2 &&
+                            (j === -1 || j === s)) {
+                                state += 1
+                            }
+                    }
+                }
+            } else {
+                for (i = -1; i <= s; i++) {
+                    for (j = -1; j <= 1; j++) {
+                        if (cell_list[row + j][cell + i] === 0) {
+                            state += 1
+                        } else if (cell_list[row + j][cell + i] === 2 &&
+                            (i === -1 || i === s)) {
+                                state += 1
+                            }
+                    }
+                }
+            }
+        }
+
+        for (i = 0; i < 12; i++) {
+            row = []
+            for (j = 0; j < 12; j++) {
+                row.push(0)
+            }
+            cell_list.push(row)
+        }
+
+        ship_list.forEach(ship => {
+
+            state = 0
+
+            while (state < 3 * (ship + 2)) {
+                
+                state = 0
+
+                row = 12
+                cell = 12
+                direction = randomBetween(0, 1)
+                
+                if (direction === 0) {
+                    while (cell + 1 > 11) cell = randomBetween(1, 10)
+                    while (row + ship > 11) row = randomBetween(1, 10)
+
+                    check_for_ship(direction, ship)
+                } else {
+                    while (cell + ship > 11) cell = randomBetween(1, 10)
+                    while (row + 1 > 11) row = randomBetween(1, 10)
+
+                    check_for_ship(direction, ship)
+                }
+            }
+
+            if (direction === 0) {
+                for (i = -1; i <= 1; i++) {
+                    for (j = -1; j <= ship; j++) {
+                        if (j >= 0 && j < ship) {
+                            cell_list[row + j][cell] = 1
+                        }
+                        cell_list[row + j][cell + i] = 2
+                    }
+                }
+            } else {
+                for (i = -1; i <= ship; i++) {
+                    for (j = -1; j <= 1; j++) {
+                        if (i >= 0 && i < ship) {
+                            cell_list[row][cell + i] = 1
+                        }
+                        cell_list[row + j][cell + i] = 2
+                    }
+                }
+            }
+        })
+
+        for (j = 1; j < 11; j++) {
+            for (i = 1; i < 11; i++) {
+                div = document.createElement("DIV")
+                div.style.top = 32 * (j - 1) + "px"
+                div.style.left = 32 * (i - 1) + "px"
+                div.style.backgroundColor = cell_list[j][i] === 1 ? 'rgba(0, 255, 65, 0.5)' : 'transparent'
+                div.style.borderColor = cell_list[j][i] === 1 ? 'transparent' : 'rgba(0, 255, 65, 0.5)'
+                div.className = 'scanlines cell'
+                frame.appendChild(div)
+            }
+        }
+    </script>
+
+    <script>
+        var crt_list = document.getElementsByClassName('noisy')
+
+        function color() {
+            for (i = 0; i < crt_list.length; i++) {
+                if (crt_list[i].style.backgroundColor == 'rgb(5, 45, 20)') {
+                    crt_list[i].style.backgroundColor = 'rgb(6, 53, 24)'
+                } else {
+                    crt_list[i].style.backgroundColor = 'rgb(5, 45, 20)'
+                }
+            }
+        }
+
+        window.setInterval(color, 10)
+    </script>
+
+    <script>
+        var monitor_list = document.getElementsByClassName('monitor')
+        var width = screen.width
+        // monitor_list[0].style.left = 50 * 418 / width + '%'
+        monitor_list[0].style.left = '5%'
+        monitor_list[0].style.top = '8%'
+        monitor_list[1].style.left = '50%'
+        monitor_list[1].style.top = '8%'
+    </script>
+</body>
+
+</html>
