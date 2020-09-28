@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang='pl'>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Document</title>
 
-    <script src="libs/jq.js"></script>
+    <script src='libs/jq.js'></script>
 
     <script>
         var n = 0
@@ -15,36 +15,60 @@
         var el = {}
         var list = []
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             /*Początek skryptu*/
 
             for (i = 0; i < 5; i++) {
                 for (j = 0; j < 5; j++) {
-                    div = $("<div>")
-                    div.addClass("pole")
-                    div.css("left", i * 32 + "px").css("top", j * 32 + "px")
-                    $("#main").append(div)
+                    div = $('<div>')
+                    div.addClass('cell')
+                    div.css('left', i * 32 + 'px').css('top', j * 32 + 'px')
+                    $('#main').append(div)
                 }
             }
 
-            $(".pole").on("click", function() {
-                $(this).css("background-color", "yellow")
-
+            $('.cell').on('click', function () {
                 el = {
                     x: $(this).offset().left,
-                    y: $(this).offset().top
+                    y: $(this).offset().top,
                 }
 
-                if (!list.some(list => list.x === el.x) ||
-                    !list.some(list => list.y === el.y)) {
+                if (list.length === 0) {
                     list.push(el)
-                    console.log(list)
+                    $(this).css('background-color', 'yellow')
+                } else if ($(this).css('background-color') === 'rgb(255, 255, 255)' &&
+                    (list[list.length - 1].x == el.x - 32 &&
+                        list[list.length - 1].y == el.y - 32 ||
+                        list[list.length - 1].x == el.x + 32 &&
+                        list[list.length - 1].y == el.y + 32)) {
+                    list.push(el)
+                    $(this).css('background-color', 'yellow')
+                }
+
+            })
+
+            $('#bt1').on('click', function () {
+                if (list.length <= 2) {
+                    alert('Za krótki labirynt!')
+                } else {
+                    $('#marker1').css('left', list[0].x)
+                    $('#marker1').css('top', list[0].y)
+                    $('#marker2').css('left', list[list.length - 1].x)
+                    $('#marker2').css('top', list[list.length - 1].y)
                 }
             })
 
-            // $("#bt1").on("click", function() {
+            $('#bt2').on('click', function () {
 
-            // })
+            })
+
+            $('#bt3').on('click', function () {
+                $('.marker').css('top', '300px')
+                $('#marker1').css('left', '64px')
+                $('#marker2').css('left', '97px')
+                list = []
+                $('.cell').css('background-color', 'white')
+            })
 
             /*Koniec skryptu*/
         })
@@ -57,24 +81,44 @@
             text-transform: uppercase;
             font-weight: bold;
         }
-        
+
         h1 {
             color: blue;
         }
-        
-        .pole {
-            width: 28px;
-            height: 28px;
+
+        .cell {
+            width: 32px;
+            height: 32px;
             border: black 1px solid;
+            background-color: white;
         }
-        
+
         div {
             position: absolute;
         }
-        
+
         #main {
             top: 128px;
             left: 64px;
+        }
+
+        .marker {
+            position: absolute;
+            top: 300px;
+            border-radius: 16px;
+            width: 32px;
+            height: 32px;
+        }
+
+        #marker1 {
+            background-color: green;
+            left: 64px;
+
+        }
+
+        #marker2 {
+            background-color: blue;
+            left: 97px;
         }
     </style>
 </head>
@@ -82,14 +126,16 @@
 <body>
     <h1>T: Labirynt - tablice obiektów</h1>
 
-    <button id="bt1">Start game</button>
-    <button id="bt2">Next move</button>
-    <button id="bt3">Reset game</button>
+    <button id='bt1'>Start game</button>
+    <button id='bt2'>Next move</button>
+    <button id='bt3'>Reset game</button>
 
     <br />
 
-    <div id="main">
-    </div>
+    <div id='main'></div>
+
+    <div class='marker' id='marker1'></div>
+    <div class='marker' id='marker2'></div>
 
 </body>
 
