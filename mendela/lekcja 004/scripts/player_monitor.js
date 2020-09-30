@@ -15,7 +15,6 @@ for (j = 1; j < 11; j++) {
 button.addEventListener("click", () => {
 	if (!bool) {
 		generate_ships()
-		console.log(frame1.children)
 
 		for (j = 1; j < 11; j++) {
 			for (i = 1; i < 11; i++) {
