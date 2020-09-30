@@ -1,11 +1,11 @@
 var crt_list = document.getElementsByClassName('noisy')
 var monitor_list = document.getElementsByClassName('monitor')
-var width = screen.width
-// monitor_list[0].style.left = 50 * 418 / width + '%'
-monitor_list[0].style.left = '5%'
-monitor_list[0].style.top = '8%'
-monitor_list[1].style.left = '50%'
-monitor_list[1].style.top = '8%'
+var button = document.getElementById('randomise')
+var width = window.innerWidth
+
+monitor_list[0].style.left = (width / 2 - 468) + 'px'
+monitor_list[1].style.left = (width / 2 + 50) + 'px'
+button.style.left = (width / 2 - 45) + 'px'
 
 function color() {
     for (i = 0; i < crt_list.length; i++) {

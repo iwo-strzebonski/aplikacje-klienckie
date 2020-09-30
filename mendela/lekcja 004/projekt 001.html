@@ -16,17 +16,21 @@
     <link rel="stylesheet" href="./style.css" />
 </head>
 
-<body style="font-family: 'Courier New'">
-    <div class="monitor" id="monitorbot">
-        <div class="noisy frame scanlines" id="bot"></div>
-    </div>
+<body>
+    <button id='randomise'>Randomise</button>
 
     <div class="monitor" id="monitorplayer">
-        <div class="noisy frame scanlines" id="player"></div>
+        <div class="noisy frame" id="player"></div>
+    </div>
+
+    <div class="monitor" id="monitorbot">
+        <div class="noisy frame" id="bot"></div>
     </div>
     
-    <script src="./ship_generator.js"></script>
-    <script src="./monitor_positioning.js"></script>
+    <script src="./libs/ship_generator.js"></script>
+    <script src="./scripts/monitor_positioning.js"></script>
+    <script src="./scripts/player_monitor.js"></script>
+    <script src="./scripts/bot_monitor.js"></script>
 </body>
 
 </html>

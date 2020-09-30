@@ -1,16 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=VT323);
+
 html,
 body {
 	background-color: black;
 	margin: 0;
 	padding: 0;
+	font-family: 'VT323';
+	color: rgb(0, 255, 65);
 }
 
 .monitor {
 	background-color: rgb(56, 56, 56);
-	border-radius: 2rem;
+	border-radius: 16px;
 	position: absolute;
 	width: 418px;
 	height: 418px;
+	top: 40px;
 }
 
 .cell {
@@ -45,4 +50,21 @@ body {
 	position: absolute;
 	height: 322px;
 	width: 322px;
+}
+
+button {
+	font-family: 'VT323';
+	font-size: 16px;
+	width: 90px;
+	height: 20px;
+	text-align: center;
+	background-color: rgb(56, 56, 56);
+	color: rgba(0, 255, 65, 0.7);
+	border-radius: 6px;
+	border: none;
+}
+
+#randomise {
+	position: absolute;
+	top: 40px;
 }

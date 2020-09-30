@@ -18,12 +18,12 @@
             n = prompt('Podaj przesunięcie - l<n> (lewo), p<n> (prawo), k (koniec)')
             console.log(`======== ${n} ========`)
             if (n[0] == 'p') {
-                for (i = 0; i < n[1]; i++) {
+                for (i = 0; i < n.substring(1, n.length); i++) {
                     list.unshift(list.pop())
                 }
                 console.log(list)
             } else if (n[0] == 'l') {
-                for (i = 0; i < n[1]; i++) {
+                for (i = 0; i < n.substring(1, n.length); i++) {
                     list.push(list.shift())
                 }
                 console.log(list)
