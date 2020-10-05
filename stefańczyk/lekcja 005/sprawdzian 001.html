@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="libs/jq.js"></script>
+
+    <script>
+        var list = [{
+            type: "komisariat 1 - dzielnica I",
+            c1: "111111",
+            c2: "f5aa00",
+            start: 20
+        }, {
+            type: "komisariat 2 - dzielnica II",
+            c1: "333333",
+            c2: "f5bb00",
+            start: 60
+        }, {
+            type: "komisariat 3 - dzielnice III i IV",
+            c1: "555555",
+            c2: "f5cc00",
+            start: 50
+        }, {
+            type: "komisariat 4 - dzielnice V, VI i VII",
+            c1: "777777",
+            c2: "f5dd00",
+            start: 40
+        }, {
+            type: "komisariat 5 - dzielnice VIII, IX, i XIII",
+            c1: "999999",
+            c2: "f5ee00",
+            start: 50
+        }, {
+            type: "komisariat 6 - dzielnice X, XI i XII",
+            c1: "777777",
+            c2: "f5dd00",
+            start: 60
+        }, {
+            type: "komisariat 7 - dzielnice XV, XVI i XVII",
+            c1: "555555",
+            c2: "f5cc00",
+            start: 70
+        }, {
+            type: "komisariat 8 - dzielnice XIV i XVIII",
+            c1: "333333",
+            c2: "f5bb00",
+            start: 80
+        }, ]
+
+
+        var td
+        var tr
+        var n = 0
+        var bool = 0
+
+        var day = 0
+        var night = 0
+
+        $(document).ready(function() {
+            /*Początek skryptu*/
+
+            for (i = 0; i < list.length; i++) {
+                tr = $('<tr>')
+                td = $('<td>')
+                slider = $(`<div class='slider' style='background: #${list[i].c1};'>`)
+                circle = $(
+                    `<div class='circle' style='background: #${list[i].c2}; left: ${list[i].start * 2}px'>`
+                )
+                slider.append(circle)
+                td.append(list[i].type)
+                tr.append(td)
+                td = $('<td>')
+                td.append(100 - list[i].start)
+                tr.append(td)
+                td = $('<td>')
+                td.append(slider)
+                tr.append(td)
+                td = $('<td>')
+                td.append(list[i].start)
+                tr.append(td)
+                $('#table').append(tr)
+
+                day += 100 - list[i].start
+                night += list[i].start
+            }
+            tr = $('<tr>')
+            td = $('<td colspan=4>')
+            td.html(`Średnia przestępczość w Krakowie:<br />dzień - ${day / 8}<br />noc - ${night / 8}`)
+            tr.append(td)
+            $('#table').append(tr)
+
+            $(this).on("mousedown", function(e) {
+                $(window).on("mousemove", function(e) {})
+            })
+
+            $(this).on("mouseup", function(e) {
+                $(window).off("mousemove")
+            })
+
+            /*Koniec skryptu*/
+        })
+    </script>
+
+    <style>
+        td {
+            border: blue 2px dotted;
+            text-align: center;
+            height: 20px;
+        }
+        
+        div {
+            height: 16px;
+            border-radius: 8px;
+        }
+        
+        .slider {
+            width: 200px;
+            margin: 2px;
+        }
+        
+        .circle {
+            width: 16px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="table"></table>
+</body>
+
+</html>
