@@ -1,5 +1,8 @@
 # ignore a single file
 .DS_Store
 .vscode/
-mendela/projekt 001/libs/dist
-mendela/projekt 001/scripts/dist
+*/*/dist
+*/*/*/dist
+*/*/*/*/dist
+*/*/node_modules
+*/*/package-lock.json
