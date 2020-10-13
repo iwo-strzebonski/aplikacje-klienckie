@@ -3,19 +3,33 @@
     © Copyright 2020 Iwo Strzeboński
 	Published under WTFPLv2
 	Languages: HTML5, CSS3, JavaScript (ES 2020)
-	Player events script in Javascript (ES 2020)
+	Events script in Javascript (ES 2020)
  */
 
-reset.style.pointerEvents = 'none'
-start.style.pointerEvents = 'none'
+var button_list = document.getElementsByTagName('button')
+var player = document.getElementById('player')
+var randomise = document.getElementById('randomise')
+var reset = document.getElementById('reset')
+var start = document.getElementById('start')
+
+player.onmouseover = function(e) {
+    console.log(e.target.style.left.replace('px', '') / 32, e.target.style.top.replace('px', '') / 32)
+}
 
 randomise.onmousedown = function() {
-    randomise.style.backgroundColor = '#080808'
-    player_cells = generate_ships(player_cells)
-    ship_presenter('player', player_cells)
+    this.style.backgroundColor = '#080808'
+}
+reset.onmousedown = function() {
+    this.style.backgroundColor = '#080808'
+}
+start.onmousedown = function() {
+    this.style.backgroundColor = '#080808'
 }
 
 randomise.onmouseup = function() {
+    player_cells = generate_ships(player_cells)
+    ship_presenter('player', player_cells)
+    
     randomise.style.pointerEvents = 'none'
     randomise.style.backgroundColor = '#121212'
     randomise.style.color = 'rgba(255, 255, 0, 0.5)'
@@ -27,8 +41,7 @@ randomise.onmouseup = function() {
     start.style.color = 'rgb(255, 255, 0)'
 }
 
-reset.onmousedown = function() {
-    reset.style.backgroundColor = '#080808'
+reset.onmouseup = function() {
     player_cells = []
 
     for (i = 0; i < 12; i++) {
@@ -40,9 +53,7 @@ reset.onmousedown = function() {
     }
 
     ship_presenter('player', player_cells)
-}
 
-reset.onmouseup = function() {
     reset.style.pointerEvents = 'none'
     reset.style.backgroundColor = '#121212'
     reset.style.color = 'rgba(255, 255, 0, 0.5)'
@@ -54,18 +65,14 @@ reset.onmouseup = function() {
     start.style.color = 'rgba(255, 255, 0, 0.5)'
 }
 
-start.onmousedown = function() {
-    start.style.backgroundColor = '#080808'
-}
-
 start.onmouseup = function() {
-    randomise.style.pointerEvents = 'none'
-    randomise.style.color = 'rgba(255, 255, 0, 0.5)'
-
-    reset.style.pointerEvents = 'none'
-    reset.style.color = 'rgba(255, 255, 0, 0.5)'
+    bot_cells = generate_ships(bot_cells)
+    ship_presenter('bot', bot_cells)
 
     start.style.backgroundColor = '#121212'
-    start.style.color = 'rgba(255, 255, 0, 0.5)'
-    start.style.pointerEvents = 'none'
+
+    for (i = 0; i < button_list.length; i++) {
+        button_list[i].style.pointerEvents = 'none'
+        button_list[i].style.color = 'rgba(255, 255, 0, 0.5)'
+    }
 }

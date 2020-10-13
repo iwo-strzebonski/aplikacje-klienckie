@@ -108,7 +108,7 @@ function ship_presenter(id, list) {
 				if (i != 0 || i != 11) {
 					child = document.getElementById(id).childNodes[10 * (j - 1) + i - 1]
 					child.style.backgroundColor = list[j][i] === 1 ? 'rgba(0, 255, 65, 0.5)' : 'transparent'
-					child.style.borderColor = list[j][i] === 1 ? 'transparent' : 'rgba(0, 255, 65, 0.5)'
+					child.style.borderColor = list[j][i] === 1 ? 'transparent' : 'rgba(0, 255, 65, 0.25)'
 				}
 			}
 		}

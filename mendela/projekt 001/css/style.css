@@ -1,0 +1,155 @@
+/*
+    Battleship game
+    © Copyright 2020 Iwo Strzeboński
+	Published under WTFPLv2
+	Languages: HTML5, CSS3, JavaScript (ES 2020)
+	CSS3 Style Sheet
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+html,
+body {
+	background-color: black;
+	margin: 0;
+	padding: 0;
+	font-family: 'VT323', monospace;
+	font-size: 16px;
+	color: rgb(0, 255, 65);
+}
+
+img {
+	position: absolute;
+	display: block;
+}
+
+.screw {
+	width: 16px;
+	height: 16px;
+}
+
+.rivet {
+	width: 10px;
+	height: 10px;
+}
+
+#button_panel {
+	position: absolute;
+	top: 546px;
+	left: 478px;
+	width: 964px;
+	height: 128px;
+	background-image: url('../gfx/rust.png');
+	background-repeat: round;
+	box-shadow: inset 0 0 9rem rgb(65, 20, 0), inset 0 0 1rem rgb(65, 20, 0);
+	border-radius: 6px;
+}
+
+#monitorplayer {
+	left: 478px;
+}
+
+#monitorbot {
+	left: 1024px;
+}
+
+.monitor {
+	background-color: rgb(56, 56, 56);
+	border-radius: 2rem;
+	position: absolute;
+	width: 418px;
+	height: 418px;
+	top: 64px;
+}
+
+.cell {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	border: 1px rgba(0, 255, 65, 0.25) solid;
+	background-color: transparent;
+}
+
+.scanlines {
+	background: linear-gradient(
+    	to bottom,
+		rgba(255, 255, 255, 0),
+		rgba(255, 255, 255, 0) 50%,
+		rgba(0, 0, 0, 0.15) 70%,
+		rgba(0, 0, 0, 0.15)
+	);
+	background-size: 100% 0.3rem;
+}
+
+.frame {
+	background-color: transparent;
+	border: 16px solid;
+	border-bottom-color: rgb(18, 18, 18);
+	border-left-color: rgb(8, 8, 8);
+	border-right-color: rgb(8, 8, 8);
+	border-top-color: rgb(18, 18, 18);
+	box-shadow: inset 0 0 9rem black, inset 0 0 1rem black, 0 0 2rem black;
+	position: relative;
+	left: 32px;
+	top: 32px;
+	height: 320px;
+	width: 320px;
+}
+
+.noisy {
+	position: relative;
+	height: 322px;
+	width: 322px;
+}
+
+.text-button {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	left: 928px;
+	height: 64px;
+	width: 64px;
+	text-align: center;
+	font-family: 'VT323', monospace;
+	text-transform: uppercase;
+	font-size: 16px;
+	background-color: rgb(18, 18, 18);
+}
+
+.lamp_button {
+	height: 32px;
+	width: 32px;
+	background-color: rgba(255, 255, 0, 0.5);
+}
+
+.lamp_button_bg {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	height: 32px;
+	width: 32px;
+	background-color: black;
+}
+
+.ship_div_bg {
+	position: absolute;
+	height: 28px;
+	background-color: black;
+	border: 2px silver solid;
+	border-radius: 3.6px;
+}
+
+.ship_div {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	border: 1px silver solid;
+}
+
+.hover {
+	background-color: rgba(0, 255, 65, 0.25);
+}
+
+.errored {}
+
+.missed {}
