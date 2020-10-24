@@ -37,19 +37,19 @@ for (i = 0; i < 3; i++) {
             button.id = 'reset'
             button.innerHTML = 'Reset<br />ships'
             button.style.top = '241px'
-            break;
+            break
 
         case 2:
             button.id = 'start'
             button.innerHTML = 'Start<br />game'
             button.style.top = '321px'
-            break;
+            break
 
         default:
             button.id = 'randomise'
             button.innerHTML = 'Rand<br />ships'
             button.style.top = '161px'
-            break;
+            break
     }
     document.body.append(button)
 }
@@ -77,6 +77,7 @@ for (i = 0; i < ship_list.length; i++) {
     
     lamp_button = document.createElement('BUTTON')
     lamp_button.className = 'lamp_button'
+    lamp_button.id = `s${i}`
     lamp_button_bg.append(lamp_button)
     
     ship_div_bg = document.createElement('DIV')
@@ -88,46 +89,32 @@ for (i = 0; i < ship_list.length; i++) {
         case 5:
             ship_div_bg.style.left = '96px'
             lamp_button_bg.style.left = '48px'
-            break;
+            break
 
         case 1:
         case 6:
             ship_div_bg.style.left = '288px'
             lamp_button_bg.style.left = '240px'
-            break;
+            break
 
         case 2:
         case 7:
             ship_div_bg.style.left = '480px'
             lamp_button_bg.style.left = '432px'
-            break;
+            break
 
         case 3:
         case 8:
             ship_div_bg.style.left = '672px'
             lamp_button_bg.style.left = '624px'
-            break;
+            break
 
         case 4:
         case 9:
             ship_div_bg.style.left = '864px'
             lamp_button_bg.style.left = '816px'
-            break;
+            break
     }
-
-    /*if (i < 2) {
-        ship_div_bg.style.left = '96px'
-        lamp_button_bg.style.left = '48px'
-    } else if (i == 2) {
-        ship_div_bg.style.left = '261.6px'
-        lamp_button_bg.style.left = '213.6px'
-    } else if (ship_list[i] == 2) {
-        ship_div_bg.style.left = `${192 + 96 * (i - 2) + (i - 3) * (ship_list[i] * 19 + 12.6)}px`
-        lamp_button_bg.style.left = `${144 + 96 * (i - 2) + (i - 3) * (ship_list[i] * 19 + 12.6)}px`
-    } else {
-        ship_div_bg.style.left = `${331.2 + 96 * (i - 5) + (i - 6) * 31.6}px`
-        lamp_button_bg.style.left = `${283.2 + 96 * (i - 5) + (i - 6) * 31.6}px`
-    }*/
 
     button_panel.append(lamp_button_bg)
 
@@ -151,6 +138,9 @@ for (i = 0; i < ship_list.length; i++) {
         ship_div_bg.append(ship_div)
     }
 }
+
+document.getElementsByClassName('lamp_button')[0].style.backgroundColor = 'rgb(255, 255, 0)'
+document.getElementsByClassName('lamp_button')[0].style.pointerEvents = 'none'
 
 /* CRT noise */
 
