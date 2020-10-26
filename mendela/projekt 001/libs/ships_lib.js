@@ -14,15 +14,28 @@
   Cell state:
     0: empty
     1: ship
-    2: protected
+	2: protected
+	3: hit
+    4: missed
  */
 
-const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
-const ship_list = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+for (i = 0; i < 10; i++) {
+    row = []
+    for (j = 0; j < 10; j++) {
+        row.push(0)
+    }
+    hit_by_player.push(row)
+}
 
-var result, state, cell, direction, row, child
-var placed_ships = 0
-var frame = document.getElementById('bot')
+var hit_by_bot = []
+
+for (i = 0; i < 10; i++) {
+    row = []
+    for (j = 0; j < 10; j++) {
+        row.push(0)
+    }
+    hit_by_bot.push(row)
+}
 
 function check_for_ship(list, d, s) {
 	if (d === 0) {
@@ -110,12 +123,13 @@ function generate_ships(list) {
 	return list
 }
 
-function ship_presenter(id, list) {
+function ship_presenter(id, list1, list2) {
 	for (j = 1; j < 11; j++) {
 		for (i = 1; i < 11; i++) {
 			child = document.getElementById(id).childNodes[10 * (j - 1) + i - 1]
-			child.style.backgroundColor = list[j][i] === 1 ? 'rgba(0, 255, 65, 0.5)' : 'transparent'
-			child.style.borderColor = list[j][i] === 1 ? 'transparent' : 'rgba(0, 255, 65, 0.25)'
+			child.style.backgroundColor = list1[j][i] == 1 ? 'rgba(0, 255, 65, 0.6)' : 'transparent'
+			child.style.borderColor = list1[j][i] == 1 ? 'transparent' : 'rgba(0, 255, 65, 0.25)'
+			child.innerHTML = list2[j - 1][i - 1] == 3 ? 'X' : (list2[j - 1][i - 1] == 4 ? 'M' : '')
 		}
 	}
 }
@@ -159,7 +173,7 @@ function place_ship(e) {
 				}
 			}
         }
-        ship_presenter('player', player_cells)
+        ship_presenter('player', player_cells, hit_by_bot)
 
         randomise.style.pointerEvents = 'none'
         randomise.style.backgroundColor = '#121212'
@@ -186,25 +200,33 @@ function hover_ship(e, id, list) {
 	var x = e.target.style.left.replace('px', '') / 32
 	var y = e.target.style.top.replace('px', '') / 32
 
-	ship_presenter(id, list)
-
+	ship_presenter('player', player_cells, hit_by_bot)
+	
 	if (direction == 0) {
 		if (x + ship <= 10) {
 			for (i = 0; i < ship; i++) {
 				player.childNodes[10 * y + x + i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+				player.childNodes[10 * y + x + i].innerHTML = list[y + 1][x + i + 1] != 0 ? 'E' : ''
 			}
 			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					try { player.childNodes[10 * y + x + i].style.backgroundColor = 'transparent' } catch {}
+					try {
+						player.childNodes[10 * y + x + i].style.backgroundColor = 'transparent'
+						player.childNodes[10 * y + x + i].innerHTML = ''
+					} catch {}
 				}
 			}
 		} else {
 			for (i = 0; i < ship; i++) {
 				player.childNodes[10 * y + 9 - i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+				player.childNodes[10 * y + 9 - i].innerHTML = list[y + 1][9 - i + 1] != 0 ? 'E' : ''
 			}
 			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					try { player.childNodes[10 * y + 9 - i].style.backgroundColor = 'transparent' } catch {}
+					try {
+						player.childNodes[10 * y + 9 - i].style.backgroundColor = 'transparent'
+						player.childNodes[10 * y + x + i].innerHTML = ''
+					} catch {}
 				}
 			}
 		}
@@ -212,19 +234,27 @@ function hover_ship(e, id, list) {
 		if (y + ship <= 10) {
 			for (i = 0; i < ship; i++) {
 				player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+				player.childNodes[10 * y + x + 10 * i].innerHTML = list[y + i + 1][x + 1] != 0 ? 'E' : ''
 			}
 			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					try { player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'transparent' } catch {}
+					try {
+						player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'transparent'
+						player.childNodes[10 * y + x + 10 * i].innerHTML = ''
+					} catch {}
 				}
 			}
 		} else {
 			for (i = 0; i < ship; i++) {
 				player.childNodes[90 + x - 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+				player.childNodes[90 + x - 10 * i].innerHTML = list[9 - i + 1][x + 1] != 0 ? 'E' : ''
 			}
 			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					try { player.childNodes[90 + x - 10 * i].style.backgroundColor = 'transparent' } catch {}
+					try {
+						player.childNodes[90 + x - 10 * i].style.backgroundColor = 'transparent'
+						player.childNodes[90 + x - 10 * i].innerHTML = ''
+					} catch {}
 				}
 			}
 		}

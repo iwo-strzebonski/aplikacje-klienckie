@@ -6,10 +6,6 @@
     Script for appending HTML elements to Document in Javascript (ES 2020)
  */
 
-var player_cells = []
-var bot_cells = []
-var width = screen.width
-
 /* Monitors */
 
 for (i = 0; i < 2; i++) {
@@ -142,7 +138,7 @@ for (i = 0; i < ship_list.length; i++) {
 document.getElementsByClassName('lamp_button')[0].style.backgroundColor = 'rgb(255, 255, 0)'
 document.getElementsByClassName('lamp_button')[0].style.pointerEvents = 'none'
 
-/* CRT noise */
+/* CRT noise and cells */
 
 crt_list = document.getElementsByClassName('noisy')
 
@@ -153,6 +149,7 @@ for (n = 0; n < 2; n++) {
             cell.style.top = 32 * (j - 1) + "px"
             cell.style.left = 32 * (i - 1) + "px"
             cell.className = 'scanlines cell'
+            cell.style.cursor = n == 0 ? 'move' : 'context-menu'
             crt_list[n].appendChild(cell)
         }
     }

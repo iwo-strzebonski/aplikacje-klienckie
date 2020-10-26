@@ -16,11 +16,16 @@ body {
 	font-family: 'VT323', monospace;
 	font-size: 16px;
 	color: rgb(0, 255, 65);
+	user-select: none;
 }
 
 img {
 	position: absolute;
 	display: block;
+}
+
+button {
+	cursor: pointer;
 }
 
 .screw {
@@ -66,6 +71,10 @@ img {
 	height: 32px;
 	border: 1px rgba(0, 255, 65, 0.25) solid;
 	background-color: transparent;
+	color: rgb(0, 255, 65);
+	font-size: 32px;
+	line-height: 32px;
+	text-align: center;
 }
 
 .scanlines {
@@ -143,5 +152,3 @@ img {
 	height: 18px;
 	border: 1px silver solid;
 }
-
-.missed {}
