@@ -6,19 +6,6 @@
 	JavaScript (ES 2020) library file (used for presenting and placing ships)
  */
 
-/*
-  Generator's directions:
-    0: up
-    1: right
-
-  Cell state:
-    0: empty
-    1: ship
-	2: protected
-	3: hit
-    4: missed
- */
-
 function check_for_ship(list, d, s) {
 	if (d === 0) {
 		for (i = -1; i <= 1; i++) {

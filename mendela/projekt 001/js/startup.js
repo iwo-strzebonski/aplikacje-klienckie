@@ -1,3 +1,24 @@
+/*
+    Battleship game
+    © Copyright 2020 Iwo Strzeboński
+	Published under WTFPLv2
+	Languages: HTML5, CSS3, JavaScript (ES 2020)
+    Script for defining and re-setting variables in Javascript (ES 2020)
+ */
+
+/*
+  Generator's directions:
+    0: up
+    1: right
+
+  Cell state:
+    0: empty
+    1: ship
+	2: protected
+	3: hit
+    4: missed
+ */
+
 const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
 const timeout = 100
 const ship_list = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]

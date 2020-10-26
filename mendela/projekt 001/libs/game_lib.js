@@ -6,15 +6,6 @@
 	JavaScript (ES 2020) library file (used for game mechanics)
  */
 
-/*
-  Cell state:
-    0: empty
-    1: ship
-    2: protected
-    3: hit
-    4: missed
- */
-
 function start_game(e) {
     player.onclick = function(e) {
         if (e.target.id != 'player') {

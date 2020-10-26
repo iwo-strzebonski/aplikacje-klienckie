@@ -6,15 +6,6 @@
 	JavaScript (ES 2020) library file (AI)
  */
 
-/*
-  Cell state:
-    0: empty
-    1: ship
-    2: protected
-    3: hit
-    4: missed
- */
-
 function bot_attack() {
     if (turn == 1) {
         setTimeout(() => {
