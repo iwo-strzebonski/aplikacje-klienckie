@@ -1,4 +1,12 @@
 /*
+    Battleship game
+    © Copyright 2020 Iwo Strzeboński
+	Published under WTFPLv2
+	Languages: HTML5, CSS3, JavaScript (ES 2020)
+	JavaScript (ES 2020) library file (used for presenting and placing ships)
+ */
+
+/*
   Generator's directions:
     0: up
     1: right
@@ -125,9 +133,9 @@ function place_ship(e) {
 
     for (i = 0; i < ship; i++) {
         if (direction == 0) {
-            if (player_cells[y + 1][x + i + 1] == 0) { bool = true } else { bool = false }
+            if (player_cells[y + 1][x + i + 1] == 0) { bool = true } else { bool = false; break }
         } else {
-            if (player_cells[y + i + 1][x + 1] == 0) { bool = true } else { bool = false }
+            if (player_cells[y + i + 1][x + 1] == 0) { bool = true } else { bool = false; break }
         }
     }
 
@@ -174,53 +182,49 @@ function place_ship(e) {
 	}
 }
 
-function hover_ship(e) {
-	if (e.target.id != 'player') {
-		var x = e.target.style.left.replace('px', '') / 32
-		var y = e.target.style.top.replace('px', '') / 32
+function hover_ship(e, id, list) {
+	var x = e.target.style.left.replace('px', '') / 32
+	var y = e.target.style.top.replace('px', '') / 32
 
-		e.target.onmouseout = function(e) {
-			player.childNodes[10 * y + x].style.backgroundColor = 'transparent'
-		}
-		
-		if (direction == 0) {
-			if (x + ship <= 10) {
+	ship_presenter(id, list)
+
+	if (direction == 0) {
+		if (x + ship <= 10) {
+			for (i = 0; i < ship; i++) {
+				player.childNodes[10 * y + x + i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+			}
+			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					player.childNodes[10 * y + x + i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
-				}
-				e.target.onmouseout = function() {
-					for (i = 0; i < ship; i++) {
-						try { player.childNodes[10 * y + x + i].style.backgroundColor = 'transparent' } catch {}
-					}
-				}
-			} else {
-				for (i = 0; i < ship; i++) {
-					player.childNodes[10 * y + 9 - i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
-				}
-				e.target.onmouseout = function() {
-					for (i = 0; i < ship; i++) {
-						try { player.childNodes[10 * y + 9 - i].style.backgroundColor = 'transparent' } catch {}
-					}
+					try { player.childNodes[10 * y + x + i].style.backgroundColor = 'transparent' } catch {}
 				}
 			}
 		} else {
-			if (y + ship <= 10) {
+			for (i = 0; i < ship; i++) {
+				player.childNodes[10 * y + 9 - i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+			}
+			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+					try { player.childNodes[10 * y + 9 - i].style.backgroundColor = 'transparent' } catch {}
 				}
-				e.target.onmouseout = function() {
-					for (i = 0; i < ship; i++) {
-						try { player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'transparent' } catch {}
-					}
-				}
-			} else {
+			}
+		}
+	} else {
+		if (y + ship <= 10) {
+			for (i = 0; i < ship; i++) {
+				player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+			}
+			e.target.onmouseout = function() {
 				for (i = 0; i < ship; i++) {
-					player.childNodes[90 + x - 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+					try { player.childNodes[10 * y + x + 10 * i].style.backgroundColor = 'transparent' } catch {}
 				}
-				e.target.onmouseout = function() {
-					for (i = 0; i < ship; i++) {
-						try { player.childNodes[90 + x - 10 * i].style.backgroundColor = 'transparent' } catch {}
-					}
+			}
+		} else {
+			for (i = 0; i < ship; i++) {
+				player.childNodes[90 + x - 10 * i].style.backgroundColor = 'rgba(0, 255, 65, 0.25)'
+			}
+			e.target.onmouseout = function() {
+				for (i = 0; i < ship; i++) {
+					try { player.childNodes[90 + x - 10 * i].style.backgroundColor = 'transparent' } catch {}
 				}
 			}
 		}
@@ -228,9 +232,52 @@ function hover_ship(e) {
 }
 
 function all_ships_placed() {
-	reset.style.pointerEvents = 'all'
-    reset.style.color = 'rgb(255, 255, 0)'
-
     start.style.pointerEvents = 'all'
     start.style.color = 'rgb(255, 255, 0)'
+}
+
+function lamp_buttons_onclick(e) {
+	e.target.style.backgroundColor = 'rgb(255, 255, 0)'
+
+	var id = parseInt(e.target.id[1])
+
+	if (lamp_buttons[last]?.style.backgroundColor != 'rgb(255, 0, 0)') {
+		lamp_buttons[last].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
+		lamp_buttons[last].style.pointerEvents = 'all'
+	}
+
+	switch (id) {
+		case 0:
+			ship = 4
+			break
+
+		case 1:
+		case 2:
+			ship = 3
+			break
+	
+		case 3:
+		case 4:
+		case 5:
+			ship = 2
+			break
+
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+			ship = 1
+			break
+
+		default:
+			break
+	}
+
+	last = id
+
+	player.oncontextmenu = function() {
+		direction = direction == 0 ? 1 : 0
+	}
+
+	e.target.style.pointerEvents = 'none'
 }

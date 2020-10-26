@@ -8,7 +8,7 @@
 
 var button_list = document.getElementsByTagName('button')
 var panel = document.getElementById('button_panel')
-var lamp_buttons = panel.getElementsByTagName('button')
+var lamp_buttons = panel.getElementsByTagName('BUTTON')
 var player = document.getElementById('player')
 var randomise = document.getElementById('randomise')
 var reset = document.getElementById('reset')
@@ -29,88 +29,30 @@ for (i = 0; i < 12; i++) {
     player_cells.push(row)
 }
 
+panel.onclick = function(e) {
+    if (placed_ships < 10 && e.target.tagName == 'BUTTON') {
+        lamp_buttons_onclick(e)
+    }
+}
+
 player.oncontextmenu = function() {
     direction = direction == 0 ? 1 : 0
 }
 player.onmouseover = function(e) {
-    hover_ship(e)
+    if (e.target.id != 'player') {
+        hover_ship(e, 'player', player_cells)
+    }
 }
 player.onclick = function(e) {
     place_ship(e)
 }
 
-panel.onmousedown = function(e) {
-    if (placed_ships < 10) { e.target.style.backgroundColor = 'rgb(255, 255, 0)' }
-}
-panel.onmouseup = function(e) {
-    var id = parseInt(e.target.id[1])
-
-    // console.log()
-
-    if (id != undefined) {
-        if (lamp_buttons[last]?.style.backgroundColor != 'rgb(255, 0, 0)') {
-            lamp_buttons[last].style.backgroundColor = 'rgba(255, 255, 0, 0.5)'
-            lamp_buttons[last].style.pointerEvents = 'all'
-        }
-
-        switch (id) {
-            case 0:
-                ship = 4
-                break
-
-            case 1:
-            case 2:
-                ship = 3
-                break
-        
-            case 3:
-            case 4:
-            case 5:
-                ship = 2
-                break
-
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                ship = 1
-                break
-
-            default:
-                break
-        }
-
-        last = id
-
-        player.oncontextmenu = function() {
-            direction = direction == 0 ? 1 : 0
-            console.log(direction)
-        }
-
-        e.target.style.pointerEvents = 'none'
-    }
-}
-
-randomise.onmousedown = function() {
-    this.style.backgroundColor = '#080808'
-}
-reset.onmousedown = function() {
-    this.style.backgroundColor = '#080808'
-}
-start.onmousedown = function() {
-    this.style.backgroundColor = '#080808'
-}
-
 randomise.onmouseleave = function() {
     this.style.backgroundColor = '#121212'
 }
-reset.onmouseleave = function() {
-    this.style.backgroundColor = '#121212'
+randomise.onmousedown = function() {
+    this.style.backgroundColor = '#080808'
 }
-start.onmouseleave = function() {
-    this.style.backgroundColor = '#121212'
-}
-
 randomise.onmouseup = function() {
     player_cells = generate_ships(player_cells)
     ship_presenter('player', player_cells)
@@ -129,6 +71,13 @@ randomise.onmouseup = function() {
         lamp_buttons[i].style.pointerEvents = 'none'
         lamp_buttons[i].style.backgroundColor = 'rgb(255, 0, 0)'
     }
+}
+
+reset.onmousedown = function() {
+    this.style.backgroundColor = '#080808'
+}
+reset.onmouseleave = function() {
+    this.style.backgroundColor = '#121212'
 }
 reset.onmouseup = function() {
     player_cells = []
@@ -160,6 +109,13 @@ reset.onmouseup = function() {
 
     last = 0
     placed_ships = 0
+}
+
+start.onmousedown = function() {
+    this.style.backgroundColor = '#080808'
+}
+start.onmouseleave = function() {
+    this.style.backgroundColor = '#121212'
 }
 start.onmouseup = function() {
     bot_cells = generate_ships(bot_cells)

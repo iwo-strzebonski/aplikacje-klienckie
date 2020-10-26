@@ -40,7 +40,6 @@ img {
 	width: 964px;
 	height: 128px;
 	background-color: #666A6B;
-	/* box-shadow: inset 0 0 9rem rgb(65, 20, 0), inset 0 0 1rem rgb(65, 20, 0); */
 	border-radius: 6px;
 }
 
@@ -71,7 +70,7 @@ img {
 
 .scanlines {
 	background: linear-gradient(
-    	to bottom,
+    to bottom,
 		rgba(255, 255, 255, 0),
 		rgba(255, 255, 255, 0) 50%,
 		rgba(0, 0, 0, 0.15) 70%,
@@ -143,10 +142,6 @@ img {
 	width: 18px;
 	height: 18px;
 	border: 1px silver solid;
-}
-
-.hover {
-	background-color: rgba(0, 255, 65, 0.25);
 }
 
 .missed {}
