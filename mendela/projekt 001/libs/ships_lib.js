@@ -19,24 +19,6 @@
     4: missed
  */
 
-for (i = 0; i < 10; i++) {
-    row = []
-    for (j = 0; j < 10; j++) {
-        row.push(0)
-    }
-    hit_by_player.push(row)
-}
-
-var hit_by_bot = []
-
-for (i = 0; i < 10; i++) {
-    row = []
-    for (j = 0; j < 10; j++) {
-        row.push(0)
-    }
-    hit_by_bot.push(row)
-}
-
 function check_for_ship(list, d, s) {
 	if (d === 0) {
 		for (i = -1; i <= 1; i++) {
