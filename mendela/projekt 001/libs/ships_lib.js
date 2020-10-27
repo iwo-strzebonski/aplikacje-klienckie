@@ -98,7 +98,20 @@ function ship_presenter(id, list1, list2) {
 			child = document.getElementById(id).childNodes[10 * (j - 1) + i - 1]
 			child.style.backgroundColor = list1[j][i] == 1 ? 'rgba(0, 255, 65, 0.6)' : 'transparent'
 			child.style.borderColor = list1[j][i] == 1 ? 'transparent' : 'rgba(0, 255, 65, 0.25)'
-			child.innerHTML = list2[j - 1][i - 1] == 3 ? 'X' : (list2[j - 1][i - 1] == 4 ? 'M' : '')
+			switch (list2[j - 1][i - 1]) {
+				case 3:
+					child.innerHTML = 'X'
+					break
+				case 4:
+					child.innerHTML = 'M'
+					break
+				case 5:
+					child.innerHTML = 'O'
+					break
+				default:
+					child.innerHTML = ''
+					break
+			}
 		}
 	}
 }
@@ -279,4 +292,35 @@ function lamp_buttons_onclick(e) {
 	}
 
 	e.target.style.pointerEvents = 'none'
+}
+
+function empty_cells(list, x, y) {
+    if (list[y][x] == 3) {
+        if (x == 0 && y == 0) {
+            list[y + 1][x + 1] = list[y + 1][x + 1] == null ? 5 : list[y + 1][x + 1]
+        } else if (x == 0 && y == 9) {
+            list[y - 1][x + 1] = list[y - 1][x + 1] == null ? 5 : list[y - 1][x + 1]
+        } else if (x == 9 && y == 0) {
+            list[y + 1][x - 1] = list[y + 1][x - 1] == null ? 5 : list[y + 1][x - 1]
+        } else if (x == 9 && y == 9) {
+            list[y - 1][x - 1] = list[y - 1][x - 1] == null ? 5 : list[y - 1][x - 1]
+        } else if (x == 0) {
+            list[y - 1][x + 1] = list[y - 1][x + 1] == null ? 5 : list[y - 1][x + 1]
+            list[y + 1][x + 1] = list[y + 1][x + 1] == null ? 5 : list[y + 1][x + 1]
+        } else if (y == 0) {
+            list[y + 1][x - 1] = list[y + 1][x - 1] == null ? 5 : list[y + 1][x - 1]
+            list[y + 1][x + 1] = list[y + 1][x + 1] == null ? 5 : list[y + 1][x + 1]
+        } else if (x == 9) {
+            list[y - 1][x - 1] = list[y - 1][x - 1] == null ? 5 : list[y - 1][x - 1]
+            list[y + 1][x - 1] = list[y + 1][x - 1] == null ? 5 : list[y + 1][x - 1]
+        } else if (y == 9) {
+            list[y - 1][x - 1] = list[y - 1][x - 1] == null ? 5 : list[y - 1][x - 1]
+            list[y - 1][x + 1] = list[y - 1][x + 1] == null ? 5 : list[y - 1][x + 1]
+        } else {
+            list[y - 1][x - 1] = list[y - 1][x - 1] == null ? 5 : list[y - 1][x - 1]
+            list[y - 1][x + 1] = list[y - 1][x + 1] == null ? 5 : list[y - 1][x + 1]
+            list[y + 1][x - 1] = list[y + 1][x - 1] == null ? 5 : list[y + 1][x - 1]
+            list[y + 1][x + 1] = list[y + 1][x + 1] == null ? 5 : list[y + 1][x + 1]
+        }
+    }
 }

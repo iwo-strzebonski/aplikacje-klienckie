@@ -123,9 +123,9 @@ function events_startup() {
         this.style.backgroundColor = '#121212'
     }
     start.onmouseup = function() {
-        player.onmouseover = function() {}
+        player.onmouseover = function() { ship_presenter('player', player_cells, hit_by_bot) }
         player.oncontextmenu = function() {}
-        player.onmouseleave = function() {}
+        player.onmouseleave = function() { ship_presenter('player', player_cells, hit_by_bot) }
 
         bot_cells = generate_ships(bot_cells)
         ship_presenter('bot', bot_cells, hit_by_player)
