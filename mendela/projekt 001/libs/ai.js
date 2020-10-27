@@ -6,8 +6,10 @@
 	JavaScript (ES 2020) library file (AI)
  */
 
+// TODO: napisać dobijanie statków
+
 var checkerboard_count = 0
-var hit = false
+// var hit = false
 
 function bot_attack() {
     while (turn == 1) {
@@ -29,7 +31,7 @@ function random_cell() {
 
     hit_by_bot[y][x] = player_cells[y + 1][x + 1] == 1 ? 3 : 4
     count_bot = player_cells[y + 1][x + 1] == 1 ? count_bot + 1 : count_bot
-    hit = player_cells[y + 1][x + 1] == 1
+    // hit = player_cells[y + 1][x + 1] == 1
 
     return [x, y]
 }
@@ -46,7 +48,7 @@ function checkerboard_salvo() {
 
     hit_by_bot[y][x] = player_cells[y + 1][x + 1] == 1 ? 3 : 4
     count_bot = player_cells[y + 1][x + 1] == 1 ? count_bot + 1 : count_bot
-    hit = player_cells[y + 1][x + 1] == 1
+    // hit = player_cells[y + 1][x + 1] == 1
 
     checkerboard_count = 0
 

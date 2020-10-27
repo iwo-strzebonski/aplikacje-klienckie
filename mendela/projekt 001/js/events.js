@@ -128,7 +128,7 @@ function events_startup() {
         player.onmouseleave = function() { ship_presenter('player', player_cells, hit_by_bot) }
 
         bot_cells = generate_ships(bot_cells)
-        ship_presenter('bot', bot_cells, hit_by_player)
+        // ship_presenter('bot', bot_cells, hit_by_player)
 
         start.style.backgroundColor = '#121212'
 
