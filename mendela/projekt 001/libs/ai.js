@@ -11,10 +11,9 @@
 var checkerboard_count = 0
 // var hit = false
 
-function bot_attack() {
+async function bot_attack() {
     while (turn == 1) {
-        var start = Date.now()
-        while (Date.now() - start < timeout) {}
+        await new Promise(r => setTimeout(r, timeout))
         var xy = checkerboard_count == 50 ? random_cell() : checkerboard_salvo()
 
         empty_cells(hit_by_bot, xy[0], xy[1])
