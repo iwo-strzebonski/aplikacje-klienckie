@@ -5,7 +5,12 @@ body {
     font-family: fantasy;
 }
 
+table {
+    margin-left: 8px;
+}
+
 header,
+nav,
 .nav {
     font-size: 32px;
     height: 64px;
@@ -29,8 +34,15 @@ a {
     line-height: 60px;
 }
 
-header a {
+header a,
+nav a,
+td {
     color: white;
+}
+
+td {
+    border: 2px solid #998a35;
+    padding: 8px 16px 8px 8px;
 }
 
 .nav a {
@@ -44,4 +56,8 @@ h1 {
     color: lightgray;
     font-size: 128px;
     margin-top: 0;
+}
+
+#denied {
+    background-color: #c1195a;
 }

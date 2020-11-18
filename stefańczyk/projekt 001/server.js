@@ -8,10 +8,95 @@ const PORT = process.env.PORT || 3000;
 
 var site
 access = false
+sort_type = '0'
 
 user_data = [
     { id: 0, login: 'AAA', passwd: 'PASS1', age: 10, student: 'on', gender: 'M' },
+    { id: 1, login: 'qq', passwd: 'qq', age: 20, student: 'off', gender: 'F' },
 ]
+
+function gen_table_sort(sort_type) {
+    var temp = ''
+    var out = `<html>\
+    <head><link rel='stylesheet' href='css/style.css' /></head>\
+    <body style='background-color: #212021; color: white;'>\
+    <nav><a href='sort'>sort</a><a href='gender'>gender</a><a href='show'>show</a></nav>\
+    <form method='POST' action='/show' onchange='this.submit()'>\
+    <input ${sort_type === '0' ? checked='checked' : ''} default type='radio' id='ascending' name='sort_type' value='0' /><label for='ascending'>ascending</label>\
+    <input ${sort_type === '1' ? checked='checked' : ''} type='radio' id='descending' name='sort_type' value='1' /><label for='decending'>descending</label>\
+    </form><br /><table>`
+
+    switch (sort_type) {
+        default:
+            user_data = user_data.sort((a, b) => {
+                return parseFloat(a.age) - parseFloat(b.age)
+            })
+            break
+
+        case '1':
+            user_data = user_data.sort((a, b) => {
+                return parseFloat(b.age) - parseFloat(a.age)
+            })
+            break
+    }
+
+    for (let i = 0; i < user_data.length; i++) {
+        out += `<tr><td>id: ${user_data[i].id}</td>`
+        out += `<td>user: ${user_data[i].login} - ${user_data[i].passwd}</td>`   
+        out += `<td>age: ${user_data[i].age}</td>`           
+    }
+
+    return out + '</table>'
+}
+
+function gen_table_show() {
+    var out = "<html>\
+    <head><link rel='stylesheet' href='css/style.css' /></head>\
+    <body style='background-color: #212021;'>\
+    <nav><a href='sort'>sort</a><a href='gender'>gender</a><a href='show'>show</a></nav>\
+    <table>"
+    
+    for (let i = 0; i < user_data.length; i++) {
+        out += `<tr><td>id: ${user_data[i].id}</td>`
+        out += `<td>user: ${user_data[i].login} - ${user_data[i].passwd}</td>`
+        out += `<td>student: <input type='checkbox' disabled='disabled' ${user_data[i].student === 'on' ? checked='checked' : ''}></td>`       
+        out += `<td>age: ${user_data[i].age}</td>`       
+        out += `<td>gender: ${user_data[i].gender}</td></tr>`       
+    }
+
+    return out + '</table>'
+}
+
+function gen_table_gender() {
+    var out = "<html>\
+    <head><link rel='stylesheet' href='css/style.css' /></head>\
+    <body style='background-color: #212021;'>\
+    <nav><a href='sort'>sort</a><a href='gender'>gender</a><a href='show'>show</a></nav>"
+    
+    table1 = '<table>'
+    table2 = '<table>'
+
+    for (let i = 0; i < user_data.length; i++) {
+        switch (user_data[i].gender) {
+            case 'F':
+                table1 += `<tr><td>id: ${user_data[i].id}</td>`     
+                table1 += `<td>gender: ${user_data[i].gender}</td></tr>`
+                break
+        
+            default:
+                table2 += `<tr><td>id: ${user_data[i].id}</td>`     
+                table2 += `<td>gender: ${user_data[i].gender}</td></tr>`
+                break
+        }
+    }
+
+    table1 += '</table>'
+    table2 += '</table>'
+
+    out += table1 + '<br />' + table2
+
+    return out
+}
 
 app.use(express.static('static'))
 
@@ -19,7 +104,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-app.get('/:site', function(req, res) {
+app.get('/:site', (req, res) => {
     site = req.params.site
 
     switch (site) {
@@ -35,13 +120,7 @@ app.get('/:site', function(req, res) {
 
         case 'admin':
         case 'admin.html':
-            var data = fs.readFileSync(path.join(__dirname + '/static/pages/admin.html'), 'utf8')
-            if (access) {
-                res.send(data
-                    .replace('<h1></h1>','<h1>admin page</h1>')
-                    .replace('<nav></nav>', "<div class='nav'><a href='sort'>sort</a><a href='gender'>gender</a><a href='show'>show</a></div>")
-                    .replace(" style='display: none;'", ''))
-            } else { res.send(data.replace('<h1></h1>','<h1>access denied</h1>')) }
+            res.sendFile(path.join(__dirname + `/static/pages/${access ? 'admin' : 'denied'}.html`))
             break
 
         case 'logout':
@@ -49,11 +128,42 @@ app.get('/:site', function(req, res) {
             res.redirect('/login')
             res.end()
             break
-
+        
+        case 'sort':
+            if (access) {
+                res.send(gen_table_sort(sort_type))
+            } else {
+                res.sendFile(path.join(__dirname + `/static/pages/denied.html`))
+            }
+            break
+        
+        case 'gender':
+            if (access) {
+                res.send(gen_table_gender())
+            } else {
+                res.sendFile(path.join(__dirname + `/static/pages/denied.html`))
+            }
+            break
+        
+        case 'show':
+            if (access) {
+                res.send(gen_table_show())
+            } else {
+                res.sendFile(path.join(__dirname + `/static/pages/denied.html`))
+            }
+            break
+        
         default:
             res.send('Taka strona nie istnieje')
             break
     }
+})
+
+app.post('/show', function(req, res) {
+    sort_type = req.body.sort_type
+
+    res.redirect('sort')
+    res.end()
 })
 
 app.post('/register', (req, res) => {
@@ -88,7 +198,7 @@ app.post('/login', (req, res) => {
 
     if (bool) {
         access = true
-        res.redirect('admin');
+        res.redirect('admin')
     } else {
         res.send('Invalid credentials')
     }
@@ -96,6 +206,6 @@ app.post('/login', (req, res) => {
     res.end()
 })
 
-app.listen(PORT, function() {
+app.listen(PORT, () => {
     console.log('Start serwera Projektu 001 na porcie ' + PORT)
 })
