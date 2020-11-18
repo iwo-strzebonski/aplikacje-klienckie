@@ -25,13 +25,11 @@ app.get('/:site', function(req, res) {
     switch (site) {
         case 'register':
         case 'register.html':
-            access = false
             res.sendFile(path.join(__dirname + '/static/pages/register.html'))
             break
 
         case 'login':
         case 'login.html':
-            access = false
             res.sendFile(path.join(__dirname + '/static/pages/login.html'))
             break
 
@@ -69,7 +67,7 @@ app.post('/register', (req, res) => {
         res.send('Hello ' + req.body.login + '!')
         req.body.id = user_data.length
         req.body.student = req.body.student === undefined ? 'off' : 'on'
-        user_data.push(req.body.id)
+        user_data.push(req.body)
     } else {
         res.send('User with that login already exists!')
     }
