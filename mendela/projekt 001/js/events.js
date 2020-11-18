@@ -30,13 +30,17 @@ function events_startup() {
         }
     }
 
-    player.oncontextmenu = function() {
+    player.oncontextmenu = function(e) {
         direction = direction == 0 ? 1 : 0
+        ship_presenter('player', player_cells, hit_by_bot)
+        hover_ship(e, 'player', player_cells)
     }
     player.onmouseover = function(e) {
-        if (e.target.id != 'player') {
-            hover_ship(e, 'player', player_cells)
+        if (e.target.id == 'player') {
+            console.log('test')
+            ship_presenter('player', player_cells, hit_by_bot)
         }
+        hover_ship(e, 'player', player_cells)
     }
     player.onclick = function(e) {
         place_ship(e)
