@@ -1,7 +1,6 @@
 {
   "name": "stefanczyk-projekt-001",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "directories": {
     "doc": "docs"
@@ -16,5 +15,14 @@
     "start": "node server.js"
   },
   "author": "Iwo Strzeboński 3ia",
-  "license": "WTFPL"
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iwo-strzebonski/aplikacje-klienckie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iwo-strzebonski/aplikacje-klienckie/issues"
+  },
+  "homepage": "https://github.com/iwo-strzebonski/aplikacje-klienckie#readme",
+  "description": ""
 }
