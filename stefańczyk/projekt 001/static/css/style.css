@@ -5,17 +5,20 @@ body {
     font-family: fantasy;
 }
 
-div {
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-    float: left;
+header,
+.nav {
+    font-size: 32px;
+    height: 64px;
 }
 
 header {
     background-color: #313f9f;
-    font-size: 32px;
-    height: 64px;
+}
+
+.nav {
+    display: inline-block;
+    width: 100%;
+    background-color: #ffeb3e;
 }
 
 a {
@@ -24,7 +27,14 @@ a {
     height: inherit;
     padding: 0 16px 0 16px;
     line-height: 60px;
+}
+
+header a {
     color: white;
+}
+
+.nav a {
+    color: black;
 }
 
 h1 {
