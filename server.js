@@ -1,12 +1,10 @@
 const express = require('express')
 const path = require('path')
-const bodyParser = require("body-parser")
-const fs = require('fs')
+const bodyParser = require('body-parser')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
 
-var site
 access = false
 sort_type = '0'
 
@@ -16,7 +14,6 @@ user_data = [
 ]
 
 function gen_table_sort(sort_type) {
-    var temp = ''
     var out = `<html>\
     <head><link rel='stylesheet' href='css/style.css' /></head>\
     <body style='background-color: #212021; color: white;'>\
