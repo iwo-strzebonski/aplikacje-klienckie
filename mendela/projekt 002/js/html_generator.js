@@ -83,6 +83,9 @@ generate_html = {
     timer: () => {
         span = document.createElement('SPAN')
         div.append(span)
+        while (span.firstChild) {
+            span.removeChild(span.firstChild)
+        }
     },
     gamemodes: () => {
         for (var i = 0; i < 4; i++) {

@@ -82,8 +82,13 @@ move = {
         }
     },
     generate: async () => {
+        var btns = document.getElementsByTagName('BUTTON')
         var empty = document.getElementById(empty_cell)
         var dims = parseInt(empty.style.height.replace('px', ''))
+
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].style.pointerEvents = 'none'
+        }
 
         var j
         var i
@@ -132,6 +137,10 @@ move = {
                     }
             }
             steps--
+        }
+
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].style.pointerEvents = 'initial'
         }
 
         async_bool = true
