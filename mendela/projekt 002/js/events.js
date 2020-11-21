@@ -26,10 +26,6 @@ for (var n = 0; n < gamemodes.length; n++) {
                 start_array = cell_array.generate()
                 current_array = cell_array.generate()
                 async_bool = false
-                setTimeout(() => {
-                    async_bool = true
-                    timer.display_time()
-                }, 1)
                 move.generate()
             }
             break
@@ -43,10 +39,6 @@ for (var n = 0; n < gamemodes.length; n++) {
                 start_array = cell_array.generate()
                 current_array = cell_array.generate()
                 async_bool = false
-                setTimeout(() => {
-                    async_bool = true
-                    timer.display_time()
-                }, 1)
                 move.generate()
             }
             break
@@ -60,10 +52,6 @@ for (var n = 0; n < gamemodes.length; n++) {
                 start_array = cell_array.generate()
                 current_array = cell_array.generate()
                 async_bool = false
-                setTimeout(() => {
-                    async_bool = true
-                    timer.display_time()
-                }, 1)
                 move.generate()
             }
             break
@@ -77,10 +65,6 @@ for (var n = 0; n < gamemodes.length; n++) {
                 start_array = cell_array.generate()
                 current_array = cell_array.generate()
                 async_bool = false
-                setTimeout(() => {
-                    async_bool = true
-                    timer.display_time()
-                }, 1)
                 move.generate()
             }
             break

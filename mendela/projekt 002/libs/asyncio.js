@@ -1,6 +1,7 @@
 const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
 
-async_bool = true
+async_bool = false
+current_time = 0
 
 timer = {
     time_diff: async ( start ) => { return Date.now() - start },
@@ -8,11 +9,23 @@ timer = {
         await new Promise(r => setTimeout(r, time))
     },
     display_time: async () => {
-        start = Date.now()
+        var start = Date.now()
         while (async_bool) {
-            await timer.sleep(1)
-            // console.log(await timer.time_diff(start))
+            current_time = await timer.get_time(await timer.time_diff(start))
+            var span = document.getElementsByTagName('SPAN')[0]
+            while (span.firstChild) {
+                span.removeChild(span.firstChild)
+            }
+            for (var i = 0; i < current_time.length; i++) {
+                var img = document.createElement('IMG')
+                img.src = `./gfx/${current_time[i] == '.' ? 'dot' : current_time[i] == ':' ? 'colon' : current_time[i]}.gif`
+                span.appendChild(img)
+            }
         }
+    },
+    get_time: async (time) => {
+        await timer.sleep(0.1)
+        return new Date(time).toISOString().slice(11,23)
     }
 }
 
@@ -21,7 +34,7 @@ move = {
         var move = slider.scrollLeft
         var steps = 0
         while (steps < 8) {
-            await timer.sleep(8)
+            await timer.sleep(16)
             if (move == 0) {
                 move = 384 - 16
             } else {
@@ -35,7 +48,7 @@ move = {
         var move = slider.scrollLeft
         var steps = 0
         while (steps < 8) {
-            await timer.sleep(8)
+            await timer.sleep(16)
             if (move == 384) {
                 move = 16
             } else {
@@ -50,7 +63,7 @@ move = {
         if (pos1[0] == pos2[0]) {
             var move = (pos1[1] - pos2[1]) / 8
             while (steps < 8) {
-                await timer.sleep(8)
+                await timer.sleep(16)
                 cell.style.top = parseInt(cell.style.top.replace('px', '')) - move + 'px'
                 steps++
             }
@@ -58,68 +71,70 @@ move = {
         } else {
             var move = (pos1[0] - pos2[0]) / 8
             while (steps < 8) {
-                await timer.sleep(8)
+                await timer.sleep(16)
                 cell.style.left = parseInt(cell.style.left.replace('px', '')) - move + 'px'
                 steps++
             }
             cell.style.left = pos2[0] + 'px'
         }
+        if (!async_bool) {
+            alert(current_time)
+        }
     },
     generate: async () => {
         var empty = document.getElementById(empty_cell)
         var dims = parseInt(empty.style.height.replace('px', ''))
-        var cell = null
-        var bool = false
-        var direction = randomBetween(0, 3)
-        var steps = (gamemode + 3) * 100
+
+        var j
+        var i
+        var id = ''
+        var last = ''
+
+        var pos1
+        var pos2
+
+        var cell
+        var steps = (gamemode + 3) * 50
+        // var steps = 4
+
         var temp1 = ''
         var temp2 = ''
+
         while (steps != 0) {
-            empty = document.getElementById(empty_cell)
-            pos2 = cell_array.get_cell_pos(empty_cell)
-            direction = randomBetween(0, 3)
             while (true) {
-                try {
-                    switch (direction) {
-                        case 0:
-                            cell = document.getElementById((parseInt(empty_cell[0]) - 1).toString() + empty_cell[1])
-                            break
-
-                        case 1:
-                            cell = document.getElementById(empty_cell[0] + parseInt((empty_cell[1]) + 1).toString())
-                            break
-
-                        case 2:
-                            cell = document.getElementById((parseInt(empty_cell[0]) + 1).toString() + empty_cell[1])
-                            break
-
-                        case 3:
-                            cell = document.getElementById(empty_cell[0] + parseInt((empty_cell[1]) - 1).toString())
-                            break
-                    }
-                    bool = cell != null ? true : bool
-                } catch {
-                    direction = randomBetween(0, 3)
+                empty = document.getElementById(empty_cell)
+                j = randomBetween(0, parseInt(empty_cell[0]))
+                i = randomBetween(0, parseInt(empty_cell[0]))
+                id = j.toString() + i.toString()
+                while (id == last) {
+                    j = randomBetween(0, parseInt(empty_cell[0]))
+                i = randomBetween(0, parseInt(empty_cell[0]))
+                id = j.toString() + i.toString()
                 }
-                if (bool) {
-                    try {
-                    temp1 = empty.style.left
-                    temp2 = empty.style.top
-                    empty.style.left = cell.style.left
-                    empty.style.top = cell.style.top
-                    timer.sleep(100)
-                    cell.style.left = temp2
-                    cell.style.top = temp1
-                    break
-                    } catch {
-                        console.log(empty)
+
+                pos1 = cell_array.get_cell_pos(id)
+                pos2 = cell_array.get_cell_pos(empty_cell)
+
+                if (((pos1[0] == pos2[0] - dims) && pos1[1] == pos2[1]) ||
+                    ((pos1[0] == pos2[0] + dims) && pos1[1] == pos2[1]) ||
+                    (pos1[0] == pos2[0] && (pos1[1] == pos2[1] - dims)) ||
+                    (pos1[0] == pos2[0] && (pos1[1] == pos2[1] + dims))) {
+                        last = j.toString() + i.toString()
+                        cell = document.getElementById(id)
+                        temp1 = cell.style.left
+                        temp2 = cell.style.top
+                        await timer.sleep(16)
+                        cell.style.left = empty.style.left
+                        cell.style.top = empty.style.top
+                        empty.style.left = temp1
+                        empty.style.top = temp2
                         break
                     }
-                } else {
-                    direction = randomBetween(0, 3)
-                }
             }
             steps--
         }
+
+        async_bool = true
+        timer.display_time()
     }
 }

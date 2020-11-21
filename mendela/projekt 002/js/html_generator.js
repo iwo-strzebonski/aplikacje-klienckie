@@ -2,7 +2,7 @@ empty_cell = null
 
 generate_html = {
     image_cells: (n) => {
-        while(game.firstChild){
+        while (game.firstChild) {
             game.removeChild(game.firstChild)
         }
         for (var j = 0; j < n + 3; j++) {
