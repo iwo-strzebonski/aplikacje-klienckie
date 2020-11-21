@@ -130,7 +130,7 @@ app.get('/:site', (req, res) => {
             if (access) {
                 res.send(gen_table_sort(sort_type))
             } else {
-                res.sendFile(path.join(__dirname + `/static/pages/denied.html`))
+                res.sendFile(path.join(__dirname + '/static/pages/denied.html'))
             }
             break
         
@@ -146,7 +146,7 @@ app.get('/:site', (req, res) => {
             if (access) {
                 res.send(gen_table_show())
             } else {
-                res.sendFile(path.join(__dirname + `/static/pages/denied.html`))
+                res.sendFile(path.join(__dirname + '/static/pages/denied.html'))
             }
             break
         
