@@ -17,30 +17,20 @@ var start = document.getElementById('start')
 
 function events_startup() {
     panel.onclick = function(e) {
-        if (placed_ships < 10 && e.target.tagName == 'BUTTON') {
+        if (placed_ships < ship_list.length && e.target.tagName == 'BUTTON') {
             lamp_buttons_onclick(e)
-        }
-        if (hover_bool) {
-            player.onmouseover = function(e) {
-                if (e.target.id != 'player') {
-                    hover_ship(e, 'player', player_cells)
-                }
-            }
-            hover_bool = false
         }
     }
 
     player.oncontextmenu = function(e) {
         direction = direction == 0 ? 1 : 0
-        ship_presenter('player', player_cells, hit_by_bot)
-        hover_ship(e, 'player', player_cells)
+        hover_ship(e, direction, player_cells)
     }
     player.onmouseover = function(e) {
         if (e.target.id == 'player') {
-            console.log('test')
             ship_presenter('player', player_cells, hit_by_bot)
         }
-        hover_ship(e, 'player', player_cells)
+        hover_ship(e, direction, player_cells)
     }
     player.onclick = function(e) {
         place_ship(e)
@@ -60,8 +50,10 @@ function events_startup() {
         this.style.backgroundColor = '#080808'
     }
     randomise.onmouseup = function() {
+        player.onmouseover = function() { ship_presenter('player', player_cells, hit_by_bot) }
+        player.onmouseleave = function() { ship_presenter('player', player_cells, hit_by_bot) }
+
         hover_bool = false
-        player.onmouseover = function() {}
 
         player_cells = generate_ships(player_cells)
         ship_presenter('player', player_cells, hit_by_bot)
@@ -89,6 +81,7 @@ function events_startup() {
         this.style.backgroundColor = '#121212'
     }
     reset.onmouseup = function() {
+        
         hover_bool = true
         player_cells = []
 
@@ -128,7 +121,6 @@ function events_startup() {
     }
     start.onmouseup = function() {
         player.onmouseover = function() { ship_presenter('player', player_cells, hit_by_bot) }
-        player.oncontextmenu = function() {}
         player.onmouseleave = function() { ship_presenter('player', player_cells, hit_by_bot) }
 
         bot_cells = generate_ships(bot_cells)

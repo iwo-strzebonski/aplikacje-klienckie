@@ -6,15 +6,11 @@
 	JavaScript (ES 2020) library file (AI)
  */
 
-// TODO: napisać dobijanie statków
-
-var checkerboard_count = 0
-// var hit = false
-
 async function bot_attack() {
     while (turn == 1) {
         await new Promise(r => setTimeout(r, timeout))
-        var xy = checkerboard_count == 50 ? random_cell() : checkerboard_salvo()
+        // var xy = salvo_count == 50 ? random_cell() : checkerboard_salvo()
+        var xy = salvo_cells.length == 0 ? random_cell() : opening_salvo()
 
         empty_cells(hit_by_bot, xy[0], xy[1])
         ship_presenter('player', player_cells, hit_by_bot)
@@ -30,7 +26,6 @@ function random_cell() {
 
     hit_by_bot[y][x] = player_cells[y + 1][x + 1] == 1 ? 3 : 4
     count_bot = player_cells[y + 1][x + 1] == 1 ? count_bot + 1 : count_bot
-    // hit = player_cells[y + 1][x + 1] == 1
 
     return [x, y]
 }
@@ -47,19 +42,24 @@ function checkerboard_salvo() {
 
     hit_by_bot[y][x] = player_cells[y + 1][x + 1] == 1 ? 3 : 4
     count_bot = player_cells[y + 1][x + 1] == 1 ? count_bot + 1 : count_bot
-    // hit = player_cells[y + 1][x + 1] == 1
 
-    checkerboard_count = 0
-
-    for (j = 0; j < 10; j++) {
-        for (i = 0; i < 10; i++) {
-            if (hit_by_bot[j][i] == 3 || hit_by_bot[j][i] == 4 || hit_by_bot[j][i] == 5) checkerboard_count++
-        }
-    }
+    salvo_count += 1
 
     return [x, y]
 }
 
-/*function destroy_ship(x, y) {
-    direction = randomBetween(0, 4)
-}*/
+function opening_salvo() {
+    var xy = '00'
+    while (!salvo_cells.includes(xy)) {
+        x = randomBetween(0, 9)
+        y = randomBetween(0, 9)
+        xy = x.toString() + y.toString()
+    }
+
+    salvo_cells.splice(salvo_cells.indexOf(xy))
+
+    hit_by_bot[y][x] = player_cells[y + 1][x + 1] == 1 ? 3 : 4
+    count_bot = player_cells[y + 1][x + 1] == 1 ? count_bot + 1 : count_bot
+
+    return [x, y]
+}

@@ -164,8 +164,6 @@ function place_ship(e) {
         reset.style.pointerEvents = 'all'
         reset.style.color = 'rgb(255, 255, 0)'
 
-        player.oncontextmenu = function() {}
-
         ship = 0
 
 		lamp_buttons[last].style.backgroundColor = 'rgb(255, 0, 0)'
@@ -173,17 +171,18 @@ function place_ship(e) {
 		placed_ships += 1
 	}
 	
-	if (placed_ships == 10) {
+	if (placed_ships == ship_list.length) {
 		all_ships_placed()
 	}
 }
 
-function hover_ship(e, id, list) {
+function hover_ship(e, direction, list) {
+	console.log(direction)
 	var x = e.target.style.left.replace('px', '') / 32
 	var y = e.target.style.top.replace('px', '') / 32
 
-	ship_presenter('player', player_cells, hit_by_bot)
-	
+	ship_presenter('player', list, hit_by_bot)
+
 	if (direction == 0) {
 		if (x + ship <= 10) {
 			for (i = 0; i < ship; i++) {
@@ -286,10 +285,6 @@ function lamp_buttons_onclick(e) {
 	}
 
 	last = id
-
-	player.oncontextmenu = function() {
-		direction = direction == 0 ? 1 : 0
-	}
 
 	e.target.style.pointerEvents = 'none'
 }
