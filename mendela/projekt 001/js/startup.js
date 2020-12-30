@@ -25,6 +25,7 @@
 
 const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
 const timeout = 500
+const mode = 0
 const ship_list = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
 ship_cells_number = 0

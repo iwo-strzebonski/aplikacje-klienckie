@@ -7,10 +7,14 @@
  */
 
 async function bot_attack() {
+    var xy = [0, 0]
     while (turn == 1) {
         await new Promise(r => setTimeout(r, timeout))
-        // var xy = salvo_count == 50 ? random_cell() : checkerboard_salvo()
-        var xy = salvo_cells.length == 0 ? random_cell() : opening_salvo()
+        if (mode == 0) {
+            xy = salvo_count == 50 ? random_cell() : checkerboard_salvo()
+        } else if (mode == 1) {
+            xy = salvo_cells.length == 0 ? random_cell() : opening_salvo()
+        }
 
         empty_cells(hit_by_bot, xy[0], xy[1])
         ship_presenter('player', player_cells, hit_by_bot)

@@ -177,7 +177,6 @@ function place_ship(e) {
 }
 
 function hover_ship(e, direction, list) {
-	console.log(direction)
 	var x = e.target.style.left.replace('px', '') / 32
 	var y = e.target.style.top.replace('px', '') / 32
 
