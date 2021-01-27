@@ -6,8 +6,6 @@
 	JavaScript (ES 2020) library file (AI)
  */
 
-// TODO: napisać dobijanie statków
-
 var checkerboard_count = 0
 // var hit = false
 
