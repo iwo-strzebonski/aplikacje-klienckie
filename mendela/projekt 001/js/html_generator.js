@@ -155,10 +155,13 @@ for (n = 0; n < 2; n++) {
     }
 }
 
-function color() {
-    for (i = 0; i < crt_list.length; i++) {
-        crt_list[i].style.backgroundColor = crt_list[i].style.backgroundColor == 'rgb(5, 45, 20)' ? 'rgb(6, 53, 24)' : 'rgb(5, 45, 20)'
+async function color() {
+    while (true) {
+        await new Promise(r => setTimeout(r, 10))
+        for (i = 0; i < crt_list.length; i++) {
+            crt_list[i].style.backgroundColor = crt_list[i].style.backgroundColor == 'rgb(5, 45, 20)' ? 'rgb(6, 53, 24)' : 'rgb(5, 45, 20)'
+        }
     }
 }
 
-window.setInterval(color, 10)
+color()

@@ -24,7 +24,8 @@
  */
 
 const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1))
-const timeout = 100
+const timeout = 500
+const mode = 1
 const ship_list = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
 ship_cells_number = 0
@@ -33,7 +34,19 @@ ship_list.forEach(ship => {
 })
 
 function startup() {
-    bot_ship_list = ship_list
+    salvo_count = 0
+    salvo_cells = [
+        '10', '60',
+        '31', '81',
+        '02', '52',
+        '23', '73',
+        '44', '94',
+        '15', '65',
+        '36', '86',
+        '07', '57',
+        '28', '78',
+        '49', '99'
+    ]
     
     result = 0
     state = 0
@@ -53,8 +66,6 @@ function startup() {
     count_player = 0
 
     count_bot = 0
-    // x = randomBetween(0, 9)
-    // y = randomBetween(0, 9)
     x = 0
     y = 0
     old_x = 0
