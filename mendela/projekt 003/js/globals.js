@@ -2,6 +2,7 @@
 
 (function(globals) {
     globals.VARS = {
+        current_pill: 0,
         bottle_list: []
     },
     globals.CONSTS = {

@@ -10,7 +10,7 @@
 'use strict'
 
 document.body.onkeydown = (e) => {
-    let pill = document.getElementById('test')
+    let pill = document.getElementByTag('div')
 
     switch (e.keyCode) {
     case 65:
