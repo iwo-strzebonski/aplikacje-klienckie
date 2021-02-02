@@ -44,13 +44,10 @@ th {
 	background-color: transparent;
 }
 
-.pill {
+.pill,
+.virus {
 	position: absolute;
-	background-color: rgba(0, 255, 65, 0.25);
 	width: 16px;
 	height: 16px;
-	color: rgb(0, 255, 65);
-	font-size: 8px;
-	line-height: 8px;
-	text-align: center;
+	color: transparent;
 }
