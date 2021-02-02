@@ -13,12 +13,9 @@
             time_diff: new CONSTS.AsyncFunction('start', 'return Date.now() - start'),
             sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r => setTimeout(r, time))')
         }
-    },
-    globals.PROTS = {
-
     }
 }( (this) ))
 
-HTMLCollection.prototype.toArray = () => {
+HTMLCollection.prototype.toArray = function() {
     return Array.from(this)
 }

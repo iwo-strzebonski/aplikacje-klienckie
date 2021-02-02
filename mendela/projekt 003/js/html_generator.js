@@ -20,18 +20,20 @@ const generate_html = {
         }
     },
     test_pill: () => {
+        VARS.current_pill += 1
+
         let cell = document.createElement('DIV')
-        cell.style.top = 0 * 32 + 'px'
-        cell.style.left = 3 * 32 + 'px'
-        cell.innerText = '0\nr'
-        cell.className = 'test'
+        cell.style.top = 6 * 16 + 'px'
+        cell.style.left = 20 * 16 + 'px'
+        cell.innerText = VARS.current_pill + '\nr'
+        cell.className = 'pill'
         document.getElementById('bottle').appendChild(cell)
         
         cell = document.createElement('DIV')
-        cell.style.top = 0 * 32 + 'px'
-        cell.style.left = 4 * 32 + 'px'
-        cell.innerText = '0\nr'
-        cell.className = 'test'
+        cell.style.top = 6 * 16 + 'px'
+        cell.style.left = 21 * 16 + 'px'
+        cell.innerText = VARS.current_pill + '\nr'
+        cell.className = 'pill'
         document.getElementById('bottle').appendChild(cell)
     }
 }
@@ -40,6 +42,6 @@ generate_html.bottle()
 generate_html.cells()
 generate_html.test_pill()
 
-Array.from(document.getElementsByClassName('test')).forEach(cell => {
-    console.log(cell.innerHTML)
+document.getElementsByClassName('pill').toArray().forEach(cell => {
+    console.log(cell.innerText)
 })

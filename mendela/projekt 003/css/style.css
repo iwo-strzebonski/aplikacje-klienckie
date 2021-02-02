@@ -23,24 +23,34 @@ body * {
 	user-select: none;
 }
 
+#bottle {
+	background-image: url('../assets/gfx/pf.png');
+	background-repeat: no-repeat;
+	width: 640px;
+	height: 384px;
+}
+
 table {
+	position: absolute;
 	border-spacing: 0px;
+	left: 272px;
+	top: 96px;
 }
 
 th {
-	width: 30px;
-	height: 30px;
+	width: 14px;
+	height: 14px;
 	border: 1px rgba(0, 255, 65, 0.25) solid;
 	background-color: transparent;
 }
 
-.test {
+.pill {
 	position: absolute;
 	background-color: rgba(0, 255, 65, 0.25);
-	width: 32px;
-	height: 32px;
+	width: 16px;
+	height: 16px;
 	color: rgb(0, 255, 65);
-	font-size: 16px;
-	line-height: 15px;
+	font-size: 8px;
+	line-height: 8px;
 	text-align: center;
 }
