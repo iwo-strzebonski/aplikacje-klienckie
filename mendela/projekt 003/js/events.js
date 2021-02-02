@@ -1,7 +1,13 @@
 /* 
- * ArrowLeft = 37
- * ArrowDown = 40
- * ArrowRight = 39
+ * ArrowUp      = 38
+ * ArrowLeft    = 37
+ * ArrowDown    = 40
+ * ArrowRight   = 39
+ * KeyW         = 87
+ * KeyA         = 65
+ * KeyS         = 83
+ * KeyD         = 68
+ * Shift        = 16
 */
 
 'use strict'
@@ -17,7 +23,17 @@ document.body.onkeydown = (e) => {
     }
 
     switch (e.keyCode) {
+    case 38:
+    case 87:
+
+        break
+
+    case 16:
+
+        break
+
     case 37:
+    case 65:
         if (parseInt(pill[0].style.left) > 272 ) {
             FUNCS.pill.move_left(pill[0])
             FUNCS.pill.move_left(pill[1])
@@ -25,6 +41,7 @@ document.body.onkeydown = (e) => {
         break
 
     case 40:
+    case 83:
         if (parseInt(pill[0].style.top) < 336) {
             FUNCS.pill.move_down(pill[0])
             FUNCS.pill.move_down(pill[1])
@@ -33,6 +50,7 @@ document.body.onkeydown = (e) => {
         break
 
     case 39:
+    case 68:
         switch (FUNCS.pill.get_pill_rotation(array[0])) {
         case 'r':
         case 'l':
