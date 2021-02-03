@@ -3,6 +3,7 @@
 (function(globals) {
     globals.VARS = {
         current_pill: 0,
+        is_pill_falling: false,
         game_over: false,
         vir_count: 4
     },

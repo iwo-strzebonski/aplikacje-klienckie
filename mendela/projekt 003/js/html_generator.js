@@ -29,7 +29,7 @@ function pill() {
         cell = document.createElement('DIV')
         cell.style.top = 6 * 16 + 'px'
         cell.style.left = (20 + i) * 16 + 'px'
-        cell.innerText = VARS.current_pill + '\nr'
+        cell.innerText = VARS.current_pill + '\n1'
         cell.className = 'pill'
 
         switch (CONSTS.random_between(0, 2)) {
