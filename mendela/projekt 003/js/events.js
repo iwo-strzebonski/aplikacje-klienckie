@@ -14,25 +14,18 @@
 'use strict'
 
 document.body.onkeydown = async(e) => {
-    let array = document.getElementsByClassName('pill').toArray()
-    let pill = []
+    let pill = [], pill_pos = []
 
-    for (let i = 0; i < array.length; i++) {
-        if (FUNCS.pill.get_pill_no(array[i]) === VARS.current_pill) {
-            pill.push(array[i])
+    for (let y = 0; y < 16; y++) {
+        for (let x = 0; x < 8; x++) {
+            if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === VARS.current_pill) {
+                pill_pos.push([x, y])
+                pill.push(VARS.bottle_arr[y][x])
+            }
         }
     }
 
-    for (let i = 0; i < pill.length; i++) {
-        let temp
-        if (pill[0].innerText.charAt(pill[0].innerText.indexOf('\n')) === 1) {
-            temp = pill[0]
-            pill[0] = pill[1]
-            pill[1] = temp
-        }
-    }
-
-    let rotation = FUNCS.pill.get_pill_rotation(pill[0])
+    let rotation = FUNCS.pill.get_rotation(pill[0])
 
     switch (e.keyCode) {
     case 38:
@@ -57,23 +50,19 @@ document.body.onkeydown = async(e) => {
 
     case 37:
     case 65:
-        FUNCS.pill.move_left(pill, rotation)
+        FUNCS.pill.move_left(pill_pos, rotation)
+        GEN_HTML.renderer()
         break
 
     case 40:
     case 83:
-        if (parseInt(pill[0].style.top) < await 336 - 16) {
-            if (!VARS.is_pill_falling) {
-                VARS.is_pill_falling = true
-                FUNCS.pill.fall_down(pill[0])
-                FUNCS.pill.fall_down(pill[1])
-            }
-        }
+        FUNCS.pill.move_fall(pill_pos)
         break
 
     case 39:
     case 68:
-        FUNCS.pill.move_right(pill, rotation)
+        FUNCS.pill.move_right(pill_pos, rotation)
+        GEN_HTML.renderer()
         break
         
     default:

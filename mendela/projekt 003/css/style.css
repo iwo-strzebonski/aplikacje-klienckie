@@ -21,11 +21,12 @@ body * {
 	padding: 0;
 	cursor: default;
 	user-select: none;
+	background-repeat: no-repeat;
 }
 
 #bottle {
+	position: relative;
 	background-image: url('../assets/gfx/pf.png');
-	background-repeat: no-repeat;
 	width: 640px;
 	height: 384px;
 }
@@ -38,16 +39,27 @@ table {
 }
 
 th {
-	width: 14px;
-	height: 14px;
-	border: 1px rgba(0, 255, 65, 0.25) solid;
-	background-color: transparent;
-}
-
-.pill,
-.virus {
-	position: absolute;
 	width: 16px;
 	height: 16px;
+	background-color: transparent;
 	color: transparent;
+	font-size: 0;
+}
+
+#go-dr {
+	position: absolute;
+	top: 20px;
+	left: 450px;
+	width: 168px;
+	height: 167px;
+	transform: scale(0.7);
+}
+
+#game-over {
+	position: absolute;
+	top: 124px;
+	left: 169px;
+	width: 334px;
+	height: 120px;
+	transform: scale(0.67);
 }

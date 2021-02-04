@@ -1,86 +1,36 @@
 /* eslint-disable require-jsdoc */
 'use strict'
 
-async function pill_fall() {
-    while (!VARS.game_over && !VARS.is_pill_falling) {
-        FUNCS.pill.get_max_fall()
-
-        let array = document.getElementsByClassName('pill').toArray()
-        let pill = []
-
-        for (let i = 0; i < array.length; i++) {
-            if (FUNCS.pill.get_pill_no(array[i]) === VARS.current_pill) {
-                pill.push(array[i])
-            }
-        }
-
-        while (parseInt(pill[0].style.top) < await 336) {
+async function auto_fall() {
+    while (!VARS.is_game_over) {
+        while (!VARS.has_pill_fallen) {
             await FUNCS.timer.sleep(CONSTS.time)
-            if (parseInt(pill[0].style.top) === await 336) break
-            FUNCS.pill.move_down(pill[0])
-            FUNCS.pill.move_down(pill[1])
+            FUNCS.pill.move_down()
+            GEN_HTML.renderer()
         }
 
-        await FUNCS.timer.sleep(CONSTS.time)
+        await FUNCS.timer.sleep(CONSTS.time * 4)
         GEN_HTML.pill()
     }
+
+    GEN_HTML.game_over()
+    return
 }
 
-async function get_max_fall() {
-    let array = document.getElementsByClassName('pill').toArray()
-    let pill = []
-    let max_y_at_x
-    let current_y
-
-    for (let i = 0; i < array.length; i++) {
-        if (FUNCS.pill.get_pill_no(array[i]) === VARS.current_pill) {
-            pill.push(array[i])
-        }
+async function move_fall(pill) {
+    while (!VARS.has_pill_fallen) {
+        await FUNCS.timer.sleep(CONSTS.time / 25)
+        pill = FUNCS.pill.move_down(pill)
+        GEN_HTML.renderer()
     }
-
-    switch (FUNCS.pill.get_pill_rotation(pill[0])) {
-    case 1:
-    case 3:
-        current_y =
-        parseInt(pill[0].style.top) > parseInt(pill[1].style.top)
-            ? parseInt(pill[0].style.top)
-            : parseInt(pill[1].style.top)
-
-        for (let i = 0; i < array.length; i++) {
-            if (FUNCS.pill.get_pill_no(array[i]) != VARS.current_pill &&
-                parseInt(array[i].style.top) >= current_y) {
-                console.log(parseInt(array[i].style.top))
-            }
-        }
-
-        break
-        
-    case 2:
-    case 4:
-        current_y = parseInt(pill[0].style.top)
-        break
-            
-    default:
-        break
-    }
-
-    return max_y_at_x
 }
 
-async function fall_down(pill) {
-    while(parseInt(pill.style.top) < 336) {
-        await FUNCS.timer.sleep(10)
-        pill.style.top = parseInt(pill.style.top) + 16 + 'px'
-    }
-    VARS.is_pill_falling = false
-}
-
-function rotate_left(pill, rot) {
+function rotate_left(pill_pos, pill, rot) {
     if ((rot === 1 || rot === 3) && parseInt(pill[0].style.left) === 384) {
         pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
         pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
     }
-    
+
     switch (rot) {
     case 1:
         pill[0].innerText = pill[0].innerText.substring(0, pill[0].innerText.indexOf('\n') + 1) + 1
@@ -195,47 +145,214 @@ function rotate_right(pill, rot) {
     }
 }
 
-function move_left(pill, rot) {
+function move_left(pill_pos, rot) {
+    let temp1, temp2
+    let x = pill_pos[0][0]
+    let y = pill_pos[0][1]
+
     switch (rot) {
     case 1:
+        if (x > 0) {
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x + 1]
+                VARS.bottle_arr[y][x + 1] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y][x] = temp2
+            }
+        }
+        break
+
     case 2:
-    case 4:
-        if (parseInt(pill[0].style.left) > 272 ) {
-            pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
-            pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
+        if (x > 0) {
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y + 1][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y + 1][x - 1] = temp2
+            }
         }
         break
 
     case 3:
-        if (parseInt(pill[0].style.left) > 288 ) {
-            pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
-            pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
+        if (x > 1) {
+            if (VARS.bottle_arr[y][x - 2] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x - 1]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y][x - 2] = temp2
+            }
         }
         break
-    
+
+    case 4:
+        if (x > 0) {
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y - 1][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y + 1][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y - 1][x - 1] = temp2
+            }
+        }
+        break
+        
     default:
         break
     }
 }
 
-function move_right(pill, rot) {
+function move_right(pill_pos, rot) {
+    let temp1, temp2
+    let x = pill_pos[0][0]
+    let y = pill_pos[0][1]
+
     switch (rot) {
-    case 2:
-    case 3:
-    case 4:
-        if (parseInt(pill[0].style.left) < 384) {
-            pill[0].style.left = parseInt(pill[0].style.left) + 16 + 'px'
-            pill[1].style.left = parseInt(pill[1].style.left) + 16 + 'px'
+    case 1:
+        if (x < 7) {
+            if (VARS.bottle_arr[y][x + 2] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x + 1]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x + 1] = temp1
+                VARS.bottle_arr[y][x + 2] = temp2
+            }
         }
         break
 
-    case 1:
-        if (parseInt(pill[0].style.left) < 368) {
-            pill[0].style.left = parseInt(pill[0].style.left) + 16 + 'px'
-            pill[1].style.left = parseInt(pill[1].style.left) + 16 + 'px'
+    case 2:
+        if (x < 8) {
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y + 1][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y + 1][x - 1] = temp2
+            }
         }
         break
-    
+
+    case 3:
+        if (x < 8) {
+            if (VARS.bottle_arr[y][x - 2] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x - 1]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y][x - 2] = temp2
+            }
+        }
+        break
+
+    case 4:
+        if (x < 8) {
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y - 1][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y + 1][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = temp1
+                VARS.bottle_arr[y - 1][x - 1] = temp2
+            }
+        }
+        break
+        
+    default:
+        break
+    }
+}
+
+function move_down() {
+    let pill_pos = [], pill = []
+    let rot
+
+    for (let y = 0; y < 16; y++) {
+        for (let x = 0; x < 8; x++) {
+            if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === VARS.current_pill) {
+                pill_pos.push([x, y])
+                pill.push(VARS.bottle_arr[y][x])
+            }
+        }
+    }
+
+    rot = FUNCS.pill.get_rotation(pill[0])
+
+    let temp1, temp2
+    let x = pill_pos[0][0]
+    let y = pill_pos[0][1]
+
+    switch (rot) {
+    case 1:
+        try {
+            if (VARS.bottle_arr[y + 1][x] === '0.0.0.0' && VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x + 1]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x + 1] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = temp1
+                VARS.bottle_arr[y + 1][x + 1] = temp2
+            } else {
+                VARS.has_pill_fallen = true
+            }
+        } catch {
+            VARS.has_pill_fallen = true
+        }
+        break
+
+    case 2:
+        try {
+            if (VARS.bottle_arr[y + 2][x] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y + 1][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = temp1
+                VARS.bottle_arr[y + 2][x] = temp2
+            } else {
+                VARS.has_pill_fallen = true
+            }
+        } catch {
+            VARS.has_pill_fallen = true
+        }
+        break
+
+    case 3:
+        try {
+            if (VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0' && VARS.bottle_arr[y + 1][x] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y][x - 1]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y][x - 1] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = temp1
+                VARS.bottle_arr[y + 1][x - 1] = temp2
+            } else {
+                VARS.has_pill_fallen = true
+            }
+        } catch {
+            VARS.has_pill_fallen = true
+        }
+        break
+
+    case 4:
+        try {
+            if (VARS.bottle_arr[y + 1][x] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y][x]
+                temp2 = VARS.bottle_arr[y - 1][x]
+                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = temp1
+                VARS.bottle_arr[y][x] = temp2
+            } else {
+                VARS.has_pill_fallen = true
+            }
+        } catch {
+            VARS.has_pill_fallen = true
+        }
+        break
+        
     default:
         break
     }
@@ -244,36 +361,24 @@ function move_right(pill, rot) {
 (function(globals) {
     globals.FUNCS = {
         pill: {
-            get_pill_rotation: new Function('pill', 'return parseInt(pill.innerText.charAt(pill.innerText.length-1))'),
-            get_pill_no: new Function('pill', 'return parseInt(pill.innerText.substring(0,pill.innerText.indexOf("\\n")))'),
-            move_down: new Function('pill', 'pill.style.top=parseInt(pill.style.top)+16+"px"'),
-            push: new Function('pill', 'pill[0].style.left=parseInt(pill[0].style.top)-16 +"px";pill[1].style.left=parseInt(pill[1].style.top)-16 +"px"'),
+            get_no: new Function('cell', 'return parseInt(cell.substring(0,cell.indexOf(".")))'),
+            get_rotation: new Function('cell', 'return parseInt(cell.substring(cell.indexOf(".")+1,cell.nthIndexOf(".",2)))'),
+            get_pill_rotation: new Function('cell', 'return parseInt(cell.substring(cell.nthIndexOf(".",2)+1,cell.lastIndexOf(".")))'),
+            get_color: new Function('cell', 'return cell.substring(cell.lastIndexOf(".")+1,cell.length)'),
             move_left: move_left,
             move_right: move_right,
-            fall_down: fall_down,
+            move_down: move_down,
+            move_fall: move_fall,
             rotate_left: rotate_left,
             rotate_right: rotate_right,
-            pill_fall: pill_fall,
-            get_max_fall: get_max_fall
+            auto_fall: auto_fall
         },
         timer: {
-            time_diff: new CONSTS.AsyncFunction('start', 'return Date.now() - start'),
-            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r => setTimeout(r, time))')
+            time_diff: new CONSTS.AsyncFunction('start', 'return Date.now()-start'),
+            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r=>setTimeout(r,time))')
+        },
+        score: {
+            create_storage: new Function('if(localStorage.getItem("dr_mario_score")===null){localStorage.setItem("dr_mario_score",100)}')
         }
     }
 }( (this) ))
-
-HTMLCollection.prototype.toArray = function() {
-    return Array.from(this)
-}
-
-String.prototype.nthIndexOf = function(pattern, n) {
-    let i = -1
-
-    while (n-- && i++ < this.length) {
-        i = this.indexOf(pattern, i)
-        if (i < 0) break
-    }
-
-    return i
-}
