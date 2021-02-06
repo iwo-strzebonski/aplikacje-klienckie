@@ -15,6 +15,7 @@
 
 document.body.onkeydown = async(e) => {
     let pill = [], pill_pos = []
+    let rotation
 
     for (let y = 0; y < 16; y++) {
         for (let x = 0; x < 8; x++) {
@@ -25,47 +26,53 @@ document.body.onkeydown = async(e) => {
         }
     }
 
-    let rotation = FUNCS.pill.get_rotation(pill[0])
+    try {
+        rotation = FUNCS.pill.get_rotation(pill[0])
+    } catch {
+        return
+    }
 
-    switch (e.keyCode) {
-    case 38:
-    case 87:
-        rotation =
-        rotation === 1 ?
-            4 :
-            rotation - 1
+    if (!VARS.has_pill_fallen) {
+        switch (e.keyCode) {
+        case 38:
+        case 87:
+            rotation =
+            rotation === 1 ?
+                4 :
+                rotation - 1
 
-        FUNCS.pill.rotate_left(pill, rotation)
-        break
+            FUNCS.pill.rotate_left(pill, rotation)
+            break
 
-    case 16:
-    case 81:
-        rotation =
-        rotation === 4 ?
-            1 :
-            rotation + 1
+        case 16:
+        case 81:
+            rotation =
+            rotation === 4 ?
+                1 :
+                rotation + 1
+                
+            FUNCS.pill.rotate_right(pill, rotation)
+            break
+
+        case 37:
+        case 65:
+            FUNCS.pill.move_left(pill_pos, rotation)
+            GEN_HTML.renderer()
+            break
+
+        case 40:
+        case 83:
+            FUNCS.pill.move_fall(pill_pos)
+            break
+
+        case 39:
+        case 68:
+            FUNCS.pill.move_right(pill_pos, rotation)
+            GEN_HTML.renderer()
+            break
             
-        FUNCS.pill.rotate_right(pill, rotation)
-        break
-
-    case 37:
-    case 65:
-        FUNCS.pill.move_left(pill_pos, rotation)
-        GEN_HTML.renderer()
-        break
-
-    case 40:
-    case 83:
-        FUNCS.pill.move_fall(pill_pos)
-        break
-
-    case 39:
-    case 68:
-        FUNCS.pill.move_right(pill_pos, rotation)
-        GEN_HTML.renderer()
-        break
-        
-    default:
-        break
+        default:
+            break
+        }
     }
 }

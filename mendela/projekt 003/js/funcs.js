@@ -9,6 +9,7 @@ async function auto_fall() {
             GEN_HTML.renderer()
         }
 
+        VARS.current_pill++
         await FUNCS.timer.sleep(CONSTS.time * 4)
         GEN_HTML.pill()
     }
@@ -18,11 +19,15 @@ async function auto_fall() {
 }
 
 async function move_fall(pill) {
+    VARS.is_pill_falling = true
+
     while (!VARS.has_pill_fallen) {
         await FUNCS.timer.sleep(CONSTS.time / 25)
         pill = FUNCS.pill.move_down(pill)
         GEN_HTML.renderer()
     }
+
+    VARS.is_pill_falling = false
 }
 
 function rotate_left(pill_pos, pill, rot) {

@@ -5,6 +5,7 @@
         bottle_arr: [],
         current_pill: 0,
         is_game_over: false,
+        is_pill_falling: false,
         has_pill_fallen: true,
         vir_count: 4
     },

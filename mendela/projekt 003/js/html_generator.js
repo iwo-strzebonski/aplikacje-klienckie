@@ -28,31 +28,21 @@ function cells() {
 }
 
 function pill() {
-    VARS.current_pill++
     VARS.has_pill_fallen = false
+    let colors = ''
     
     for (let i = 0; i < 2; i++) {
         if (VARS.bottle_arr[0][3 + i] != '0.0.0.0') {
             VARS.is_game_over = true
         }
         VARS.bottle_arr[0][3 + i] = VARS.current_pill + '.1.' + (4 - 2 * i) + '.' + CONSTS.random_color()
+        colors += FUNCS.pill.get_color(VARS.bottle_arr[0][3 + i])
     }
     
     if (!VARS.is_game_over) {
+        GEN_HTML.animate_pill(colors)
         GEN_HTML.renderer()
     }
-}
-
-function game_over() {
-    let img = document.createElement('IMG')
-    img.src = 'assets/gfx/go_dr.png'
-    img.id = 'go-dr'
-    document.body.appendChild(img)
-
-    img = document.createElement('IMG')
-    img.src = 'assets/gfx/go.png'
-    img.id = 'game-over'
-    document.body.appendChild(img)
 }
 
 function virus() {
@@ -139,6 +129,23 @@ function renderer() {
     }
 }
 
+function game_over() {
+    let img = document.createElement('IMG')
+    img.src = 'assets/gfx/go_dr.png'
+    img.id = 'go-dr'
+    document.body.appendChild(img)
+
+    img = document.createElement('IMG')
+    img.src = 'assets/gfx/go.png'
+    img.id = 'game-over'
+    document.body.appendChild(img)
+}
+
+function animate_pill(colors) {
+    console.log(colors)
+}
+
+
 (function(globals) {
     globals.GEN_HTML = {
         bottle: bottle,
@@ -147,6 +154,7 @@ function renderer() {
         pill: pill,
         pill_background: pill_background,
         renderer: renderer,
-        game_over: game_over
+        game_over: game_over,
+        animate_pill: animate_pill
     }
 }( (this) ))
