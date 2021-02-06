@@ -32,7 +32,7 @@ document.body.onkeydown = async(e) => {
         return
     }
 
-    if (!VARS.has_pill_fallen) {
+    if (!VARS.has_pill_fallen && !VARS.is_pill_falling) {
         switch (e.keyCode) {
         case 38:
         case 87:

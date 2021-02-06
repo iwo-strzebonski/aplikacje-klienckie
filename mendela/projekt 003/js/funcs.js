@@ -24,7 +24,7 @@ async function move_fall(pill) {
     while (!VARS.has_pill_fallen) {
         await FUNCS.timer.sleep(CONSTS.time / 25)
         pill = FUNCS.pill.move_down(pill)
-        GEN_HTML.renderer()
+        if (!VARS.is_game_over) GEN_HTML.renderer()
     }
 
     VARS.is_pill_falling = false
@@ -285,7 +285,11 @@ function move_down() {
         }
     }
 
-    rot = FUNCS.pill.get_rotation(pill[0])
+    try {
+        rot = FUNCS.pill.get_rotation(pill[0])
+    } catch {
+        return
+    }
 
     let temp1, temp2
     let x = pill_pos[0][0]
