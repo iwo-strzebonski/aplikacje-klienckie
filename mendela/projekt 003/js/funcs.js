@@ -31,6 +31,10 @@ async function move_fall(pill) {
 }
 
 function rotate_left(pill_pos, pill, rot) {
+    let temp1, temp2
+    let x = pill_pos[0][0]
+    let y = pill_pos[0][1]
+    
     if ((rot === 1 || rot === 3) && parseInt(pill[0].style.left) === 384) {
         pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
         pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
