@@ -17,7 +17,7 @@ document.body.onkeydown = async(e) => {
     let pill = [], pill_pos = []
     let rotation
 
-    for (let y = 0; y < 16; y++) {
+    for (let y = 0; y < 17; y++) {
         for (let x = 0; x < 8; x++) {
             if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === VARS.current_pill) {
                 pill_pos.push([x, y])
@@ -41,7 +41,8 @@ document.body.onkeydown = async(e) => {
                 4 :
                 rotation - 1
 
-            FUNCS.pill.rotate_left(pill, rotation)
+            FUNCS.pill.rotate_left(pill_pos, pill, rotation)
+            GEN_HTML.renderer()
             break
 
         case 16:
@@ -50,7 +51,7 @@ document.body.onkeydown = async(e) => {
             rotation === 4 ?
                 1 :
                 rotation + 1
-                
+
             FUNCS.pill.rotate_right(pill, rotation)
             break
 

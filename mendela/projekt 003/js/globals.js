@@ -3,7 +3,7 @@
 (function(globals) {
     globals.VARS = {
         bottle_arr: [],
-        current_pill: 0,
+        current_pill: 1,
         is_game_over: false,
         is_pill_falling: false,
         has_pill_fallen: true,

@@ -10,7 +10,7 @@ function bottle() {
 }
 
 function cells() {
-    for (let y = 0; y < 16; y++) {
+    for (let y = 0; y < 17; y++) {
         let html_row = document.createElement('TR')
         let row = []
 
@@ -25,6 +25,10 @@ function cells() {
         document.getElementsByTagName('table')[0].appendChild(html_row)
         VARS.bottle_arr.push(row)
     }
+
+    for (let i = 0; i < 8; i++) {
+        if (i < 3 || i > 4) VARS.bottle_arr[0][i] = '-2.-2.-2.-2'
+    }
 }
 
 function pill() {
@@ -32,10 +36,10 @@ function pill() {
     let colors = ''
     
     for (let i = 0; i < 2; i++) {
-        if (VARS.bottle_arr[0][3 + i] != '0.0.0.0') {
+        if (VARS.bottle_arr[1][3 + i] != '0.0.0.0') {
             VARS.is_game_over = true
         }
-        VARS.bottle_arr[0][3 + i] = VARS.current_pill + '.1.' + (4 - 2 * i) + '.' + CONSTS.random_color()
+        VARS.bottle_arr[1][3 + i] = VARS.current_pill + '.1.' + (4 - 2 * i) + '.' + CONSTS.random_color()
         colors += FUNCS.pill.get_color(VARS.bottle_arr[0][3 + i])
     }
     
@@ -60,10 +64,9 @@ function virus() {
 
         VARS.bottle_arr[y][x] = '-1.-1.-1.'
 
-        if (i === 0) VARS.bottle_arr[y][x] += 'bl'
-        else if (i === 1) VARS.bottle_arr[y][x] += 'br'
+        if (i === 1) VARS.bottle_arr[y][x] += 'br'
         else if (i === 2) VARS.bottle_arr[y][x] += 'yl'
-        else VARS.bottle_arr[y][x] += CONSTS.random_color()
+        else VARS.bottle_arr[y][x] += 'bl'
     }
 
     GEN_HTML.renderer()
@@ -99,7 +102,7 @@ function pill_background(cell, x, y) {
 function renderer() {
     let bottle = document.getElementsByTagName('tr')
     
-    for (let y = 0; y < 16; y++) {
+    for (let y = 0; y < 17; y++) {
         for (let x = 0; x < 8; x++) {
             let cell = bottle[y].children[x]
 
@@ -141,9 +144,7 @@ function game_over() {
     document.body.appendChild(img)
 }
 
-function animate_pill(colors) {
-    console.log(colors)
-}
+function animate_pill(colors) { }
 
 
 (function(globals) {

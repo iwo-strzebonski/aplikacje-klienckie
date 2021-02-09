@@ -3,15 +3,17 @@
 
 async function auto_fall() {
     while (!VARS.is_game_over) {
+        await FUNCS.timer.sleep(CONSTS.time * 4)
+        GEN_HTML.pill()
+
         while (!VARS.has_pill_fallen) {
+            if (VARS.is_game_over) break
             await FUNCS.timer.sleep(CONSTS.time)
             FUNCS.pill.move_down()
             GEN_HTML.renderer()
         }
 
         VARS.current_pill++
-        await FUNCS.timer.sleep(CONSTS.time * 4)
-        GEN_HTML.pill()
     }
 
     GEN_HTML.game_over()
@@ -34,59 +36,42 @@ function rotate_left(pill_pos, pill, rot) {
     let temp1, temp2
     let x = pill_pos[0][0]
     let y = pill_pos[0][1]
+
+    // if ((rot === 1 || rot === 3) && x === 7) {
+    //     bool = FUNCS.pill.move_left(pill_pos, rot)
+    // }
     
-    if ((rot === 1 || rot === 3) && parseInt(pill[0].style.left) === 384) {
-        pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
-        pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
-    }
+    // if (!bool) return
+    // else console.log(bool)
 
     switch (rot) {
     case 1:
-        pill[0].innerText = pill[0].innerText.substring(0, pill[0].innerText.indexOf('\n') + 1) + 1
-        pill[1].innerText = pill[1].innerText.substring(0, pill[1].innerText.indexOf('\n') + 1) + 1
-
-        pill[0].style.top = parseInt(pill[0].style.top) + 16 + 'px'
-        pill[1].style.left = parseInt(pill[1].style.left) + 16 + 'px'
-
-        pill[0].style.backgroundImage = pill[0].style.backgroundImage.replace('up', 'left')
-        pill[1].style.backgroundImage = pill[1].style.backgroundImage.replace('down', 'right')
-
+            
         break
-
+    
     case 2:
-        pill[0].innerText = pill[0].innerText.substring(0, pill[0].innerText.indexOf('\n') + 1) + 2
-        pill[1].innerText = pill[1].innerText.substring(0, pill[1].innerText.indexOf('\n') + 1) + 2
-
-        pill[0].style.left = parseInt(pill[0].style.left) - 16 + 'px'
-        pill[0].style.top = parseInt(pill[0].style.top) - 16 + 'px'
-
-        pill[0].style.backgroundImage = pill[0].style.backgroundImage.replace('right', 'up')
-        pill[1].style.backgroundImage = pill[1].style.backgroundImage.replace('left', 'down')
-
+            
         break
-
+    
     case 3:
-        pill[0].innerText = pill[0].innerText.substring(0, pill[0].innerText.indexOf('\n') + 1) + 3
-        pill[1].innerText = pill[1].innerText.substring(0, pill[1].innerText.indexOf('\n') + 1) + 3
-
-        pill[0].style.left = parseInt(pill[0].style.left) + 16 + 'px'
-        pill[1].style.top = parseInt(pill[1].style.top) + 16 + 'px'
-
-        pill[0].style.backgroundImage = pill[0].style.backgroundImage.replace('down', 'right')
-        pill[1].style.backgroundImage = pill[1].style.backgroundImage.replace('up', 'left')
-
+            
         break
-
+    
     case 4:
-        pill[0].innerText = pill[0].innerText.substring(0, pill[0].innerText.indexOf('\n') + 1) + 4
-        pill[1].innerText = pill[1].innerText.substring(0, pill[1].innerText.indexOf('\n') + 1) + 4
+        console.log(pill)
+        if (VARS.bottle_arr[y - 1][x] === '0.0.0.0') {
+            VARS.bottle_arr[y][x] =
+                pill[0].substring(0, pill[0].indexOf('.') + 1) +
+                '4.3.' + FUNCS.pill.get_color(pill[0])
 
-        pill[1].style.left = parseInt(pill[1].style.left) - 16 + 'px'
-        pill[1].style.top = parseInt(pill[1].style.top) - 16 + 'px'
+            VARS.bottle_arr[y][x + 1] =
+                pill[1].substring(0, pill[1].indexOf('.') + 1) +
+                '4.1.' + FUNCS.pill.get_color(pill[1])
 
-        pill[0].style.backgroundImage = pill[0].style.backgroundImage.replace('left', 'down')
-        pill[1].style.backgroundImage = pill[1].style.backgroundImage.replace('right', 'up')
-        
+            temp2 = VARS.bottle_arr[y][x + 1]
+            VARS.bottle_arr[y][x + 1] = '0.0.0.0'
+            VARS.bottle_arr[y - 1][x] = temp2
+        }
         break
     
     default:
@@ -168,9 +153,10 @@ function move_left(pill_pos, rot) {
                 VARS.bottle_arr[y][x + 1] = '0.0.0.0'
                 VARS.bottle_arr[y][x - 1] = temp1
                 VARS.bottle_arr[y][x] = temp2
+                return true
             }
         }
-        break
+        return false
 
     case 2:
         if (x > 0) {
@@ -181,9 +167,10 @@ function move_left(pill_pos, rot) {
                 VARS.bottle_arr[y + 1][x] = '0.0.0.0'
                 VARS.bottle_arr[y][x - 1] = temp1
                 VARS.bottle_arr[y + 1][x - 1] = temp2
+                return true
             }
         }
-        break
+        return false
 
     case 3:
         if (x > 1) {
@@ -193,25 +180,27 @@ function move_left(pill_pos, rot) {
                 VARS.bottle_arr[y][x] = '0.0.0.0'
                 VARS.bottle_arr[y][x - 1] = temp1
                 VARS.bottle_arr[y][x - 2] = temp2
+                return true
             }
         }
-        break
+        return false
 
     case 4:
         if (x > 0) {
-            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y - 1][x - 1] === '0.0.0.0') {
-                temp1 = VARS.bottle_arr[y][x]
-                temp2 = VARS.bottle_arr[y + 1][x]
+            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y + 1][x]
+                temp2 = VARS.bottle_arr[y][x]
                 VARS.bottle_arr[y][x] = '0.0.0.0'
-                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
-                VARS.bottle_arr[y][x - 1] = temp1
-                VARS.bottle_arr[y - 1][x - 1] = temp2
+                VARS.bottle_arr[y + 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x - 1] = temp1
+                VARS.bottle_arr[y][x - 1] = temp2
+                return true
             }
         }
-        break
+        return false
         
     default:
-        break
+        return false
     }
 }
 
@@ -260,13 +249,13 @@ function move_right(pill_pos, rot) {
 
     case 4:
         if (x < 8) {
-            if (VARS.bottle_arr[y][x - 1] === '0.0.0.0' && VARS.bottle_arr[y - 1][x - 1] === '0.0.0.0') {
-                temp1 = VARS.bottle_arr[y][x]
-                temp2 = VARS.bottle_arr[y + 1][x]
+            if (VARS.bottle_arr[y][x + 1] === '0.0.0.0' && VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y + 1][x]
+                temp2 = VARS.bottle_arr[y][x]
                 VARS.bottle_arr[y][x] = '0.0.0.0'
-                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
-                VARS.bottle_arr[y][x - 1] = temp1
-                VARS.bottle_arr[y - 1][x - 1] = temp2
+                VARS.bottle_arr[y + 1][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x + 1] = temp1
+                VARS.bottle_arr[y][x + 1] = temp2
             }
         }
         break
@@ -280,7 +269,7 @@ function move_down() {
     let pill_pos = [], pill = []
     let rot
 
-    for (let y = 0; y < 16; y++) {
+    for (let y = 0; y < 17; y++) {
         for (let x = 0; x < 8; x++) {
             if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === VARS.current_pill) {
                 pill_pos.push([x, y])
@@ -352,12 +341,12 @@ function move_down() {
 
     case 4:
         try {
-            if (VARS.bottle_arr[y + 1][x] === '0.0.0.0') {
-                temp1 = VARS.bottle_arr[y][x]
-                temp2 = VARS.bottle_arr[y - 1][x]
-                VARS.bottle_arr[y - 1][x] = '0.0.0.0'
-                VARS.bottle_arr[y + 1][x] = temp1
-                VARS.bottle_arr[y][x] = temp2
+            if (VARS.bottle_arr[y + 2][x] === '0.0.0.0') {
+                temp1 = VARS.bottle_arr[y + 1][x]
+                temp2 = VARS.bottle_arr[y][x]
+                VARS.bottle_arr[y][x] = '0.0.0.0'
+                VARS.bottle_arr[y + 1][x] = temp2
+                VARS.bottle_arr[y + 2][x] = temp1
             } else {
                 VARS.has_pill_fallen = true
             }
