@@ -52,7 +52,8 @@ document.body.onkeydown = async(e) => {
                 1 :
                 rotation + 1
 
-            FUNCS.pill.rotate_right(pill, rotation)
+            FUNCS.pill.rotate_right(pill_pos, pill, rotation)
+            GEN_HTML.renderer()
             break
 
         case 37:

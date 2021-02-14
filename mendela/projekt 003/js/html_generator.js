@@ -40,7 +40,7 @@ function pill() {
             VARS.is_game_over = true
         }
         VARS.bottle_arr[1][3 + i] = VARS.current_pill + '.1.' + (4 - 2 * i) + '.' + CONSTS.random_color()
-        colors += FUNCS.pill.get_color(VARS.bottle_arr[0][3 + i])
+        colors += FUNCS.pill.get_color(VARS.bottle_arr[1][3 + i])
     }
     
     if (!VARS.is_game_over) {
@@ -144,7 +144,9 @@ function game_over() {
     document.body.appendChild(img)
 }
 
-function animate_pill(colors) { }
+function animate_pill(colors) {
+    console.log(colors)
+}
 
 
 (function(globals) {
