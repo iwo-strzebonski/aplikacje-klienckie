@@ -2,13 +2,20 @@
 'use strict'
 
 async function auto_fall() {
+    let colors = GEN_HTML.randomize_colors()
+    GEN_HTML.throwable(colors)
+
     while (!VARS.is_game_over) {
-        await FUNCS.timer.sleep(CONSTS.time * 4)
-        GEN_HTML.pill()
+        await GEN_HTML.animate_pill(colors)
+        GEN_HTML.pill(colors)
+        colors = GEN_HTML.randomize_colors()
+        GEN_HTML.throwable(colors)
+
+        GEN_HTML.renderer()
 
         while (!VARS.has_pill_fallen) {
             if (VARS.is_game_over) break
-            await FUNCS.timer.sleep(CONSTS.time)
+            await FUNCS.timer.sleep(CONSTS.TIME)
             FUNCS.pill.move_down()
             GEN_HTML.renderer()
         }
@@ -24,7 +31,7 @@ async function move_fall(pill) {
     VARS.is_pill_falling = true
 
     while (!VARS.has_pill_fallen) {
-        await FUNCS.timer.sleep(CONSTS.time / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 25)
         pill = FUNCS.pill.move_down(pill)
         if (!VARS.is_game_over) GEN_HTML.renderer()
     }
@@ -353,7 +360,8 @@ function move_down() {
         },
         timer: {
             time_diff: new CONSTS.AsyncFunction('start', 'return Date.now()-start'),
-            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r=>setTimeout(r,time))')
+            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r=>setTimeout(r,time))'),
+            stop: new Function('time', 'r=>setTimeout(r,time)')
         },
         score: {
             create_storage: new Function('if(localStorage.getItem("dr_mario_score")===null){localStorage.setItem("dr_mario_score",100)}')

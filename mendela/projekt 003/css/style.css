@@ -46,6 +46,13 @@ th {
 	font-size: 0;
 }
 
+#anim-pill-1,
+#anim-pill-2 {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+}
+
 #go-dr {
 	position: absolute;
 	top: 20px;
@@ -62,4 +69,13 @@ th {
 	width: 334px;
 	height: 120px;
 	transform: scale(0.67);
+}
+
+#hand {
+	position: absolute;
+}
+
+.loupe {
+	position: absolute;
+	transform: scale(0.7);
 }
