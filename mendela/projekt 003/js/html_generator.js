@@ -3,15 +3,33 @@
 
 function bottle() {
     let hand = document.createElement('IMG')
+    let high = document.createElement('IMG')
+    let score = document.createElement('IMG')
+
     let container = document.createElement('DIV')
+
     let bottle = document.createElement('TABLE')
+
     hand.id = 'hand'
     hand.style.left = '496px'
     hand.style.top = '64px'
     hand.src = 'assets/gfx/hands/up.png'
+
+    high.id = 'high'
+    high.style.left = '140px'
+    high.style.top = '76px'
+    high.src = 'assets/gfx/nums/' + FUNCS.score.get_high() + '.png'
+
+    score.id = 'score'
+    score.style.left = '140px'
+    score.style.top = '124px'
+    score.src = 'assets/gfx/nums/0.png'
+
     container.id = 'bottle'
     container.appendChild(bottle)
     container.appendChild(hand)
+    container.appendChild(high)
+    container.appendChild(score)
     document.body.appendChild(container)
 }
 
@@ -116,7 +134,41 @@ function renderer() {
         for (let x = 0; x < 8; x++) {
             let cell = bottle[y].children[x]
 
-            if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === -1) {
+            if (FUNCS.pill.get_rotation(VARS.bottle_arr[y][x]) === -3) {
+                switch (FUNCS.pill.get_color(VARS.bottle_arr[y][x])) {
+                case 'bl':
+                    cell.style.backgroundImage = 'url(assets/gfx/bl_o.png)'
+                    break
+        
+                case 'br':
+                    cell.style.backgroundImage = 'url(assets/gfx/br_o.png)'
+                    break
+        
+                case 'yl':
+                    cell.style.backgroundImage = 'url(assets/gfx/yl_o.png)'
+                    break
+                        
+                default:
+                    break
+                }
+            } else if (FUNCS.pill.get_rotation(VARS.bottle_arr[y][x]) === -4) {
+                switch (FUNCS.pill.get_color(VARS.bottle_arr[y][x])) {
+                case 'bl':
+                    cell.style.backgroundImage = 'url(assets/gfx/bl_x.png)'
+                    break
+    
+                case 'br':
+                    cell.style.backgroundImage = 'url(assets/gfx/br_x.png)'
+                    break
+    
+                case 'yl':
+                    cell.style.backgroundImage = 'url(assets/gfx/yl_x.png)'
+                    break
+                    
+                default:
+                    break
+                }
+            } else if (FUNCS.pill.get_no(VARS.bottle_arr[y][x]) === -1) {
                 switch (FUNCS.pill.get_color(VARS.bottle_arr[y][x])) {
                 case 'bl':
                     cell.style.backgroundImage = 'url(assets/gfx/covid_blue.png)'
@@ -311,14 +363,14 @@ async function loupe() {
         await FUNCS.timer.sleep(CONSTS.TIME * 2)
 
         if (i === 4) {
-            try { img1.src = 'assets/gfx/loupe/bl/' + 2 + '.png' } catch {null}
-            try { img2.src = 'assets/gfx/loupe/br/' + 2 + '.png' } catch {null}
-            try { img3.src = 'assets/gfx/loupe/yl/' + 2 + '.png' } catch {null}
+            try { img1.src = 'assets/gfx/loupe/bl/' + 2 + '.png' } catch { null }
+            try { img2.src = 'assets/gfx/loupe/br/' + 2 + '.png' } catch { null }
+            try { img3.src = 'assets/gfx/loupe/yl/' + 2 + '.png' } catch { null }
             i = 0
         } else {
-            try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch {null}
-            try { img2.src = 'assets/gfx/loupe/br/' + i + '.png' } catch {null}
-            try { img3.src = 'assets/gfx/loupe/yl/' + i + '.png' } catch {null}
+            try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch { null }
+            try { img2.src = 'assets/gfx/loupe/br/' + i + '.png' } catch { null }
+            try { img3.src = 'assets/gfx/loupe/yl/' + i + '.png' } catch { null }
         }
 
         i++
@@ -330,11 +382,21 @@ async function loupe() {
         await FUNCS.timer.sleep(CONSTS.TIME * 2)
 
         if (i === 6) i = 2
-        try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch {null}
-        try { img2.src = 'assets/gfx/loupe/br/' + i + '.png' } catch {null}
-        try { img3.src = 'assets/gfx/loupe/yl/' + i + '.png' } catch {null}
+        try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch { null }
+        try { img2.src = 'assets/gfx/loupe/br/' + i + '.png' } catch { null }
+        try { img3.src = 'assets/gfx/loupe/yl/' + i + '.png' } catch { null }
         i += 2
     } while (VARS.is_game_over)
+}
+
+function score_counter() {
+
+    // y = 8 * 16
+    // x = 9 * 16
+}
+
+function high_counter() {
+
 }
 
 (function(globals) {
@@ -349,6 +411,8 @@ async function loupe() {
         animate_pill: animate_pill,
         randomize_colors: randomize_colors,
         throwable: throwable,
-        loupe: loupe
+        loupe: loupe,
+        score_counter: score_counter,
+        high_counter: high_counter
     }
 }( (this) ))

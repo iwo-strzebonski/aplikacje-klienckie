@@ -20,6 +20,7 @@ async function auto_fall() {
             GEN_HTML.renderer()
         }
 
+        await EVENTS.check_colors()
         VARS.current_pill++
     }
 
@@ -41,31 +42,35 @@ async function move_fall(pill) {
 
 function rotate_left(pill_pos, pill, rot) {
     let temp1, temp2
-    let bool = true
     let x = pill_pos[0][0]
     let y = pill_pos[0][1]
-
-    if (x === 7) {
-        if (rot % 2 === 1) x--
-
-        if (rot === 1) bool = FUNCS.pill.move_left(pill_pos, 2)
-        else if (rot === 3) bool = FUNCS.pill.move_left(pill_pos, 4)
-    }
-
-    if (!bool) return
 
     switch (rot) {
     case 1:
     case 3:
-        if (VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
+        if (x === 7 && VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0') {
             VARS.bottle_arr[y][x] =
                 pill[0].substring(0, pill[0].indexOf('.') + 1) +
                 '3.4.' + FUNCS.pill.get_color(pill[0])
-        
+            
             VARS.bottle_arr[y + 1][x] =
                 pill[1].substring(0, pill[1].indexOf('.') + 1) +
-                    '3.2.' + FUNCS.pill.get_color(pill[1])
-        
+                '3.2.' + FUNCS.pill.get_color(pill[1])
+            
+            temp1 = VARS.bottle_arr[y + 1][x]
+            temp2 = VARS.bottle_arr[y][x]
+            VARS.bottle_arr[y + 1][x] = temp1
+            VARS.bottle_arr[y + 1][x - 1] = temp2
+            VARS.bottle_arr[y][x] = '0.0.0.0'
+        } else if (VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
+            VARS.bottle_arr[y][x] =
+                pill[0].substring(0, pill[0].indexOf('.') + 1) +
+                '3.4.' + FUNCS.pill.get_color(pill[0])
+            
+            VARS.bottle_arr[y + 1][x] =
+                pill[1].substring(0, pill[1].indexOf('.') + 1) +
+                '3.2.' + FUNCS.pill.get_color(pill[1])
+            
             temp1 = VARS.bottle_arr[y + 1][x]
             temp2 = VARS.bottle_arr[y][x]
             VARS.bottle_arr[y + 1][x + 1] = temp1
@@ -98,23 +103,27 @@ function rotate_left(pill_pos, pill, rot) {
 
 function rotate_right(pill_pos, pill, rot) {
     let temp1, temp2
-    let bool = true
     let x = pill_pos[0][0]
     let y = pill_pos[0][1]
-
-    if (x === 7) {
-        if (rot % 2 === 1) x--
-
-        if (rot === 1) bool = FUNCS.pill.move_left(pill_pos, 2)
-        else if (rot === 3) bool = FUNCS.pill.move_left(pill_pos, 4)
-    }
-
-    if (!bool) return
 
     switch (rot) {
     case 1:
     case 3:
-        if (VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
+        if (x === 7 && VARS.bottle_arr[y + 1][x - 1] === '0.0.0.0') {
+            VARS.bottle_arr[y][x] =
+                pill[0].substring(0, pill[0].indexOf('.') + 1) +
+                '3.2.' + FUNCS.pill.get_color(pill[0])
+        
+            VARS.bottle_arr[y + 1][x] =
+                pill[1].substring(0, pill[1].indexOf('.') + 1) +
+                '3.4.' + FUNCS.pill.get_color(pill[1])
+        
+            temp1 = VARS.bottle_arr[y][x]
+            temp2 = VARS.bottle_arr[y + 1][x]
+            VARS.bottle_arr[y + 1][x] = temp1
+            VARS.bottle_arr[y + 1][x - 1] = temp2
+            VARS.bottle_arr[y][x] = '0.0.0.0'
+        } else if (VARS.bottle_arr[y + 1][x + 1] === '0.0.0.0') {
             VARS.bottle_arr[y][x] =
                 pill[0].substring(0, pill[0].indexOf('.') + 1) +
                 '3.2.' + FUNCS.pill.get_color(pill[0])
@@ -359,12 +368,12 @@ function move_down() {
             auto_fall: auto_fall
         },
         timer: {
-            time_diff: new CONSTS.AsyncFunction('start', 'return Date.now()-start'),
-            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r=>setTimeout(r,time))'),
-            stop: new Function('time', 'r=>setTimeout(r,time)')
+            sleep: new CONSTS.AsyncFunction('time', 'await new Promise(r=>setTimeout(r,time))')
         },
         score: {
-            create_storage: new Function('if(localStorage.getItem("dr_mario_score")===null){localStorage.setItem("dr_mario_score",100)}')
+            create_storage: new Function('if(localStorage.getItem("dr_mario_score")===null){localStorage.setItem("dr_mario_score",1)}'),
+            get_high: new Function('return parseInt(localStorage.getItem("dr_mario_score"))'),
+            set_high: new Function('h', 'localStorage.setItem("dr_mario_score",h)')
         }
     }
 }( (this) ))

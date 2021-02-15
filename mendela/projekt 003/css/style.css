@@ -75,6 +75,8 @@ th {
 	position: absolute;
 }
 
+#score,
+#high,
 .loupe {
 	position: absolute;
 	transform: scale(0.7);

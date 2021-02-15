@@ -1,5 +1,6 @@
 'use strict'
 
+localStorage.removeItem('dr_mario_score')
 FUNCS.score.create_storage()
 
 GEN_HTML.bottle()
