@@ -5,7 +5,7 @@ async function auto_fall() {
     let colors = GEN_HTML.randomize_colors()
     GEN_HTML.throwable(colors)
 
-    while (!VARS.is_game_over) {
+    while (!VARS.is_game_over && !VARS.was_game_won) {
         await GEN_HTML.animate_pill(colors)
         GEN_HTML.pill(colors)
         colors = GEN_HTML.randomize_colors()
@@ -22,9 +22,11 @@ async function auto_fall() {
 
         await EVENTS.check_colors()
         VARS.current_pill++
+
+        if (VARS.vir_count === 0) { VARS.was_game_won = true }
     }
 
-    GEN_HTML.game_over()
+    if (!VARS.was_game_won) GEN_HTML.game_over(); else GEN_HTML.game_won()
     return
 }
 

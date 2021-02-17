@@ -169,9 +169,11 @@ async function check_colors() {
 function update_score() {
     let img1 = document.getElementById('score')
     let img2 = document.getElementById('high')
+    let img3 = document.getElementById('count')
 
     VARS.vir_count--
     img1.src = 'assets/gfx/nums/' + (4 - VARS.vir_count) + '.png'
+    img3.src = 'assets/gfx/nums/' + VARS.vir_count + '.png'
 
     if (4 - VARS.vir_count > FUNCS.score.get_high()) {
         FUNCS.score.set_high(4 - VARS.vir_count)

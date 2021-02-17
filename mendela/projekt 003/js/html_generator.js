@@ -5,6 +5,7 @@ function bottle() {
     let hand = document.createElement('IMG')
     let high = document.createElement('IMG')
     let score = document.createElement('IMG')
+    let count = document.createElement('IMG')
 
     let container = document.createElement('DIV')
 
@@ -25,11 +26,17 @@ function bottle() {
     score.style.top = '124px'
     score.src = 'assets/gfx/nums/0.png'
 
+    count.id = 'count'
+    count.style.left = '572px'
+    count.style.top = '332px'
+    count.src = 'assets/gfx/nums/4.png'
+
     container.id = 'bottle'
     container.appendChild(bottle)
     container.appendChild(hand)
     container.appendChild(high)
     container.appendChild(score)
+    container.appendChild(count)
     document.body.appendChild(container)
 }
 
@@ -206,6 +213,13 @@ function game_over() {
     document.body.appendChild(img)
 }
 
+function game_won() {
+    let img = document.createElement('IMG')
+    img.src = 'assets/gfx/sc.png'
+    img.id = 'game-over'
+    document.body.appendChild(img)
+}
+
 function throwable(colors) {
     let img1 = document.createElement('IMG')
     let img2 = document.createElement('IMG')
@@ -241,25 +255,25 @@ async function animate_pill() {
     let img2 = document.getElementById('anim-pill-2')
     let img3 = document.getElementById('hand')
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img2.style.left = parseInt(img2.style.left) - 16 + 'px'
     img2.style.top = parseInt(img2.style.top) - 16 + 'px'
     img1.src = img1.src.replace('left', 'down')
     img2.src = img2.src.replace('right', 'up')
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.top = parseInt(img1.style.top) - 16 + 'px'
     img2.style.left = parseInt(img2.style.left) - 16 + 'px'
     img1.src = img1.src.replace('down', 'right')
     img2.src = img2.src.replace('up', 'left')
     
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.top = parseInt(img1.style.top) - 16 + 'px'
     img1.style.left = parseInt(img1.style.left) - 16 + 'px'
     img1.src = img1.src.replace('right', 'up')
     img2.src = img2.src.replace('left', 'down')
     
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.left = parseInt(img1.style.left) - 16 + 'px'
     img2.style.top = parseInt(img2.style.top) - 16 + 'px'
     img1.src = img1.src.replace('up', 'left')
@@ -270,19 +284,19 @@ async function animate_pill() {
     img3.src = 'assets/gfx/hands/mid.png'
     
     for (let i = 0; i < 3; i++) {
-        await FUNCS.timer.sleep(CONSTS.TIME / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 50)
         img2.style.left = parseInt(img2.style.left) - 16 + 'px'
         img2.style.top = parseInt(img2.style.top) - 16 + 'px'
         img1.src = img1.src.replace('left', 'down')
         img2.src = img2.src.replace('right', 'up')
 
-        await FUNCS.timer.sleep(CONSTS.TIME / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 50)
         img2.style.left = parseInt(img2.style.left) - 16 + 'px'
         img2.style.top = parseInt(img2.style.top) + 16 + 'px'
         img1.src = img1.src.replace('down', 'right')
         img2.src = img2.src.replace('up', 'left')
 
-        await FUNCS.timer.sleep(CONSTS.TIME / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 50)
         img1.style.left = parseInt(img1.style.left) - 16 + 'px'
         img1.style.top = parseInt(img1.style.top) - 16 + 'px'
         img1.src = img1.src.replace('right', 'up')
@@ -294,45 +308,45 @@ async function animate_pill() {
             img3.src = 'assets/gfx/hands/down.png'
         }
 
-        await FUNCS.timer.sleep(CONSTS.TIME / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 50)
         img1.style.left = parseInt(img1.style.left) - 16 + 'px'
         img1.style.top = parseInt(img1.style.top) + 16 + 'px'
         img1.src = img1.src.replace('up', 'left')
         img2.src = img2.src.replace('down', 'right')
     }
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img2.style.left = parseInt(img2.style.left) - 16 + 'px'
     img2.style.top = parseInt(img2.style.top) - 16 + 'px'
     img1.src = img1.src.replace('left', 'down')
     img2.src = img2.src.replace('right', 'up')
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.top = parseInt(img1.style.top) + 16 + 'px'
     img2.style.left = parseInt(img2.style.left) - 16 + 'px'
     img2.style.top = parseInt(img2.style.top) + 32 + 'px'
     img1.src = img1.src.replace('down', 'right')
     img2.src = img2.src.replace('up', 'left')
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.left = parseInt(img1.style.left) - 16 + 'px'
     img1.style.top = parseInt(img1.style.top) - 16 + 'px'
     img1.src = img1.src.replace('right', 'up')
     img2.src = img2.src.replace('left', 'down')
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
     img1.style.left = parseInt(img1.style.left) - 16 + 'px'
     img1.style.top = parseInt(img1.style.top) + 16 + 'px'
     img1.src = img1.src.replace('up', 'left')
     img2.src = img2.src.replace('down', 'right')
 
     for (let i = 0; i < 3; i++) {
-        await FUNCS.timer.sleep(CONSTS.TIME / 25)
+        await FUNCS.timer.sleep(CONSTS.TIME / 50)
         img1.style.top = parseInt(img1.style.top) + 16 + 'px'
         img2.style.top = parseInt(img2.style.top) + 16 + 'px'
     }
 
-    await FUNCS.timer.sleep(CONSTS.TIME / 25)
+    await FUNCS.timer.sleep(CONSTS.TIME / 50)
 
     img1.outerHTML = ''
     img2.outerHTML = ''
@@ -348,8 +362,11 @@ async function loupe() {
     let i = 2
 
     img1.className = 'loupe'
+    img1.id = 'loupe1'
     img2.className = 'loupe'
+    img2.id = 'loupe2'
     img3.className = 'loupe'
+    img3.id = 'loupe3'
 
     img1.src = 'assets/gfx/loupe/bl/1.png'
     img2.src = 'assets/gfx/loupe/br/1.png'
@@ -374,7 +391,7 @@ async function loupe() {
         }
 
         i++
-    } while (!VARS.is_game_over)
+    } while (!VARS.is_game_over && !VARS.was_game_won)
 
     i = 2
 
@@ -408,6 +425,7 @@ function high_counter() {
         pill_background: pill_background,
         renderer: renderer,
         game_over: game_over,
+        game_won: game_won,
         animate_pill: animate_pill,
         randomize_colors: randomize_colors,
         throwable: throwable,
