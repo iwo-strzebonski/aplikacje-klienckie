@@ -12,7 +12,8 @@
         vir_count: 4,
         removed_blues: 0,
         removed_browns: 0,
-        removed_yellows: 0
+        removed_yellows: 0,
+        movement: true
     },
     globals.CONSTS = {
         random_between: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),

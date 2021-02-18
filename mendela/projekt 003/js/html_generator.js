@@ -8,8 +8,11 @@ function bottle() {
     let count = document.createElement('IMG')
 
     let container = document.createElement('DIV')
+    let loupe = document.createElement('DIV')
 
     let bottle = document.createElement('TABLE')
+
+    loupe.id = 'loupe'
 
     hand.id = 'hand'
     hand.style.left = '496px'
@@ -34,6 +37,7 @@ function bottle() {
     container.id = 'bottle'
     container.appendChild(bottle)
     container.appendChild(hand)
+    container.appendChild(loupe)
     container.appendChild(high)
     container.appendChild(score)
     container.appendChild(count)
@@ -358,8 +362,9 @@ async function loupe() {
     let img1 = document.createElement('IMG')
     let img2 = document.createElement('IMG')
     let img3 = document.createElement('IMG')
+    let loupe = document.getElementById('loupe')
 
-    let i = 2
+    let i = 2, deg = 0
 
     img1.className = 'loupe'
     img1.id = 'loupe1'
@@ -372,17 +377,29 @@ async function loupe() {
     img2.src = 'assets/gfx/loupe/br/1.png'
     img3.src = 'assets/gfx/loupe/yl/1.png'
     
-    document.getElementById('bottle').appendChild(img1)
-    document.getElementById('bottle').appendChild(img2)
-    document.getElementById('bottle').appendChild(img3)
+    loupe.appendChild(img1)
+    loupe.appendChild(img2)
+    loupe.appendChild(img3)
 
-    do {
-        await FUNCS.timer.sleep(CONSTS.TIME * 2)
+    while (!VARS.is_game_over && !VARS.was_game_won) {
+        await FUNCS.timer.sleep(CONSTS.TIME / 2)
+        if (VARS.is_game_over || VARS.was_game_won) break
 
         if (i === 4) {
-            try { img1.src = 'assets/gfx/loupe/bl/' + 2 + '.png' } catch { null }
-            try { img2.src = 'assets/gfx/loupe/br/' + 2 + '.png' } catch { null }
-            try { img3.src = 'assets/gfx/loupe/yl/' + 2 + '.png' } catch { null }
+            deg >= 360 ? deg = 0 : deg += 30
+            loupe.style.transform = `rotate(${-deg}deg)`
+            try {
+                img1.src = 'assets/gfx/loupe/bl/' + 2 + '.png'
+                img1.style.transform = `rotate(${deg}deg)`
+            } catch { null }
+            try {
+                img2.src = 'assets/gfx/loupe/br/' + 2 + '.png'
+                img2.style.transform = `rotate(${deg}deg)`
+            } catch { null }
+            try {
+                img3.src = 'assets/gfx/loupe/yl/' + 2 + '.png'
+                img3.style.transform = `rotate(${deg}deg)`
+            } catch { null }
             i = 0
         } else {
             try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch { null }
@@ -391,12 +408,12 @@ async function loupe() {
         }
 
         i++
-    } while (!VARS.is_game_over && !VARS.was_game_won)
+    } 
 
     i = 2
 
     do {
-        await FUNCS.timer.sleep(CONSTS.TIME * 2)
+        await FUNCS.timer.sleep(CONSTS.TIME / 2)
 
         if (i === 6) i = 2
         try { img1.src = 'assets/gfx/loupe/bl/' + i + '.png' } catch { null }

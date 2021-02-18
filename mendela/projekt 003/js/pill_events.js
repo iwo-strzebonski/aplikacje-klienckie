@@ -139,6 +139,20 @@ async function check_colors() {
                 temp = VARS.bottle_arr[pos_arr[i][1]][pos_arr[i][0]]
 
                 if (FUNCS.pill.get_rotation(VARS.bottle_arr[pos_arr[i][1]][pos_arr[i][0]]) === -1) {
+                    switch (FUNCS.pill.get_color(VARS.bottle_arr[pos_arr[i][1]][pos_arr[i][0]])) {
+                    case 'bl':
+                        VARS.removed_blues++
+                        break
+                    case 'br':
+                        VARS.removed_browns++
+                        break
+                    case 'yl':
+                        VARS.removed_yellows++
+                        break
+                    
+                    default:
+                        break
+                    }
                     EVENTS.update_score()
                     VARS.bottle_arr[pos_arr[i][1]][pos_arr[i][0]] =
                         FUNCS.pill.get_no(temp) + '.-4.' +
@@ -181,9 +195,33 @@ function update_score() {
     }
 }
 
+async function update_loupe() {
+    let img1 = document.getElementById('loupe1')
+    let img2 = document.getElementById('loupe2')
+    let img3 = document.getElementById('loupe3')
+
+    while (!VARS.is_game_over && !VARS.was_game_won) {
+        await FUNCS.timer.sleep(10)
+
+        if (VARS.removed_blues === 2) {
+            img1.outerHTML = ''
+            VARS.removed_blues = 0
+        }
+        if (VARS.removed_browns === 1) {
+            img2.outerHTML = ''
+            VARS.removed_browns = 0
+        }
+        if (VARS.removed_yellows === 1) {
+            img3.outerHTML = ''
+            VARS.removed_yellows = 0
+        }
+    }
+}
+
 (function(globals) {
     globals.EVENTS = {
         check_colors: check_colors,
-        update_score: update_score
+        update_score: update_score,
+        update_loupe: update_loupe
     }
 }( (this) ))

@@ -77,8 +77,36 @@ th {
 
 #score,
 #high,
-#count,
-.loupe {
+#count {
 	position: absolute;
 	transform: scale(0.7);
+}
+
+.loupe {
+	position: absolute;
+	width: 67.2px;
+	height: 50.4px;
+}
+
+#loupe {
+	position: absolute;
+	width: 120px;
+	height: 120px;
+	top: 230px;
+	left: 60px;
+}
+
+#loupe1 {
+	top: 40px;
+	left: 70px;
+}
+
+#loupe2 {
+	top: 70px;
+	left: -10px;
+}
+
+#loupe3 {
+	top: 0px;
+	left: 10px;
 }

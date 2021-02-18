@@ -33,6 +33,8 @@ document.body.onkeydown = async(e) => {
     }
 
     if (!VARS.has_pill_fallen && !VARS.is_pill_falling) {
+        VARS.movement = true
+        
         switch (e.keyCode) {
         case 38:
         case 87:
@@ -58,8 +60,11 @@ document.body.onkeydown = async(e) => {
 
         case 37:
         case 65:
-            FUNCS.pill.move_left(pill_pos, rotation)
-            GEN_HTML.renderer()
+            while (VARS.movement) {
+                FUNCS.pill.move_left(pill_pos, rotation)
+                GEN_HTML.renderer()
+                await FUNCS.timer.sleep(10)
+            }
             break
 
         case 40:
@@ -69,12 +74,19 @@ document.body.onkeydown = async(e) => {
 
         case 39:
         case 68:
-            FUNCS.pill.move_right(pill_pos, rotation)
-            GEN_HTML.renderer()
+            while (VARS.movement) {
+                FUNCS.pill.move_right(pill_pos, rotation)
+                GEN_HTML.renderer()
+                await FUNCS.timer.sleep(10)
+            }
             break
-            
+                
         default:
             break
         }
     }
+}
+
+document.body.onkeyup = async() => {
+    VARS.movement = false
 }
