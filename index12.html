@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Ćwiczenie 12</title>
+
+    <script crossorigin src='https://unpkg.com/react@17/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+    <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+</head>
+<body>
+    <div id='react-app'></div>
+    <script type='text/babel'>
+        const data = [
+            {
+                id: 1,
+                quantity: 1,
+                name: 'masło',
+                action: 'kupić'
+            },
+            {
+                id: 2,
+                quantity: 6,
+                name: 'mleko',
+                action: 'wylać'
+            },
+            {
+                id: 3,
+                quantity: 2,
+                name: 'chleb',
+                action: 'upiec'
+            },
+        ]
+
+        class Task extends React.Component {
+            render() {
+                return (            
+                    <ul>
+                        <li>id: { this.props.id }</li>
+                        <li>
+                            zadanie:<br/>
+                            { this.props.action } -&gt; { this.props.name }
+                        </li>
+                        <li>ile: { this.props.quantity }</li>           
+                    </ul>
+                )
+            }
+        }
+
+        class TaskList extends React.Component {
+            render() {
+                const array = data.map(function(elem, i) {
+                    return <Task
+                        key = { i }
+                        quantity = { data[i].quantity }
+                        name = { data[i].name }
+                        action = { data[i].action }
+                    />
+                })
+
+                return array
+            }
+        }
+
+        ReactDOM.render(
+            <TaskList/ >,
+            document.getElementById('react-app')
+        )
+    </script>
+</body>
+</html>

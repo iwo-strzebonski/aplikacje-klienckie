@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Ćwiczenie 13</title>
+
+    <script crossorigin src='https://unpkg.com/react@17/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+    <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+
+    <style>
+        img {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id='react-app'></div>
+    <script type='text/babel'>
+        const imagesData = [
+            {id:1, name:"hamlet" },
+            {id:2, name:"krzyzacy" },
+            {id:3, name:"lalka" }
+        ] 
+
+        class Image extends React.Component {
+            makeImageName() {
+                const s = this.props.name
+                return s && s[0].toUpperCase() + s.slice(1);
+            }
+
+            makeImageUrl() {
+                return `/gfx/${this.props.name}.jpg`
+            }
+
+            render() {
+                return (
+                    <div>
+                        {this.makeImageName()}<br />
+                        <img src={this.makeImageUrl()} />
+                    </div>
+                )
+            }
+        }
+
+        class ImagesList extends React.Component {
+
+            render() {
+                const array = imagesData.map(function(elem, i) {
+                    return <Image
+                        key = { i }
+                        name = { imagesData[i].name }
+                    />
+                })
+
+                return array
+            }
+        }
+
+        ReactDOM.render(
+            <ImagesList/ >,
+            document.getElementById('react-app')
+        )
+    </script>
+</body>
+</html>

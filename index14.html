@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Zadanie 14</title>
+
+    <script crossorigin src='https://unpkg.com/react@17/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+
+    <style>
+        .klasa1 {
+            color: red;
+        }
+
+        .klasa2 {
+            color:blue
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            color: white;
+            font-size: 20px;
+            margin: 2px;
+            text-align: center;
+        }
+
+        .row {
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: flex-start;
+            border: 4px solid blue;
+            margin: 2px;
+        }
+
+        .box {
+            display: inline-flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: flex-start;
+            border: 4px solid limegreen;
+            margin: 2px;
+        }
+
+        .container {
+            display: inline-flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: flex-start;
+            border: 4px solid orangered;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id='react-app'></div>
+    <script>
+        const h1 = React.createElement(
+            'h1',
+            { className: 'klasa1' },
+            'React component h1'
+        )
+
+        const h2 = React.createElement(
+            'h2',
+            { className: 'klasa2' },
+            'React component h2'
+        )
+
+        const square = React.createElement(
+            'div',
+            { className: 'square' },
+            'React comp'
+        )
+
+        const row = React.createElement(
+            'div',
+            { className: 'row' },
+            [square, square, square]
+        )
+
+        const box = React.createElement(
+            'div',
+            { className: 'box' },
+            [row, row, row]
+        )
+
+        const container = React.createElement(
+            'div',
+            { className: 'container' },
+            [box, box, box]
+        )
+
+        const tab = [h1, h2, container]
+
+        const root = React.createElement(
+            'div',
+            {},
+            tab
+        )
+
+        ReactDOM.render(
+            root,
+            document.getElementById('react-app')
+        )
+    </script>
+</body>
+</html>
