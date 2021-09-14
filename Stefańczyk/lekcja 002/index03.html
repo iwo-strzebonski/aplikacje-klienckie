@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Ćwiczenie 03</title>
+
+    <script crossorigin src='https://unpkg.com/react@17/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+    <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+
+    <style>
+        .jedzonko {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: solid 4px blue;
+            margin: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id='react-app'></div>
+    <script type='text/babel'>
+        class Food extends React.Component {
+            render() {
+                return (
+                    <div className='jedzonko'>{this.props.food}</div>
+                )
+            }
+        }
+
+        class FoodList extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    foods: ['masło', 'mleko', 'chleb', 'dżem'],
+                    randomFood: null
+                }
+            }
+            
+            componentDidMount() {
+                this.setState({
+                    randomFood: this.state.foods[0]
+                })
+            }
+
+            onButtonClick(foods) {
+                console.log(foods[Math.floor(Math.random() * foods.length)])
+                this.setState({
+                    randomFood: foods[Math.floor(Math.random() * foods.length)]
+                })
+            }
+
+            render() {
+                return (
+                    < >
+                        <button className='random' onClick={ this.onButtonClick.bind(this, this.state.foods) }>Jedzonko</button>
+                        <br />
+                        <Food food={ this.state.randomFood } />
+                        <Food food={ this.state.randomFood } />
+                        <Food food={ this.state.randomFood } />
+                    </>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <FoodList />,
+            document.getElementById('react-app')
+        )
+    </script>
+</body>
+</html>

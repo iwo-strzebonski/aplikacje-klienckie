@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='pl'>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Ćwiczenie 08</title>
+
+    <script crossorigin src='https://unpkg.com/react@17/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+    <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+
+    <style>
+        .timer {
+            float: left;
+            text-align: center;
+            width: 200px;
+            height: 200px;
+            border: 8px solid blue;
+            border-radius: 200px;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .timer,
+        .timer * {
+            font-size: large;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='react-app'></div>
+    <script type='text/babel'>
+        class Timer extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    time: 0,
+                    state: true
+                }
+                this.onButtonClick = this.onButtonClick.bind(this)
+            }
+
+            setTimer() {
+                this.setState({
+                    licznik: this.state.licznik - 1
+                })
+
+                if (!this.state.state) {
+                    clearInterval(this.intervalId)
+                }
+            }
+
+            onButtonClick() {
+                this.intervalId = setInterval(this.setTimer.bind(this), 1000)
+            }
+
+            render() {
+                return <div className='timer'>
+                    <button onClick={ this.onButtonClick }>{this.state.state ? 'Stop' : 'Start'}</button>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    {this.state.time}
+                </div>
+            }
+        }
+
+        class Start extends React.Component {
+            constructor() {
+                super()
+            }
+
+            render() {
+                return < >
+                    <Timer />
+                    <Timer />
+                    <Timer />
+                </>
+            }
+        }
+
+        ReactDOM.render(
+            <Start />,
+            document.getElementById('react-app')
+        )
+    </script>
+</body>
+</html>
