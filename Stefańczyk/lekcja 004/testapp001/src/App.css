@@ -1,0 +1,18 @@
+br {
+    clear: both;
+}
+
+a {
+    margin: 4px;
+}
+
+.pressable-div {
+    float: left;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    border: 1px solid black;
+    margin: 4px;
+    user-select: none;
+}
