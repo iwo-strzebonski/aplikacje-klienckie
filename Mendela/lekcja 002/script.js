@@ -56,14 +56,14 @@ const renderCities = (e, xml) => {
 	let wojNum = e.target.parentNode.children[0].innerText
 	let wojName = e.target.parentNode.children[1].innerText
 	
-	let path = `/teryt/catalog/row[NAZWA_DOD[contains(text(), "miasto")] and WOJ[text() = "${wojNum}"]]/NAZWA/text()`
+	let path = `/teryt/catalog/row[NAZWA_DOD[contains(text(), "miasto") or contains(text(), "miejska")] and WOJ[text() = "${wojNum}"]]/NAZWA/text()`
 	
-	let cityList = getNodes(xml, path)
-
-	let out = cityList.map(function(el) {
+	citiesList = getNodes(xml, path).map(function(el) {
 		return el.data
-	}).join('\n')
-	
+	})
+
+	let out = [...new Set(citiesList)].join('\n')
+
 	alert(wojName + '\n' + out)
 }
 
