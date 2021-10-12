@@ -44,7 +44,6 @@ class MyForm extends React.Component {
     }
 
     render() {
-        let checkboxes = 
         return (
             <div className='myForm' onSubmit={this.handleSubmit.bind(this)}>
                 <h2>komponent MyForm</h2>

@@ -1,0 +1,30 @@
+.selected {
+    border: 1px solid black;
+    padding: 4px;
+    display: flex;
+    width: max-content;
+    flex-direction: column;
+}
+
+.boards {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    padding: 4px;
+}
+
+.board {
+    border: 8px solid;
+    border-radius: 8px;
+    text-align: center;
+    padding: 4px;
+    margin: 4px;
+}
+
+.field {
+    float: left;
+    border: 1px solid black;
+    width: 24px;
+    height: 24px;
+    margin: 1px;
+}
