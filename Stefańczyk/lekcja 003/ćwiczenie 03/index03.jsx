@@ -7,7 +7,6 @@ class MyCheckbox extends React.Component {
     }
 
     onSelectChange(e) {
-        console.log(e.target.value)
         this.setState({
             value: {
                 num: this.props.num,

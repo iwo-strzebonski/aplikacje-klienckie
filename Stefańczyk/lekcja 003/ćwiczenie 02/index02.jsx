@@ -9,8 +9,6 @@ class MySelect extends React.Component {
         }
     }
 
-    onSelectChange(e) {
-        console.log(e.target.value)
         this.setState({
             value: {
                 num: this.props.num,
@@ -80,7 +78,6 @@ class MyForm extends React.Component {
     }
 
     onHandleSelect = (item) => {
-        console.log(item)
         let tmp = this.state.toSend
 
         tmp.forEach((el, i) => {

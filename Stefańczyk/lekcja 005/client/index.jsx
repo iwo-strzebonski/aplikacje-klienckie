@@ -20,7 +20,6 @@ class Boards extends React.Component {
     }
 
     onRadioClick(color) {
-        console.log(color)
         this.setState({
             color: color
         })

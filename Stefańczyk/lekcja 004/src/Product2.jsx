@@ -6,8 +6,6 @@ import {
 
 const Product2 = ({ match }) => (
     <h1>
-        {console.log(match)}
-        
         <Link to={`${match.url}/a`}>link to page a</Link>
         <Link to={`${match.url}/b`}>link to page b</Link>
         <Link to={`${match.url}/c`}>link to page c</Link>

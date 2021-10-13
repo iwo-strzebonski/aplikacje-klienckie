@@ -1,30 +1,139 @@
 import React from 'react'
 import {
     StyleSheet,
-    Text,
     View
 } from 'react-native'
 
-import Header from './components/__App-Header'
-import Content from './components/__App-Content'
-import Footer from './components/__App-Footer'
+import Item from './components/Item'
 
 export default class App extends React.Component {
+    constructor() {
+        super()
+
+        this.styles = StyleSheet.create({
+            container: {
+                flex: 1,
+                backgroundColor: 'lightgray'
+            },
+            rowContainer: {
+                flexDirection: 'row',
+                height: '60%',
+                width: '100%'
+            },
+            mathContainer: {
+                backgroundColor: '#47ffcb',
+                height: '40%',
+                alignItems: 'flex-end'
+            },
+            row: {
+                flexDirection: 'column',
+                width: '25%'
+            },
+            expression: {
+                fontSize: 96,
+                color: '#434343',
+                alignItems: 'flex-end'
+            },
+            result: {
+                fontSize: 48,
+                color: '#434343',
+                alignItems: 'flex-end'
+            }
+        })
+
+        this.chars = [
+            ['1', '4', '7', '.'],
+            ['2', '5', '8', '0'],
+            ['3', '6', '9', '='],
+            ['C', '/', '*', '-', '+']
+        ]
+
+        this.state = {
+            exp: '',
+            res: undefined
+        }
+    }
+
+    updateExp(char) {
+        let exp = this.state.exp
+        let res
+        const lastChar = exp[exp.length - 1]
+
+        switch (char) {
+        case '=':
+            try { res = eval(exp) } catch { res = undefined }
+            this.setState({
+                res: res
+            })
+
+            break
+
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            exp = (this.chars[3].includes(lastChar)
+                ? exp.slice(0, -1)
+                : exp) + char
+            break
+        
+        case 'C':
+            exp = exp.slice(0, -1)
+            break
+        
+        default:
+            exp += char
+            break
+        }
+
+        this.setState({
+            exp: exp
+        })
+    }
+
     render() {
-        console.log('App')
+        const t = this
+        const arr = []
+
+        for (let i in this.chars) {
+            let temp = this.chars[i].map(function(el) {
+                return (
+                    <Item
+                        key={el}
+                        color={i < 3 ? '#434343' : '#636363'}
+                        text={el}
+                        height={i < 3 ? '25%' : '20%'}
+                        onPress={t.updateExp.bind(t)}
+                    />
+                )
+            })
+            arr.push(
+                <View key={i} style={this.styles.row}>
+                    {temp}
+                </View>
+            )
+        }
+
         return (
-            <View style={styles.container}>     
-                <Header />
-                <Content />
-                <Footer />
+            <View style={this.styles.container}>
+                <View style={this.styles.mathContainer}>
+                    <Item
+                        color='#47ffcb'
+                        text={this.state.exp}
+                        height='60%'
+                        style={this.styles.expression}
+                    />
+                    <Item
+                        color='#47ffcb'
+                        text={this.state.res}
+                        height='40%'
+                        style={this.styles.result}
+                    />
+                </View>
+                <View style={this.styles.rowContainer}>
+                    {arr}
+                </View>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffff00',   
-    }, 
-})

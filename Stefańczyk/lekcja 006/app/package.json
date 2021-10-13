@@ -7,6 +7,12 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "author": "Iwo Strzeboński",
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20006"
+  },
   "dependencies": {
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
