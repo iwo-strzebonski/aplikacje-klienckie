@@ -1,0 +1,19 @@
+{
+  "name": "lekcja-006",
+  "version": "1.0.0",
+  "description": "LEKCJA 06 - REACT NATIVE - start, calcApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Iwo Strzeboński",
+  "license": "WTFPL",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20006"
+  },
+  "dependencies": {
+    "expo-cli": "^4.12.1",
+    "express": "^4.17.1"
+  }
+}

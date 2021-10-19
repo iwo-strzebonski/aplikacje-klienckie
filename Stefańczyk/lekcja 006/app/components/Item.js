@@ -23,8 +23,7 @@ export default class Item extends Component {
             text: {
                 fontSize: 48,
                 color: 'white',
-            },
-            
+            }
         })
     }
 
@@ -50,6 +49,5 @@ export default class Item extends Component {
             </View>
         )
         }
-
     }
 }

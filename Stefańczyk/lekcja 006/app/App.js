@@ -12,22 +12,27 @@ export default class App extends React.Component {
 
         this.styles = StyleSheet.create({
             container: {
-                flex: 1,
-                backgroundColor: 'lightgray'
+                flex: 1
             },
             rowContainer: {
                 flexDirection: 'row',
-                height: '60%',
+                flex: 3,
                 width: '100%'
             },
             mathContainer: {
                 backgroundColor: '#47ffcb',
-                height: '40%',
+                flex: 2,
                 alignItems: 'flex-end'
             },
             row: {
+                backgroundColor: '#434343',
                 flexDirection: 'column',
-                width: '25%'
+                flex: 1
+            },
+            rowSyntax: {
+                backgroundColor: '#636363',
+                flexDirection: 'column',
+                flex: 1
             },
             expression: {
                 fontSize: 96,
@@ -108,7 +113,9 @@ export default class App extends React.Component {
                 )
             })
             arr.push(
-                <View key={i} style={this.styles.row}>
+                <View key={i} style={
+                    i < 3 ? this.styles.row : this.styles.rowSyntax
+                }>
                     {temp}
                 </View>
             )

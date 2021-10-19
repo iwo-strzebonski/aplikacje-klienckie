@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "calc",
-    "slug": "calc",
+    "name": "node-register",
+    "slug": "node-register",
     "owner": "octoturge",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,12 +25,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "io.octoturge.calc"
+      "package": "io.octoturge.noderegister"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
-    "githubUrl": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20006"
+    "githubUrl": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20007"
   }
 }
