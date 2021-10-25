@@ -1,4 +1,4 @@
 export const Settings =  {
-    address: 'http://127.0.0.1',
+    address: 'http://192.168.0.4',
     port: '3000'
 }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 import React from 'react'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native'
 
 
 export default class MyButton extends React.Component{
@@ -11,10 +11,9 @@ export default class MyButton extends React.Component{
 
         this.style = StyleSheet.create({
             container: {
+                alignSelf: 'flex-start',
                 backgroundColor: this.props.color,
                 borderRadius: 16,
-                width: 'max-content',
-                height: 'auto',
                 padding: 10
             },
             text: {
@@ -26,10 +25,7 @@ export default class MyButton extends React.Component{
 
     render() {
         return (
-            <TouchableOpacity
-                style={this.style.container}
-                onPress={() => this.props.onpress()}
-            >
+            <TouchableOpacity onPress={() => this.props.onpress()}>
                 <Text style={this.style.text}>{this.props.title}</Text>
             </TouchableOpacity>
         )
