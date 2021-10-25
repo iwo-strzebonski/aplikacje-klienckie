@@ -9,13 +9,11 @@ export default class MyButton extends React.Component{
         super(props)
         this.props = props
 
-        console.log(props.color)
-
         this.style = StyleSheet.create({
             container: {
                 backgroundColor: this.props.color,
                 borderRadius: 16,
-                width: '20%',
+                width: 'max-content',
                 height: 'auto',
                 padding: 10
             },

@@ -16,7 +16,7 @@ export default function App() {
                     name='s1'
                     component={Screen1}
                     options={{
-                        title: 'title',
+                        title: 'Register',
                         headerShown: false
                     }}
                 />
