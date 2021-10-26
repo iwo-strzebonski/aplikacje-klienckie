@@ -1,7 +1,7 @@
 {
-  "name": "lekcja-007",
+  "name": "lekcja-008",
   "version": "1.0.0",
-  "description": "LEKCJA 06 - REACT NATIVE (i) - react-navigation, FlatList, node register ",
+  "description": "LEKCJA 08 - REACT NATIVE (i) - geolocation, async/await, AsyncStorage",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,7 @@
     "url": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20007"
   },
   "dependencies": {
-    "expo-cli": "^4.12.1",
+    "expo-cli": "^4.12.10",
     "express": "^4.17.1"
   }
 }
