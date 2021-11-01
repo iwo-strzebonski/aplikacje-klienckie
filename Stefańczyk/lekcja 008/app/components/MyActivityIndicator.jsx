@@ -1,5 +1,9 @@
 import React from 'react'
-import { ActivityIndicator, View } from 'react-native'
+import {
+    ActivityIndicator,
+    View,
+    StyleSheet
+} from 'react-native'
 
 export default class MyActivityIndicator extends React.Component{
     constructor(props) {
@@ -22,13 +26,22 @@ export default class MyActivityIndicator extends React.Component{
 
     render() {
         return (
-            <View style={{flex:1}}>
-                {
-                    this.props.number
-                        ? <ActivityIndicator size="large" color="#0000ff" />
-                        : <ActivityIndicator size="small" color="#ff0000" />
-                }
-            </View>
+            this.props.state
+                ? (
+                    <View style={{
+                        display: 'flex',
+                        width:'100%',
+                        height:'100%',
+                        position:'absolute',
+                        backgroundColor: '#f0f0f0',
+                        zIndex:999,
+                        justifyContent: 'center'
+                        }}
+                    >
+                        <ActivityIndicator size='large' color='#0000ff' />
+                    </View>
+                )
+                : < ></>
         )
     }
 }

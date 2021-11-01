@@ -13,6 +13,8 @@
     "url": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20007"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.9",
+    "@react-native-community/async-storage": "^1.12.1",
     "expo-cli": "^4.12.10",
     "express": "^4.17.1"
   }

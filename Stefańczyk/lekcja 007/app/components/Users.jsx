@@ -28,7 +28,7 @@ export default class Screen1 extends React.Component {
             <FlatList
                 data={this.state.data}
                 renderItem={
-                    ({ item }) => <ListItem data={item} navigation={this.props.navigation} getusers={this.getUsers.bind(this)} />
+                    ({item}) => <ListItem data={item} navigation={this.props.navigation} getusers={this.getUsers.bind(this)} />
                 }
                 keyExtractor={
                     item => item.user
