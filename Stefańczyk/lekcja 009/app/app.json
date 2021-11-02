@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "geolocation",
-    "slug": "geolocation",
-    "owner": "octoturge",
+    "name": "camera",
+    "slug": "camera",
     "version": "1.0.0",
+    "owner": "octoturge",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,11 +25,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "io.octoturge.geolocation"
+      "package": "io.octoturge.camera"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "githubUrl": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20008"
+    "githubUrl": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20009"
   }
 }
