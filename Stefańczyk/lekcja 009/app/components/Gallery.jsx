@@ -16,7 +16,8 @@ export default class Gallery extends React.Component {
         this.props = props
         this.state = {
             images: [],
-            columns: 5
+            columns: 5,
+            selected: []
         }
 
         this.style = StyleSheet.create({
@@ -39,10 +40,10 @@ export default class Gallery extends React.Component {
 
     async setAllPhotos() {
         let obj = await MediaLibrary.getAssetsAsync({
-            first: 100,
+            first: 1000,
             mediaType: 'photo'
         })
-        
+
         obj = obj.assets.map(el => {
             return {
                 width: Dimensions.get('window').width / this.state.columns - 16,
@@ -57,6 +58,26 @@ export default class Gallery extends React.Component {
         this.setState({
             images: obj
         })
+    }
+
+    selectImage(id) {
+        this.setState({
+            selected: this.state.selected.concat(id)
+        })
+    }
+
+    unselectImage(id) {
+        this.setState({
+            selected: this.state.selected.filter(el => el !== id)
+        })
+    }
+
+    async removeSelected() {
+        if (this.state.selected.length === 0) alert('Please select some images first!')
+        else {
+            await MediaLibrary.deleteAssetsAsync(this.state.selected)
+            await this.setAllPhotos()
+        }
     }
 
     render() {
@@ -84,23 +105,53 @@ export default class Gallery extends React.Component {
                         color='#FFC107'
                     />
                     <Button
-                        onPress={() => this.props.navigation.navigate('s3')}
+                        onPress={() => this.props.navigation.navigate('s3', this.setAllPhotos.bind(this))}
                         title='open camera'
                         color='#FFC107'
                     />
                     <Button
-                        onPress={() => alert(this.state.columns)}
+                        onPress={async() => await this.removeSelected()}
                         title='Remove selected'
                         color='#FFC107'
                     />
                 </View>
-                <FlatList
-                    key={1}
-                    data={this.state.images}
-                    renderItem={({item}) => <ListItem data={item} columns={this.state.columns} />}
-                    keyExtractor={item => item.id}
-                    numColumns={1}
-                />
+                {this.state.columns === 1
+                    ? <FlatList
+                        key={1}
+                        data={this.state.images}
+                        renderItem={({item}) => {
+                                return <ListItem
+                                    data={item}
+                                    navigation={this.props.navigation}
+                                    refresh={this.setAllPhotos.bind(this)}
+                                    select={this.selectImage.bind(this)}
+                                    unselect={this.unselectImage.bind(this)}
+                                    selected={this.state.selected.some(el => el == item.id)}
+                                />
+                            }
+                        }
+                        keyExtractor={item => item.id}
+                        numColumns={1}
+                    />
+                    : <FlatList
+                        columnWrapperStyle={{justifyContent: 'space-evenly'}}
+                        key={5}
+                        data={this.state.images}
+                        renderItem={({item}) => {
+                                return <ListItem
+                                    data={item}
+                                    navigation={this.props.navigation}
+                                    refresh={this.setAllPhotos.bind(this)}
+                                    select={this.selectImage.bind(this)}
+                                    unselect={this.unselectImage.bind(this)}
+                                    selected={this.state.selected.some(el => el == item.id)}
+                                />
+                            }
+                        }
+                        keyExtractor={item => item.id}
+                        numColumns={5}
+                    />
+                }
             </View>
         )
     }
