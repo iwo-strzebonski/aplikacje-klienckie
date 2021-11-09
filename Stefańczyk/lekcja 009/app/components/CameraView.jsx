@@ -2,12 +2,14 @@ import React from 'react'
 import {
     ToastAndroid,
     View,
-    Text
+    Text,
+    BackHandler
 } from 'react-native'
 import * as MediaLibrary from 'expo-media-library'
 import { Camera } from 'expo-camera'
 
 import CircleButton from './CircleButton'
+import CameraSettings from './CameraSettings'
 
 export default class CameraView extends React.Component {
     constructor(props) {
@@ -17,8 +19,14 @@ export default class CameraView extends React.Component {
         this.state = {
             hasCameraPermission: null,
             type: Camera.Constants.Type.back,
+            isHidden: true,
+            cameraSetting: {
+                ratio: null,
+                whiteBalance: 0,
+                pictureSize: null,
+                flashMode: 3
+            }
         }
-        console.log(this.props.route.params)
     }
 
     async componentDidMount() {
@@ -26,10 +34,14 @@ export default class CameraView extends React.Component {
         this.setState({
             hasCameraPermission: status == 'granted'
         })
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+    }
+
+    async componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
     }
 
     async rotateCamera() {
-        console.log('a')
         this.setState({
             type: this.state.type === Camera.Constants.Type.back
                 ? Camera.Constants.Type.front
@@ -50,6 +62,20 @@ export default class CameraView extends React.Component {
         }
     }
 
+    handleBackPress = () => {
+        if (this.state.isHidden) {
+            this.props.navigation.goBack()
+        } else {
+            this.toggleSettings()
+        }
+
+        return true
+    }
+
+    toggleSettings() {
+        this.setState({ isHidden: !this.state.isHidden })
+    }
+
     render() {
         const { hasCameraPermission } = this.state
         if (hasCameraPermission === null) {
@@ -59,19 +85,29 @@ export default class CameraView extends React.Component {
         } else {
             return (
                 <Camera
+                    whiteBalance={this.state.whiteBalance}
+                    flashMode={this.state.flashMode}
                     ref={ref => {
                         this.camera = ref
                         }}
                     style={{ flex: 1 }}
-                    type={this.state.type}>
+                    type={this.state.type}
+                >
+                    <CameraSettings ishidden={this.state.isHidden} />
                     <View style={{
                         position: 'absolute',
-                        bottom: 0,
-                        flexDirection: 'row-reverse',
+                        bottom: 16,
+                        flexDirection: 'row',
                         width: '100%',
                         justifyContent: 'space-evenly',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        zIndex: -1
                     }}>
+                        <CircleButton
+                            size={64}
+                            text='↺'
+                            onpress={this.rotateCamera.bind(this)}
+                        />
                         <CircleButton
                             size={128}
                             text='⬤'
@@ -79,8 +115,8 @@ export default class CameraView extends React.Component {
                         />
                         <CircleButton
                             size={64}
-                            text='↺'
-                            onpress={this.rotateCamera.bind(this)}
+                            text='⚙'
+                            onpress={this.toggleSettings.bind(this)}
                         />
                     </View>
                 </Camera>
