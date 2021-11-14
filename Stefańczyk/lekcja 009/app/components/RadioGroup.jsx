@@ -10,25 +10,56 @@ export default class RadioGroup extends React.Component {
     constructor(props) {
         super(props)
         this.props = props
+
+        this.defaultKey = null
+        let settings = null
+
+        if (Array.isArray(props.data)) {
+            settings = props.data
+            this.defaultKey = props.default
+        } else {
+            let bool = false
+            for (const i in props.data) {
+                if (Array.isArray(props.data[props.ratio])) {
+                    this.defaultKey = props.default
+                    settings = props.data[props.ratio]
+                    break
+                }
+                if (props.data[i] === props.default) {
+                    this.defaultKey = i
+                    bool = true
+                    break
+                }
+            }
+            settings = bool ? Object.keys(props.data) : settings
+        }
+
         this.state = {
-            pressed: this.props.data.map((el, id) => {
-                return {id: el, state: id === 0}
-            })
+            settings: settings,
+            pressed: {}
         }
     }
 
-    changeState(id) {
-        this.setState({
-            pressed: this.state.pressed.map(el => {
-                return {id: el.id, state: el.id === id}
-            })
-        })
+    changeState(key) {
+        const pressed = {}
+
+        this.props.setSettings(this.props.groupname, key)
+
+        for (const i in this.state.settings) {
+            pressed[this.state.settings[i]] = (this.state.settings[i] === key)
+        }
+
+        this.setState({ pressed: pressed })
+    }
+
+    componentDidMount() {
+        this.changeState(this.defaultKey)
     }
 
     render() {
         return (
             <View style={{
-                flexDirection: this.props.direction // row - column
+                flexDirection: this.props.direction
             }}>
                 <Text style={{
                     fontSize: 32,
@@ -36,15 +67,13 @@ export default class RadioGroup extends React.Component {
                     borderBottomColor: '#FFFFFF',
                     borderBottomWidth: 1
                 }}>{this.props.groupname}</Text>
-                {this.props.data.map((element, i) => {
+                {this.state.settings.map(el => {
                     return (
                         <RadioButton
-                            title={element}
-                            selected={this.state.pressed.find(el => {
-                                return el.id === element
-                            }).state}
-                            key={i}
-                            id={element}
+                            title={el}
+                            selected={this.state.pressed[el]}
+                            key={el}
+                            id={el}
                             changestate={this.changeState.bind(this)}
                         />
                     )

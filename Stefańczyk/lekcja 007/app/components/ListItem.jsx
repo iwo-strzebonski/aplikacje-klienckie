@@ -24,7 +24,6 @@ export default class ListItem extends React.Component {
     }
 
     deleteUser(id, getusers) {
-        console.log(id)
         fetch(
             Settings.address + ':' + Settings.port + `/delete?id=${id}`,
             {method: 'GET'}

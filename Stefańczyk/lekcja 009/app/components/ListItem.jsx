@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native'
 
-export default class ListItem extends React.Component {
+export default class ListItem extends React.PureComponent {
     constructor(props) {
         super(props)
         this.props = props
@@ -23,8 +23,8 @@ export default class ListItem extends React.Component {
                 >
                     <Image
                         style={{
-                            width: this.props.data.width,
-                            height: this.props.data.height,
+                            width: this.props.data.gallery.width,
+                            height: this.props.data.gallery.height,
                         }}
                         source={{ uri: this.props.data.uri }}
                     />
@@ -32,8 +32,8 @@ export default class ListItem extends React.Component {
                         style={{
                             position: 'absolute',
                             backgroundColor: 'rgba(52, 52, 52, 0.8)',
-                            width: this.props.data.width,
-                            height: this.props.data.height,
+                            width: this.props.data.gallery.width,
+                            height: this.props.data.gallery.height,
                         }}
                         onPress={() => this.props.unselect(this.props.data.id)}
                     >
@@ -60,8 +60,8 @@ export default class ListItem extends React.Component {
                 >
                     <Image
                         style={{
-                            width: this.props.data.width,
-                            height: this.props.data.height
+                            width: this.props.data.gallery.width,
+                            height: this.props.data.gallery.height
                         }}
                         source={{ uri: this.props.data.uri }}
                     />

@@ -1,14 +1,14 @@
 {
-  "name": "lekcja-009.2",
+  "name": "lekcja-009",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Iwo Strzeboński",
+  "license": "WTFPL",
   "dependencies": {
-    "expo-cli": "^4.12.12"
+    "expo-cli": "^4.13.0"
   }
 }

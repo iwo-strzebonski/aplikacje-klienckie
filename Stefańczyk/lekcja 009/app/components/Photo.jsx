@@ -1,9 +1,9 @@
 import React from 'react'
 import {
     View,
+    Text,
     Button,
     Image,
-    Text,
     Dimensions
 } from 'react-native'
 import * as MediaLibrary from 'expo-media-library'
@@ -32,6 +32,7 @@ export default class Photo extends React.Component {
                     }}
                     source={{ uri: this.props.route.params.data.uri }}
                 />
+                <Text>{this.props.route.params.data.size.width}x{this.props.route.params.data.size.height}</Text>
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-evenly',

@@ -2,13 +2,15 @@ import React from 'react'
 import {
     Animated,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    FlatList
 } from 'react-native'
 import RadioGroup from './RadioGroup'
 
 export default class CameraSettings extends React.Component {
     constructor(props) {
         super(props)
+        this.props = props
         this.state = {
             pos: new Animated.Value(Dimensions.get('window').height),
         }
@@ -26,7 +28,7 @@ export default class CameraSettings extends React.Component {
         })
     }
 
-    componentDidUpdate() {
+    async componentDidUpdate() {
         Animated.spring(
             this.state.pos,
             {
@@ -53,10 +55,21 @@ export default class CameraSettings extends React.Component {
                     }
                 ]}
             >
-                <RadioGroup
-                    groupname='1'
-                    data={[1, 2, 3, 4]}
-                    direction='column'
+                <FlatList
+                    data={Object.entries(this.props.settings)}
+                    renderItem={({item}) => {
+                        return (
+                            <RadioGroup
+                                groupname={item[0]}
+                                data={item[1]}
+                                direction='column'
+                                default={this.props.default[item[0]]}
+                                ratio={this.props.default.Ratio}
+                                setSettings={this.props.setSettings}
+                            />
+                        )
+                    }}
+                    keyExtractor={item => item[0]}
                 />
             </Animated.View>
         )
