@@ -46,6 +46,8 @@ export default class CameraSettings extends React.Component {
     render() {
         return (
             <Animated.View
+                scrollEventThrottle={1}
+                key={this.props.id}
                 style={[
                     this.style.animatedView,
                     {
@@ -55,7 +57,20 @@ export default class CameraSettings extends React.Component {
                     }
                 ]}
             >
-                <FlatList
+                {/* {Object.entries(this.props.settings).map(item => {
+                    return (
+                        <RadioGroup
+                            groupname={item[0]}
+                            data={item[1]}
+                            direction='column'
+                            default={this.props.default[item[0]]}
+                            ratio={this.props.default.Ratio}
+                            setSettings={this.props.setSettings}
+                        />
+                    )
+                })} */}
+                {/* <FlatList
+                    key={this.props.id}
                     data={Object.entries(this.props.settings)}
                     renderItem={({item}) => {
                         return (
@@ -70,7 +85,7 @@ export default class CameraSettings extends React.Component {
                         )
                     }}
                     keyExtractor={item => item[0]}
-                />
+                /> */}
             </Animated.View>
         )
     }

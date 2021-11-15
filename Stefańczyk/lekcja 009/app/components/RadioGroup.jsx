@@ -67,17 +67,20 @@ export default class RadioGroup extends React.Component {
                     borderBottomColor: '#FFFFFF',
                     borderBottomWidth: 1
                 }}>{this.props.groupname}</Text>
-                {this.state.settings.map(el => {
-                    return (
-                        <RadioButton
-                            title={el}
-                            selected={this.state.pressed[el]}
-                            key={el}
-                            id={el}
-                            changestate={this.changeState.bind(this)}
-                        />
-                    )
-                })}
+                {this.state.settings
+                    ? this.state.settings.map(el => {
+                        return (
+                            <RadioButton
+                                title={el}
+                                selected={this.state.pressed[el]}
+                                key={el}
+                                id={el}
+                                changestate={this.changeState.bind(this)}
+                            />
+                        )
+                    })
+                    : null
+                }
             </View>
         )
     }
