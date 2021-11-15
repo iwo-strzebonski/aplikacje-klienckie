@@ -31,8 +31,7 @@ export default class CameraView extends React.Component {
             hasCameraPermission: null,
             settings: 0,
             isHidden: true,
-            cameraSettings: this.defaultSettings,
-            refresh: 0
+            cameraSettings: this.defaultSettings
         }
     }
 
@@ -84,17 +83,15 @@ export default class CameraView extends React.Component {
         this.setState({ isHidden: !this.state.isHidden })
     }
 
-    async setSettings(key, value) {
-        await this.getSettings()
-
+    setSettings(key, value) {
         const cameraSettings = this.state.cameraSettings
         cameraSettings[key] = value
 
         this.setState({ cameraSettings: cameraSettings })
+        
     }
 
     async getSettings() {
-        if (!this.camera) return
         const settings = Camera.Constants
         settings.Ratio = await this.camera.getSupportedRatiosAsync()
         settings.PictureSize = {}
@@ -110,11 +107,21 @@ export default class CameraView extends React.Component {
             }
         }
 
-        this.setState({ settings: settings, refresh: this.state.refresh ? 0 : 1 })
+        this.setState({ settings: settings })
     }
 
     async componentDidUpdate() {
-        
+        if (!this.isloaded) {
+            let settings = 0
+            while (!settings) {
+                try {
+                    await this.getSettings()
+                    this.isloaded = true
+                } catch {
+                    settings = 0
+                }
+            }
+        }
     }
 
     render() {
@@ -137,22 +144,8 @@ export default class CameraView extends React.Component {
                         this.camera = ref
                     }}
                     style={{ flex: 1 }}
-                    onCameraReady={async() => {
-                        if (!this.isloaded) {
-                            let settings = 0
-                            while (!settings) {
-                                try {
-                                    await this.getSettings()
-                                    this.isloaded = true
-                                } catch {
-                                    settings = 0
-                                }
-                            }
-                        }
-                    }}
                 >
                     <CameraSettings
-                        id={this.state.refresh}
                         ishidden={this.state.isHidden}
                         setSettings={this.setSettings.bind(this)}
                         settings={this.state.settings}
