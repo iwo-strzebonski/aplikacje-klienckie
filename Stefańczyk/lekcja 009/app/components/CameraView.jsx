@@ -88,7 +88,6 @@ export default class CameraView extends React.Component {
         cameraSettings[key] = value
 
         this.setState({ cameraSettings: cameraSettings })
-        
     }
 
     async getSettings() {

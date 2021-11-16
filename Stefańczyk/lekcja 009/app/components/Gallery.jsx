@@ -39,8 +39,10 @@ export default class Gallery extends React.Component {
     }
 
     async setAllPhotos() {
+        let album = await MediaLibrary.getAlbumAsync("DCIM")
         let obj = await MediaLibrary.getAssetsAsync({
-            first: 1000,
+            album: album,
+            first: 20,
             mediaType: 'photo'
         })
 
@@ -97,10 +99,16 @@ export default class Gallery extends React.Component {
                             }, () => this.setState({
                                 images: this.state.images.map(el => {
                                     return {
-                                        width: Dimensions.get('window').width / this.state.columns - 16,
-                                        height: this.state.columns === 1
+                                        size: {
+                                            width: el.size.width,
+                                            height: el.size.height
+                                        },
+                                        gallery: {
+                                            width: Dimensions.get('window').width / this.state.columns - 16,
+                                            height: this.state.columns === 1
                                             ? Dimensions.get('window').height / 8
                                             : Dimensions.get('window').width / this.state.columns - 16,
+                                        },
                                         uri: el.uri,
                                         id: el.id
                                     }

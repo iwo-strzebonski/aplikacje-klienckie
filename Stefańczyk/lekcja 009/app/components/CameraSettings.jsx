@@ -12,7 +12,7 @@ export default class CameraSettings extends React.Component {
         super(props)
         this.props = props
         this.state = {
-            pos: new Animated.Value(Dimensions.get('window').height),
+            pos: new Animated.Value(Dimensions.get('window').height)
         }
 
         this.style = StyleSheet.create({
@@ -21,7 +21,7 @@ export default class CameraSettings extends React.Component {
                 zIndex: 999,
                 bottom: 0,
                 left: 0,
-                width: 200,
+                minWidth: 200,
                 height: '100%',
                 backgroundColor: 'rgba(33, 33, 33, 0.75)',
             }
@@ -56,7 +56,10 @@ export default class CameraSettings extends React.Component {
                 ]}
             >
                 <FlatList
-                    data={Object.entries(this.props.settings)}
+                    data={Object.entries({
+                        ...this.props.settings,
+                        ...{abc: ['a', 'b', 'c']}
+                    })}
                     renderItem={({item}) => {
                         return (
                             <RadioGroup
@@ -65,7 +68,9 @@ export default class CameraSettings extends React.Component {
                                 direction='column'
                                 default={this.props.default[item[0]]}
                                 ratio={this.props.default.Ratio}
-                                setSettings={this.props.setSettings}
+                                setSettings={
+                                    item[0] !== 'abc' ? this.props.setSettings : alert
+                                }
                             />
                         )
                     }}

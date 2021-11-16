@@ -43,7 +43,11 @@ export default class RadioGroup extends React.Component {
     changeState(key) {
         const pressed = {}
 
-        this.props.setSettings(this.props.groupname, key)
+        if (this.props.groupname !== 'abc')
+            this.props.setSettings(this.props.groupname, key)
+        else if (key) {
+            this.props.setSettings(key)
+        }
 
         for (const i in this.state.settings) {
             pressed[this.state.settings[i]] = (this.state.settings[i] === key)
