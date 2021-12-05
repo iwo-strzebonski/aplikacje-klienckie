@@ -1,14 +1,23 @@
+/* eslint-disable require-jsdoc */
 import React from 'react'
+import { LogBox } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+import Database from './db/Database'
 
 import Screen1 from './components/Main'
 import Screen2 from './components/Alarms'
 import Screen3 from './components/CreateAlarm'
 
-import './globals'
-
 const Stack = createNativeStackNavigator()
+
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+])
+
+// Database.deleteTable()
+Database.createTable()
 
 export default function App() {
     return (

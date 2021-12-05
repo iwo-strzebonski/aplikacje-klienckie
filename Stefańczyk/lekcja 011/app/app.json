@@ -25,12 +25,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "tech.octoturge.sqlite"
+      "package": "io.octoturge.sqlite"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "",
     "githubUrl": "https://github.com/iwo-strzebonski/aplikacje-klienckie/tree/klasa-iv/Stefa%C5%84czyk/lekcja%20011"
   }
 }
