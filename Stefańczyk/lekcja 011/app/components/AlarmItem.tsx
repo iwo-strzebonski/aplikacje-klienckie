@@ -103,7 +103,6 @@ export default function AlarmItem(props: any) {
         })
     }
 
-    // TODO: Niedziałanie tego to czarna magia dla mnie
     const removeAlarm = () => {
         Database.deleteOne(props.data.id)
 

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import {
     TouchableOpacity,
     ScrollView,
-    Text,
     View,
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
@@ -38,9 +37,9 @@ export default function Alarms(props: any) {
     }, [alarms])
 
     const renderAlarms = (alarms: dbRow[]) => {
-        return alarms.map((el, i) => {
+        return alarms.map(el => {
             return <AlarmItem
-                key={i}
+                key={el.id}
                 data={el}
                 alarms={alarms}
                 setAlarms={setAlarms}
@@ -55,11 +54,9 @@ export default function Alarms(props: any) {
         )
     }
 
-    // TODO: po naprawieniu renderowania usuwanych elementów usunąć <Text>
     return (
         <>
             <ScrollView style={styles.alarmList} key={id}>
-                <Text>{JSON.stringify(alarms)}</Text>
                 {renderAlarms(alarms)}
             </ScrollView>
             <View style={styles.addButton}>
