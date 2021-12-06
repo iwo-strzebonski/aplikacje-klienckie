@@ -1,15 +1,15 @@
 /* eslint-disable require-jsdoc */
-import React, { useState } from 'react'
+import React from 'react'
 import {
     TouchableOpacity,
-    View,
-    Text,
+    View
 } from 'react-native'
-import { dbRow } from '../@types/Database'
+import { FontAwesome } from '@expo/vector-icons'
 
 import Database from '../db/Database'
-
 import { styles } from '../globals'
+
+import { dbRow } from '../@types/Database'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function CreateAlarm(props: any) {
@@ -32,10 +32,8 @@ export default function CreateAlarm(props: any) {
 
             </View>
             <View style={styles.addButton}>
-                <TouchableOpacity
-                    onPress={addAlarm}
-                >
-                    <Text style={styles.secondary}>➕</Text>
+                <TouchableOpacity onPress={addAlarm}>
+                    <FontAwesome name='plus' size={32} color='white' />
                 </TouchableOpacity>
             </View>
         </>

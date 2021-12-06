@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableNativeFeedback } from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
@@ -13,9 +13,35 @@ export const styles = StyleSheet.create({
         backgroundColor: '#303F9F',
     },
     alarm: {
+        borderBottomColor: '#242f78',
+        borderBottomWidth: 1,
         width: '100%',
         padding: '2%',
         alignSelf: 'center'
+    },
+    alarmDays: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    selectableDays: {
+        flexDirection: 'row',
+        zIndex: -1
+    },
+    daySelectable: {
+        width: 32,
+        height: 32,
+        justifyContent: 'center',
+        borderRadius: 16,
+        marginRight: 4
+    },
+    dayText: {
+        color: '#FFFFFF',
+        textAlign: 'center'
+    },
+    daysSelectedText: {
+        height: 36,
+        textAlignVertical: 'center',
+        color: '#C5CAE9'
     },
     removeAlarm: {
         fontSize: 32
@@ -40,3 +66,8 @@ export const styles = StyleSheet.create({
         bottom: 30,
     }
 })
+
+export const ripple = {
+    circle: TouchableNativeFeedback.Ripple('rgba(255,255,255,0.1)', true),
+    contain: TouchableNativeFeedback.Ripple('rgba(255,255,255,0.1)', false)
+}

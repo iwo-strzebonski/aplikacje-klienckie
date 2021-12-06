@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import {
     TouchableOpacity,
     ScrollView,
-    View,
     Text,
+    View,
 } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 
 import AlarmItem from './AlarmItem'
 import Database from '../db/Database'
@@ -18,6 +19,7 @@ const defaultAlarms: Array<dbRow> = []
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Alarms(props: any) {
     const [alarms, setAlarms] = useState(defaultAlarms)
+    const [id, refreshId] = useState(-1)
 
     useEffect(() => {
         (async() => {
@@ -28,9 +30,14 @@ export default function Alarms(props: any) {
 
     useEffect(() => {
         setAlarms(alarms.sort((a, b) => a.id - b.id))
+        if (alarms.length) {
+            refreshId(alarms[alarms.length - 1].id)
+        } else {
+            refreshId(-1)
+        }
     }, [alarms])
 
-    const renderAlarms = () => {
+    const renderAlarms = (alarms: dbRow[]) => {
         return alarms.map((el, i) => {
             return <AlarmItem
                 key={i}
@@ -48,16 +55,16 @@ export default function Alarms(props: any) {
         )
     }
 
+    // TODO: po naprawieniu renderowania usuwanych elementów usunąć <Text>
     return (
         <>
-            <ScrollView style={styles.alarmList}>
-                {renderAlarms()}
+            <ScrollView style={styles.alarmList} key={id}>
+                <Text>{JSON.stringify(alarms)}</Text>
+                {renderAlarms(alarms)}
             </ScrollView>
             <View style={styles.addButton}>
-                <TouchableOpacity
-                    onPress={navigate}
-                >
-                    <Text style={styles.secondary}>➕</Text>
+                <TouchableOpacity onPress={navigate}>
+                    <FontAwesome name='plus' size={32} color='white' />
                 </TouchableOpacity>
             </View>
         </>
