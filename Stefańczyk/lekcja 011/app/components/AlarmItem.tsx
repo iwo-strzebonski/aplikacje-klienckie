@@ -16,7 +16,7 @@ import { styles, ripple } from '../globals'
 
 import { dbRow } from '../@types/Database'
 
-const defaultHeight = Dimensions.get('window').height / 5
+const defaultHeight = Dimensions.get('window').height / 4.8
 const defaultDays = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd']
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
