@@ -1,0 +1,11 @@
+{
+  "name": "lekcja-008",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/iwo-strzebonski/aplikacje-klienckie/blob/klasa-iv/Mendela/lekcja 008",
+  "author": "Iwo Strzeboński",
+  "license": "WTFPL",
+  "dependencies": {
+    "@angular/cli": "^13.0.4"
+  }
+}
