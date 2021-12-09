@@ -23,4 +23,8 @@ export class AppComponent {
     createLink(src: string) {
         return `http://www.atarionline.pl/biblioteka/czasopisma/img/${src}`
     }
+
+    onClick(data: string) {
+        console.log(data)
+    }
 }

@@ -1,0 +1,6 @@
+<input type='password' [(ngModel)]='passwd'><br />
+RODO: <span>{{passwd}}</span>
+
+<div [ngSwitch]='passwd'>
+    <app-passwd *ngSwitchCase='correctPasswd' ></app-passwd>
+</div>

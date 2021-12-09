@@ -1,0 +1,11 @@
+<h1>Password correct!</h1>
+
+<button
+    *ngFor='let data of dataArr'
+    (click)='handleClick(data)'
+    [style]='checkStyle(data)'
+>
+    {{data}}
+</button>
+
+{{data}}
