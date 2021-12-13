@@ -51,13 +51,46 @@ export const styles = StyleSheet.create({
         width: '90%',
     },
     titleInput: {
-        height: 48
+        height: 48,
     },
     valueInput: {
         marginTop: 16,
         height: 96,
+        paddingBottom: 16,
         textAlignVertical: 'bottom',
         width: '90%'
+    },
+    noteTitle: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    noteDate: {
+        position: 'absolute',
+        fontSize: 16,
+        top: 16,
+        right: 16
+    },
+    alertContainer: {
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center'
+        // zIndex: 999
+    },
+    alert: {
+        top: Dimensions.get('window').height / 2 - 50,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        position: 'absolute',
+        alignSelf: 'center',
+        width: 200,
+        height: 100,
+        backgroundColor: 'white',
+        padding: 16
+    },
+    alertButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
 

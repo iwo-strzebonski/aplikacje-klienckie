@@ -1,9 +1,10 @@
 /* eslint-disable require-jsdoc */
 import React from 'react'
-import { LogBox, Image } from 'react-native'
+import { LogBox } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
+import CustomDrawer from './components/CustomDrawer'
 import Screen1 from './components/Notes'
 import Screen2 from './components/CreateNote'
 
@@ -16,7 +17,9 @@ LogBox.ignoreLogs([
 export default function App() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator>
+            <Drawer.Navigator
+                drawerContent={(props) => <CustomDrawer {...props} />}
+            >
                 <Drawer.Screen
                     name='s1'
                     component={Screen1}

@@ -1,9 +1,7 @@
 export type note = {
-    id: number,
-    data: {
-        name: string,
-        value: string,
-        date: number
-    },
+    id: string,
+    title: string,
+    text: string,
+    date: number,
     color: string
 }
