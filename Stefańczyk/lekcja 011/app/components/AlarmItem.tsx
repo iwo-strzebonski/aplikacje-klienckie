@@ -7,7 +7,8 @@ import {
     Text,
     Switch,
     TouchableNativeFeedback,
-    Dimensions
+    Dimensions,
+    Vibration
 } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
@@ -21,11 +22,29 @@ const defaultDays = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd']
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AlarmItem(props: any) {
+    const [date, setDate] = useState(new Date())
     const [active, changeActive] = useState(props.data.active as boolean)
     const [days, changeDays] = useState(JSON.parse(props.data.days))
     const height = new Animated.Value(defaultHeight)
     const [expanded, toggleExpand] = useState(false)
     let toValue = 0
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setDate(new Date())
+        }, 1000)
+
+        return () => clearInterval(interval)
+    }, [])
+
+    useEffect(() => {
+        if (active) {
+            const hm = `${date.getHours()}:${date.getMinutes()}`
+            if (hm === props.data.hour) {
+                Vibration.vibrate(500)
+            }
+        }
+    }, [date])
 
     useEffect(() => {
         const alarmList = props.alarms

@@ -29,6 +29,7 @@ export default function Alarms(props: any) {
 
     useEffect(() => {
         setAlarms(alarms.sort((a, b) => a.id - b.id))
+
         if (alarms.length) {
             refreshId(alarms[alarms.length - 1].id)
         } else {

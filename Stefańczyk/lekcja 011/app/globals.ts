@@ -64,6 +64,34 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         width: '100%',
         bottom: 30,
+    },
+    clock: {
+        position: 'relative',
+        top: 180
+    },
+    circle: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 32,
+        height: 32,
+        borderRadius: 32,
+        backgroundColor: 'rgba(255,255,255,0.25)'
+    },
+    selected: {
+        borderRadius: 32,
+        backgroundColor: 'rgba(255,255,255,0.5)'
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        width: '100%',
+        marginTop: 16
+    },
+    selectedHour: {
+        fontSize: 64,
+        fontWeight: 'bold',
+        marginTop: 16
     }
 })
 
