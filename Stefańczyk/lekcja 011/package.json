@@ -5,6 +5,6 @@
   "author": "Iwo Strzeboński",
   "license": "WTFPL",
   "dependencies": {
-    "expo-cli": "^4.13.0"
+    "expo-cli": "^5.0.0"
   }
 }

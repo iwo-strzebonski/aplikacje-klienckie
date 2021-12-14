@@ -63,8 +63,8 @@ export default function CreateAlarm(props: any) {
                         ? <Clock
                             data={minute}
                             setData={setMinute}
-                            count={12}
-                            offset={5}
+                            count={60}
+                            offset={1}
                         />
                         : <Clock
                             data={hour}

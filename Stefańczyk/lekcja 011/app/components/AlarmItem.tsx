@@ -1,5 +1,9 @@
 /* eslint-disable require-jsdoc */
-import React, { useEffect, useState } from 'react'
+import React, {
+    useEffect,
+    useState,
+    EffectCallback
+} from 'react'
 import {
     TouchableOpacity,
     Animated,
@@ -10,6 +14,7 @@ import {
     Dimensions,
     Vibration
 } from 'react-native'
+import { Audio } from 'expo-av'
 import { FontAwesome } from '@expo/vector-icons'
 
 import Database from '../db/Database'
@@ -17,16 +22,24 @@ import { styles, ripple } from '../globals'
 
 import { dbRow } from '../@types/Database'
 
-const defaultHeight = Dimensions.get('window').height / 4.8
+const defaultHeight = Dimensions.get('window').height / 3.8
 const defaultDays = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'Sb', 'Nd']
+
+let sound: Audio.Sound;
+
+(async() => ({ sound } = await Audio.Sound.createAsync(
+    require('../assets/padoru_padoru.mp3')
+)))()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AlarmItem(props: any) {
+    const height = new Animated.Value(defaultHeight)
     const [date, setDate] = useState(new Date())
     const [active, changeActive] = useState(props.data.active as boolean)
+    const [soundActive, setSoundActive] = useState(false)
     const [days, changeDays] = useState(JSON.parse(props.data.days))
-    const height = new Animated.Value(defaultHeight)
     const [expanded, toggleExpand] = useState(false)
+    const [snd, setSound] = useState(false)
     let toValue = 0
 
     useEffect(() => {
@@ -34,17 +47,44 @@ export default function AlarmItem(props: any) {
             setDate(new Date())
         }, 1000)
 
-        return () => clearInterval(interval)
+        return () => {
+            sound.setIsLoopingAsync(false)
+            sound.stopAsync()
+            setSound(false)
+
+            return clearInterval(interval)
+        }
     }, [])
 
-    useEffect(() => {
-        if (active) {
-            const hm = `${date.getHours()}:${date.getMinutes()}`
-            if (hm === props.data.hour) {
+    useEffect((async() => {
+        const hm = `${
+            date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+        }:${
+            date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+        }`
+
+        if (!soundActive) {
+            sound.setIsLoopingAsync(false)
+            sound.stopAsync()
+            setSound(false)
+        }
+
+        if (hm === props.data.hour) {
+            if (active) {
                 Vibration.vibrate(500)
             }
+
+            if (soundActive && !snd) {
+                setSound(true)
+                sound.setIsLoopingAsync(true)
+                await sound.playAsync()
+            }
+        } else {
+            sound.setIsLoopingAsync(false)
+            sound.stopAsync()
+            setSound(false)
         }
-    }, [date])
+    }) as unknown as EffectCallback, [date])
 
     useEffect(() => {
         const alarmList = props.alarms
@@ -144,6 +184,9 @@ export default function AlarmItem(props: any) {
                 <Text style={styles.primary}>{props.data.hour}</Text>
                 <Switch value={active} onValueChange={(value) => {
                     changeActive(value)
+                }} style={{width: 48, alignSelf: 'flex-end'}} />
+                <Switch value={soundActive} onValueChange={(value) => {
+                    setSoundActive(value)
                 }} style={{width: 48, alignSelf: 'flex-end'}} />
                 <TouchableOpacity
                     onPress={removeAlarm}
