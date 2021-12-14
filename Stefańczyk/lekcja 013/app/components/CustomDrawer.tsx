@@ -1,9 +1,6 @@
 /* eslint-disable require-jsdoc */
 import React from 'react'
 import {
-    Text
-} from 'react-native'
-import {
     DrawerContentScrollView,
     DrawerItemList,
     DrawerItem,

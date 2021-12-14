@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import CustomDrawer from './components/CustomDrawer'
 import Screen1 from './components/Notes'
 import Screen2 from './components/CreateNote'
+import Screen3 from './components/EditNote'
 
 const Drawer = createDrawerNavigator()
 
@@ -39,6 +40,20 @@ export default function App() {
                     component={Screen2}
                     options={{
                         title: 'create',
+                        headerStyle: {
+                            backgroundColor: '#303F9F',
+                        },
+                        headerTintColor: '#FFFFFF',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        }
+                    }}
+                />
+                <Drawer.Screen
+                    name='s3'
+                    component={Screen3}
+                    options={{
+                        title: 'edit',
                         headerStyle: {
                             backgroundColor: '#303F9F',
                         },
