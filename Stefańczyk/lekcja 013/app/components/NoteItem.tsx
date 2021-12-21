@@ -5,49 +5,41 @@ import {
     Text,
     TouchableNativeFeedback,
 } from 'react-native'
-import * as SecureStore from 'expo-secure-store'
 
 import { styles, ripple } from '../styles'
 
+import createDate from '../functions/createDate'
+import invertHex from '../functions/invertHex'
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AlarmItem(props: any) {
-    const invertHex = (hex: string) => {
-        return '#' + (Number(`0x${hex.substring(1)}`) ^ 0xFFFFFF)
-            .toString(16).toUpperCase().padStart(6, '0')
-    }
-
-    const viewNote = () => {
-        console.log('> view')
-    }
-
-    const createDate = (date: number): string => {
-        const d = new Date(date)
-        return (
-            d.toLocaleString().substring(8, 10) +
-            d.toLocaleString().substring(3, 7)
-        )
+    const handleEditNote = () => {
+        props.navigation.navigate('s3', { data: props.data })
     }
 
     return (
         <TouchableNativeFeedback
             background={ripple.contain}
-            key={props.id}
-            onPress={() => viewNote()}
-            onLongPress={() => props.setModalData(props.id)}
+            key={props.data.id}
+            onPress={() => handleEditNote()}
+            onLongPress={() => props.setModalData(props.data.id)}
         >
-            <View style={[styles.note, {backgroundColor: props.color}]}>
-                <Text
-                    style={[styles.noteTitle, {color: invertHex(props.color)}]}
-                >
-                    {props.title}
+            <View style={[styles.note, {backgroundColor: props.data.color}]}>
+                <Text style={styles.noteCategory}>
+                    {props.data.category}
                 </Text>
                 <Text
-                    style={[styles.noteDate, {color: invertHex(props.color)}]}
+                    style={[styles.noteTitle, {color: invertHex(props.data.color)}]}
                 >
-                    {createDate(props.date)}
+                    {props.data.title}
                 </Text>
-                <Text style={{color: invertHex(props.color)}}>
-                    {props.text}
+                <Text
+                    style={[styles.noteDate, {color: invertHex(props.data.color)}]}
+                >
+                    {createDate(props.data.date)}
+                </Text>
+                <Text style={{color: invertHex(props.data.color)}}>
+                    {props.data.text}
                 </Text>
             </View>
         </TouchableNativeFeedback>

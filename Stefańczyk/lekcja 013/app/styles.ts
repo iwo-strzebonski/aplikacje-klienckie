@@ -60,6 +60,10 @@ export const styles = StyleSheet.create({
         textAlignVertical: 'bottom',
         width: '90%'
     },
+    searchInput: {
+        height: 48,
+        width: '100%'
+    },
     noteTitle: {
         fontSize: 20,
         fontWeight: 'bold'
@@ -70,12 +74,22 @@ export const styles = StyleSheet.create({
         top: 16,
         right: 16
     },
+    noteCategory: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        width: '50%',
+        fontSize: 16,
+        borderColor: '#000000',
+        backgroundColor: '#404040',
+        color: '#FFC107',
+        borderRadius: 4,
+        borderWidth: 2
+    },
     alertContainer: {
         backgroundColor: 'rgba(0,0,0,0.3)',
         width: '100%',
         height: '100%',
         justifyContent: 'center'
-        // zIndex: 999
     },
     alert: {
         top: Dimensions.get('window').height / 2 - 50,
@@ -91,6 +105,13 @@ export const styles = StyleSheet.create({
     alertButtonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    picker: {
+        marginTop: 30,
+        width: '40%',
+        height: 32,
+        borderColor: '#3F51B5',
+        borderWidth: 1
     }
 })
 

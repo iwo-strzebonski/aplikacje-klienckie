@@ -1,71 +1,64 @@
 /* eslint-disable require-jsdoc */
-import React, { EffectCallback, useEffect, useState } from 'react'
+import React, {
+    EffectCallback,
+    useEffect,
+    useState,
+    useRef
+} from 'react'
 import {
     FlatList,
+    TextInput
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store'
 
 import NoteItem from './NoteItem'
-
-import { styles } from '../styles'
-import { note } from '../@types/Notes'
 import Alert from './Alert'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Notes() {
-    const [modalData, setModalData] = useState('')
+import loadNotes from '../functions/loadNotes'
+import deleteNote from '../functions/deleteNote'
 
-    const [notes, setNotes] = useState(
-        [] as note[]
+import { styles } from '../styles'
+
+import { note } from '../@types/Notes'
+import filterNotes from '../functions/filterNotes'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function Notes(props: any) {
+    const [modalData, setModalData] = useState('')
+    const [secureKeys, setSecureKeys] = useState('')
+    const [notes, setNotes] = useState([] as note[])
+    const [filter, setFilter] = useState('')
+
+    const filterRef = useRef()
+
+    useEffect(
+        loadNotes.bind(null, setNotes) as unknown as EffectCallback,
+        [secureKeys]
     )
 
-    const [secureKeys, setSecureKeys] = useState('')
+    useEffect(
+        deleteNote.bind(
+            null,
+            modalData,
+            setModalData,
+            setSecureKeys
+        ) as unknown as EffectCallback,
+        [modalData]
+    )
 
-    const loadNotes = async() => {
-        const notesArray: note[] = []
-        const keyStore = await SecureStore.getItemAsync('keys')
-
-        if (keyStore !== null) {
-            for (const key of JSON.parse(keyStore)) {
-                const note = await SecureStore.getItemAsync(key.toString())
-                if (note !== null) {
-                    notesArray.push(JSON.parse(note))
-                }
-            }
-        }
-
-        setNotes(notesArray)
-    }
-
-    const deleteNote = async() => {
-        if (modalData.includes('remove')) {
-            const id = modalData.substring(modalData.indexOf('_') + 1)
-            setModalData('')
-
-            await SecureStore.deleteItemAsync(id)
-            const kks = await SecureStore.getItemAsync('keys')
+    useFocusEffect(() => {
+        (async() => {
+            let kks = await SecureStore.getItemAsync('keys')
 
             if (kks !== null) {
-                let keyList: string[] = JSON.parse(kks)
-                keyList = keyList.filter(el => el !== id)
-                await SecureStore.setItemAsync('keys', JSON.stringify(keyList))
-                setSecureKeys(JSON.stringify(keyList))
-            }
-        }
-    }
+                if (kks === secureKeys && props.route.params?.edited)
+                    kks += props.route.params.edited
 
-    useEffect(loadNotes as unknown as EffectCallback, [secureKeys])
-    useEffect(deleteNote as unknown as EffectCallback, [modalData])
-
-    useFocusEffect((() => {
-        (async() => {
-            const kks = await SecureStore.getItemAsync('keys')
-            if (kks !== null && kks !== secureKeys) {
                 setSecureKeys(kks)
             }
         })()
-    }) as unknown as EffectCallback)
+    })
 
     return (
         < >
@@ -73,20 +66,26 @@ export default function Notes() {
                 modalData={modalData}
                 setModalData={setModalData}
             />
+            
+            <TextInput
+                style={[
+                    styles.input,
+                    styles.searchInput
+                ]}
+                placeholder='search...'
+                onChangeText={text => setFilter(text)}
+            />
             <FlatList
                 key={Date.now()}
                 style={styles.container}
                 columnWrapperStyle={{justifyContent: 'space-evenly'}}
-                data={notes}
+                data={filterNotes(notes, filter)}
                 renderItem={({item}) => <NoteItem
-                    id={item.id}
-                    date={item.date}
-                    title={item.title}
-                    text={item.text}
-                    color={item.color}
+                    data={item}
                     setSecureKeys={setSecureKeys}
                     modalData={modalData}
                     setModalData={setModalData}
+                    navigation={props.navigation}
                 />}
                 numColumns={2}
                 keyExtractor={(item) => item.id}
