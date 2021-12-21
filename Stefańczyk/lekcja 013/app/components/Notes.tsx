@@ -2,11 +2,11 @@
 import React, {
     EffectCallback,
     useEffect,
-    useState,
-    useRef
+    useState
 } from 'react'
 import {
     FlatList,
+    Text,
     TextInput
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
@@ -29,8 +29,6 @@ export default function Notes(props: any) {
     const [secureKeys, setSecureKeys] = useState('')
     const [notes, setNotes] = useState([] as note[])
     const [filter, setFilter] = useState('')
-
-    const filterRef = useRef()
 
     useEffect(
         loadNotes.bind(null, setNotes) as unknown as EffectCallback,
@@ -75,21 +73,25 @@ export default function Notes(props: any) {
                 placeholder='search...'
                 onChangeText={text => setFilter(text)}
             />
-            <FlatList
-                key={Date.now()}
-                style={styles.container}
-                columnWrapperStyle={{justifyContent: 'space-evenly'}}
-                data={filterNotes(notes, filter)}
-                renderItem={({item}) => <NoteItem
-                    data={item}
-                    setSecureKeys={setSecureKeys}
-                    modalData={modalData}
-                    setModalData={setModalData}
-                    navigation={props.navigation}
-                />}
-                numColumns={2}
-                keyExtractor={(item) => item.id}
-            />
+            {
+                filterNotes(notes, filter).length
+                    ? <FlatList
+                        key={Date.now()}
+                        style={styles.container}
+                        columnWrapperStyle={{justifyContent: 'space-evenly'}}
+                        data={filterNotes(notes, filter)}
+                        renderItem={({item}) => <NoteItem
+                            data={item}
+                            setSecureKeys={setSecureKeys}
+                            modalData={modalData}
+                            setModalData={setModalData}
+                            navigation={props.navigation}
+                        />}
+                        numColumns={2}
+                        keyExtractor={(item) => item.id}
+                    />
+                    : <Text style={styles.title}>StoreApp1</Text>
+            }
         </>
     )
 }

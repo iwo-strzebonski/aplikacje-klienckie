@@ -19,6 +19,14 @@ export const styles = StyleSheet.create({
         padding: '4%',
         marginTop: 16
     },
+    title: {
+        fontSize: 72,
+        fontWeight: 'bold',
+        marginTop: '10%',
+        width: '100%',
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
     header: {
         color: '#FFFFFF',
         fontSize: 48

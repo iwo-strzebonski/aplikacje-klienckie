@@ -20,6 +20,11 @@ export default function CustomDrawerContent(props: any) {
             />
 
             <DrawerItemList {...props} />
+
+            <DrawerItem
+                label='info'
+                onPress={() => alert('Author: Iwo Strzeboński 4ia1 30')}
+            />
         </DrawerContentScrollView>
     )
 }
