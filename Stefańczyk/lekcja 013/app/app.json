@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "notepad-app",
-    "slug": "notepad",
+    "name": "IwoStrzebonskiStoreApp1",
+    "slug": "IwoStrzebonskiStoreApp1",
     "owner": "octoturge",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "io.octoturge.notepad"
+      "package": "com.projekty.iwostrzebonski.storeapp1"
     },
     "web": {
       "favicon": "./assets/favicon.png"
